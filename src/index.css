@@ -1,1 +1,40 @@
 @import "tailwindcss";
+
+@layer utilities {
+  /* Fade animation */
+  @keyframes fadeIn {
+    0% { opacity: 0 }
+    100% { opacity: 1 }
+  }
+  .animate-fade {
+    animation: fadeIn 0.7s ease-in-out;
+  }
+
+  /* Fade Up */
+  @keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(20px) }
+    100% { opacity: 1; transform: translateY(0) }
+  }
+  .animate-fadeUp {
+    animation: fadeUp 0.8s ease-out;
+  }
+
+  /* Slide In */
+  @keyframes slideIn {
+    0% { opacity: 0; transform: translateX(40px) }
+    100% { opacity: 1; transform: translateX(0) }
+  }
+  .animate-slideIn {
+    animation: slideIn 0.8s ease-out;
+  }
+
+  /* Parallax Float */
+  @keyframes parallaxFloat {
+    0% { transform: translateY(0) }
+    50% { transform: translateY(-10px) }
+    100% { transform: translateY(0) }
+  }
+  .animate-parallax {
+    animation: parallaxFloat 4s ease-in-out infinite;
+  }
+}
