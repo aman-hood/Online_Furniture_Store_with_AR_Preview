@@ -6,10 +6,10 @@ const BestSellerCard = ({ item }) => {
     <div>
 
       {/* IMAGE BOX */}
-     <div className="relative w-60 h-56 bg-[#fafafa] border border-black flex items-center justify-center">
+<div className="relative w-65 h-60 bg-white border border-gray-500 flex items-center justify-center ">
 
   {/* Heart Icon */}
-  <button className="absolute top-3 right-3 text-gray-700 hover:text-black">
+  <button className="absolute top-2 right-3 text-gray-700 hover:text-black">
     <FiHeart size={18} />
   </button>
 
@@ -17,7 +17,7 @@ const BestSellerCard = ({ item }) => {
   <img
     src={item.img}
     alt={item.name}
-    className="w-full h-full object-cover"
+    className="w-full h-full object-contai"
   />
 </div>
 

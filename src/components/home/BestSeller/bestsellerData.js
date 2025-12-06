@@ -34,4 +34,25 @@ export const bestSellers = [
     price: "₹32,999",
     img: "src/assets/bestSeller/chair.png",
   },
+  {
+    id: 6,
+    name: "King Size Bed Frame",
+    category: "Bedroom",
+    price: "₹32,999",
+    img: "src/assets/bestSeller/chair.png",
+  },
+  {
+    id: 7,
+    name: "King Size Bed Frame",
+    category: "Bedroom",
+    price: "₹32,999",
+    img: "src/assets/bestSeller/chair.png",
+  },
+  {
+    id: 8,
+    name: "King Size Bed Frame",
+    category: "Bedroom",
+    price: "₹32,999",
+    img: "src/assets/bestSeller/chair.png",
+  }
 ];
