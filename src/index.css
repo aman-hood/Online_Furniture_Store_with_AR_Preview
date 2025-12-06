@@ -38,11 +38,21 @@
     animation: parallaxFloat 4s ease-in-out infinite;
   }
 }
-/* Hide scrollbar */
+/* Hide scrollbar of BestSeller */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+/* Hide scrollbar of entire page */
+html, body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }

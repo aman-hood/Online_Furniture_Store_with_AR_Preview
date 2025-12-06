@@ -39,8 +39,8 @@ const BestSellers = () => {
   };
 
   return (
-    <section className="py-16 ml-20 bg-white">
-      <div className="max-w-8xl mx-auto px-8">
+    <section className="py-16 ml-28 bg-white">
+      <div className="max-w-8xl mx-auto ">
 
         {/* Section Title */}
         <h2 className="text-3xl font-sans mb-5 tracking-wide">BESTSELLERS</h2>
