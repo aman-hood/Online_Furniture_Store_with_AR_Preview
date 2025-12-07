@@ -8,7 +8,7 @@ const HeroBanner = () => {
 
   // Auto slide
   useEffect(() => {
-    const timer = setInterval(() => nextSlide(), 50000);
+    const timer = setInterval(() => nextSlide(), 5000);
     return () => clearInterval(timer);
   }, [current]);
 

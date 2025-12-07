@@ -1,3 +1,5 @@
+// it is not used anywhere it get in common/productCard.jsx
+
 import React from "react";
 import { FiHeart } from "react-icons/fi";
 
@@ -6,7 +8,7 @@ const BestSellerCard = ({ item }) => {
     <div>
 
       {/* IMAGE BOX */}
-<div className="relative w-65 h-60 bg-white border border-gray-500 flex items-center justify-center ">
+<div className="relative w-65 h-60  border border-gray-500 flex items-center justify-center ">
 
   {/* Heart Icon */}
   <button className="absolute top-2 right-3 text-gray-700 hover:text-black">
@@ -17,7 +19,7 @@ const BestSellerCard = ({ item }) => {
   <img
     src={item.img}
     alt={item.name}
-    className="w-full h-full object-contai"
+    className="w-full h-full "
   />
 </div>
 
