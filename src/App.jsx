@@ -1,12 +1,5 @@
-import React from 'react'
-import HomePage from './pages/HomePage.jsx'
+import AppRoutes from "./router/AppRoutes";
 
-const App = () => {
-  return (
-    <div >
-      <HomePage/>
-    </div>
-  )
+export default function App() {
+  return <AppRoutes />;
 }
-
-export default App

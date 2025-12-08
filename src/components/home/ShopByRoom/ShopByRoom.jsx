@@ -7,8 +7,8 @@ const ShopByRoom = () => {
     <section className="py-20 bg-white max-w-7xl mx-auto px-8">
 
       {/* TITLE */}
-      <h2 className="text-3xl mb-2 tracking-wide text-center font-sans">Shop by Room</h2>
-      <p className="text-gray-500 text-center text-sm mb-10">Design each space with the perfect mood.</p>
+      <h2 className="text-4xl pb-3 tracking-wider text-center font-semibold">Shop by Room</h2>
+      <p className="text-gray-600 text-center text-sm mb-10">Design each space with the perfect mood.</p>
 
       {/* ROW 1 – 3 TALL CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -24,12 +24,12 @@ const PopularCard = ({ product }) => {
         <img
           src={product.img}
           alt={product.name}
-          className="w-full h-full object-cover transition duration-300 group-hover:scale-105 "
+          className="w-full h-full object-cover transition duration-300 group-hover:scale-115 "
         />
       </div>
 
       {/* NAME */}
-      <p className="mt-3 text-gray-700 text-sm">{product.name}</p>
+      <p className="mt-3 text-gray-700 font-medium text-sm">{product.name}</p>
 
       {/* RATING */}
       <div className="text-yellow-500 text-sm mt-1">
@@ -39,7 +39,7 @@ const PopularCard = ({ product }) => {
       {/* PRICE */}
       <div className="flex gap-2 text-sm items-center mt-1">
         <span className="font-semibold text-black">₹{product.price}</span>
-        <span className="line-through text-gray-400">₹{product.oldPrice}</span>
+        <span className="line-through text-gray-400 font-semibold">₹{product.oldPrice}</span>
       </div>
 
     </div>

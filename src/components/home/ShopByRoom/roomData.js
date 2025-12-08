@@ -22,6 +22,6 @@ export const roomData = [
   {
     id: 5,
     title: "Kids Room",
-    img: "src/assets/rooms/kids.png",
+    img: "src/assets/rooms/kids.jpg",
   },
 ];

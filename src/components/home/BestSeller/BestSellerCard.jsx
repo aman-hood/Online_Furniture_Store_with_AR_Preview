@@ -1,37 +1,34 @@
-// it is not used anywhere it get in common/productCard.jsx
+
 
 import React from "react";
 import { FiHeart } from "react-icons/fi";
 
-const BestSellerCard = ({ item }) => {
+const ProductCard = ({ product }) => {
   return (
-    <div>
+    <div className="cursor-pointer group ">
 
       {/* IMAGE BOX */}
-<div className="relative w-65 h-60  border border-gray-500 flex items-center justify-center ">
+      <div className="relative w-70 h-65 bg-white border border-gray-500 flex items-center justify-center overflow-hidden">
 
-  {/* Heart Icon */}
-  <button className="absolute top-2 right-3 text-gray-700 hover:text-black">
-    <FiHeart size={18} />
-  </button>
+        {/* Wishlist Icon */}
+        <button className="absolute top-3 right-3 text-gray-700 hover:text-black z-20">
+          <FiHeart size={18} />
+        </button>
 
-  {/* FULL IMAGE VISIBLE */}
-  <img
-    src={item.img}
-    alt={item.name}
-    className="w-full h-full "
-  />
-</div>
+        {/* PRODUCT IMAGE */}
+        <img
+          src={product.img}
+          alt={product.name}
+          className="w-full h-full group-hover:scale-110 transition duration-300"
+        />
+      </div>
 
-
-      {/* TITLE */}
-      <p className="text-gray-600 text-sm mt-3">{item.name}</p>
-
-      {/* PRICE */}
-      <p className="font-semibold text-gray-900 text-base">{item.price}</p>
+      {/* TEXT */}
+      <p className="text-gray-600 text-sm font-medium mt-3">{product.name}</p>
+      <p className="font-semibold text-gray-900 text-base">{product.price}</p>
 
     </div>
   );
 };
 
-export default BestSellerCard;
+export default ProductCard;

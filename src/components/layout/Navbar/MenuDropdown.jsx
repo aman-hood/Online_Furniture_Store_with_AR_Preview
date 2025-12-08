@@ -8,7 +8,7 @@ const MenuDropdown = ({ items = [], sections = [], mega = false, open }) => {
     return (
       <div
         className="
-          absolute top-full left-0 mt-4 p-6 rounded-xl shadow-2xl z-50
+          absolute top-full left-0 mt-4 p-8 rounded-xl shadow-lg z-50
           transition-all duration-200 bg-[#f7f3ed]
           border border-[#e6e2d9]
           flex gap-10 
@@ -33,7 +33,7 @@ const MenuDropdown = ({ items = [], sections = [], mega = false, open }) => {
                   key={idx}
                   className="
                     cursor-pointer px-2 py-2 text-gray-700 rounded-md
-                    border-b border-gray-300/40
+                    border-b border-gray-300/40  text-xs
                     hover:bg-gray-200/60 transition
                   "
                 >

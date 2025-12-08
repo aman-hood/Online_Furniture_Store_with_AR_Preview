@@ -8,11 +8,11 @@ const PopularPicks = () => {
   const [activeTab, setActiveTab] = useState("bedroom");
 
   return (
-    <section className="py-20 bg-white max-w-7xl mx-auto px-8">
+    <section className="pt-20 bg-white max-w-7xl mx-auto px-8">
 
       {/* Section Title */}
-      <h2 className="text-3xl font-semibold text-center">Today's Popular Picks</h2>
-      <p className="text-center text-gray-500 text-sm mt-2">
+      <h2 className="text-4xl font-semibold text-center">Today's Popular Picks</h2>
+      <p className="text-center text-gray-600 text-sm mt-2">
         Items loved by our customers — refreshed daily
       </p>
 

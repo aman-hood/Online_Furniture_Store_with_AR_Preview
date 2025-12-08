@@ -1,4 +1,4 @@
-// src/components/common/HorizontalScroller.jsx
+
 
 import React, { useRef, useState, useEffect } from "react";
 import { HiOutlineArrowLongRight, HiOutlineArrowLongLeft } from "react-icons/hi2";
@@ -29,7 +29,7 @@ const HorizontalScroller = ({ children }) => {
   };
 
   return (
-    <div className="relative pb-6">
+    <div className="relative">
 
       {/* SCROLLER */}
       <div

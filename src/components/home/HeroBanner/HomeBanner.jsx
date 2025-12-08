@@ -62,17 +62,17 @@ const HeroBanner = () => {
       {/* LEFT ARROW */}
       <button
         onClick={prevSlide}
-        className="absolute left-6 top-1/2 -translate-y-1/2  hover:bg-black/40 text-white border-1 p-3 rounded-full transition"
+        className="absolute left-6 top-1/2 -translate-y-1/2  hover:bg-black/40 text-white border-2 p-3 rounded-full transition"
       >
-        <FiChevronLeft size={20} />
+        <FiChevronLeft size={24} />
       </button>
 
       {/* RIGHT ARROW */}
       <button
         onClick={nextSlide}
-        className="absolute right-6 top-1/2 -translate-y-1/2  hover:bg-black/40 text-white border-1 p-3 rounded-full transition"
+        className="absolute right-6 top-1/2 -translate-y-1/2  hover:bg-black/40 text-white border-2 p-3 rounded-full transition"
       >
-        <FiChevronRight size={20} />
+        <FiChevronRight size={24} />
       </button>
 
       {/* DOTS */}

@@ -27,7 +27,7 @@ const Footer = () => {
       </div>
 
       {/* MAIN FOOTER CONTENT */}
-      <div className="max-w-7xl mx-auto px-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-14 mt-10">
+      <div className="max-w-7xl mx-auto px-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-18 mt-10">
 
         {/* BRAND */}
         <div>

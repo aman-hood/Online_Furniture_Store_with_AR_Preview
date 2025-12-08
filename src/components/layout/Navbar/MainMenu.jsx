@@ -1,22 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { FiSearch, FiUser, FiHeart, FiShoppingCart } from "react-icons/fi";
 import { shopMenu, productMenu, pageMenu } from "./menuData";
+import AccountDropdown from "./AccountDropdown";
 import MenuDropdown from "./MenuDropdown";
+import { Link } from "react-router-dom";
+
 
 const menuItems = [
-  { label: "HOME", type: "none" },
-  { label: "SHOP", type: "mega", data: shopMenu },
-  { label: "PRODUCT", type: "mega", data: productMenu },
-  { label: "PAGE", type: "mega", data: pageMenu },
+  { label: "HOME", type: "none", path: "/" },
+  { label: "SHOP", type: "mega", data: shopMenu, path: "/shop" },
+  { label: "PRODUCT", type: "mega", data: productMenu, path: "/product" },
+  { label: "PAGE", type: "mega", data: pageMenu, path: "/page" },
   {
     label: "BLOG",
     type: "mega",
     data: [{ heading: "BLOG PAGES", items: ["Latest Posts", "Blog Grid", "Single Post"] }],
+    path: "/blog",
   },
 ];
 
 const MainMenu = () => {
   const [openMenu, setOpenMenu] = useState(null);
+  const closeTimeout = useRef(null);
+
+  const handleOpenMenu = (index) => {
+    if (closeTimeout.current) clearTimeout(closeTimeout.current);
+    setOpenMenu(index);
+  };
+
+  const handleCloseMenu = () => {
+    closeTimeout.current = setTimeout(() => {
+      setOpenMenu(null);
+    }, 200);
+  };
 
   return (
     <div className="py-4">
@@ -31,15 +47,18 @@ const MainMenu = () => {
           {/* MENU */}
           <ul className="hidden md:flex gap-10 font-medium relative">
             {menuItems.map((item, index) => (
-              <li
-                key={index}
-                className="cursor-pointer relative"
-                onMouseEnter={() => setOpenMenu(index)}
-                onMouseLeave={() => setOpenMenu(null)}
-              >
+               <li
+              key={index}
+              className="cursor-pointer relative"
+              onMouseEnter={() => item.type === "mega" && handleOpenMenu(index)}
+              onMouseLeave={() => item.type === "mega" && handleCloseMenu()}
+            >
 
-                {/* LABEL + ARROW (arrow only for mega menus) */}
-                <span className="flex items-center gap-1 hover:text-gray-300 transition select-none">
+                {/* LABEL + MAKE IT CLICKABLE */}
+                <Link
+                  to={item.path}
+                  className="flex items-center gap-1 hover:text-gray-300 transition select-none"
+                >
                   {item.label}
 
                   {item.type === "mega" && (
@@ -51,9 +70,9 @@ const MainMenu = () => {
                       ▾
                     </span>
                   )}
-                </span>
+                </Link>
 
-                {/* DROPDOWNS - only for mega items */}
+                {/* DROPDOWN FOR MEGA MENUS */}
                 {item.type === "mega" && (
                   <MenuDropdown
                     sections={item.data}
@@ -61,7 +80,6 @@ const MainMenu = () => {
                     open={openMenu === index}
                   />
                 )}
-
               </li>
             ))}
           </ul>
@@ -71,7 +89,7 @@ const MainMenu = () => {
         {/* RIGHT ICONS */}
         <div className="flex items-center gap-5 text-xl">
           <FiSearch className="cursor-pointer hover:opacity-70" />
-          <FiUser className="cursor-pointer hover:opacity-70" />
+<AccountDropdown />
           <FiHeart className="cursor-pointer hover:opacity-70" />
           <FiShoppingCart className="cursor-pointer hover:opacity-70" />
         </div>
