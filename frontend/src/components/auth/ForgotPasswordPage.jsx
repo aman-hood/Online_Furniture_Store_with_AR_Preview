@@ -12,8 +12,8 @@ export default function ForgotPasswordPage() {
     setError("");
 
     try {
-      await forgotPassword(email);
-      navigate(`/otp/${email}`);
+      await forgotPassword(email); // CALL BACKEND
+      navigate(`/otp/${email}`);  // GO TO OTP PAGE
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong");
     }
@@ -28,6 +28,7 @@ export default function ForgotPasswordPage() {
         {error && <p className="text-red-500 mb-3">{error}</p>}
 
         <form onSubmit={handleSendOTP} className="space-y-4">
+
           <input
             type="email"
             placeholder="Enter your email"
@@ -37,9 +38,13 @@ export default function ForgotPasswordPage() {
             required
           />
 
-          <button className="w-full bg-black text-white py-3 rounded-xl">
+          <button
+            type="submit"
+            className="w-full bg-black text-white py-3 rounded-xl"
+          >
             Send OTP
           </button>
+
         </form>
 
       </div>

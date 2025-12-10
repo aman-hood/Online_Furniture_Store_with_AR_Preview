@@ -1,4 +1,3 @@
-// src/components/auth/LoginPage.jsx
 import React, { useState } from "react";
 import chair from "/src/assets/login/chair.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,41 +11,38 @@ export default function LoginPage() {
   const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
+    console.log("LOGIN CLICKED", email, password);
+
     e.preventDefault();
     setError("");
     setLoading(true);
 
     try {
       const res = await loginUser(email, password);
-      // sample response: { success: true, accessToken, refreshToken, user, ... }
+
       if (res?.accessToken) {
-        // save token locally (you can change storage strategy later)
+        // Save token
         localStorage.setItem("accessToken", res.accessToken);
         localStorage.setItem("user", JSON.stringify(res.user || {}));
-        // redirect to homepage or desired page
+
         navigate("/");
       } else {
         setError(res?.message || "Login failed");
       }
+
     } catch (err) {
-  const msg = err?.response?.data?.message || "Login failed";
+      const msg = err?.response?.data?.message || "Login failed";
 
-  // 🔥 If account is not verified → redirect to verify page
-  if (msg.includes("Verify your account")) {
-    const email = err?.response?.config?.data
-      ? JSON.parse(err.response.config.data).email
-      : null;
+      // If user is not verified → send to verify page
+      if (msg.includes("Verify your account") && email) {
+        navigate(`/verify-pending/${email}`);
+        return;
+      }
 
-    if (email) {
-      navigate(`/verify-pending/${email}`);
-    }
-  }
+      setError(msg);
+      console.log(err?.response?.data);
 
-  setError(msg);
-  console.log(err.response?.data);
-
-}
- finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -76,7 +72,12 @@ export default function LoginPage() {
             </div>
 
             <form onSubmit={handleLogin} className="space-y-4">
-              {error && <div className="text-sm text-red-600">{error}</div>}
+              
+              {error && (
+                <div className="p-3 rounded-lg bg-red-100 text-red-700 text-sm">
+                  {error}
+                </div>
+              )}
 
               <label className="block">
                 <span className="text-xs text-gray-600">Email Address</span>
@@ -116,7 +117,8 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full mt-2 rounded-xl py-3 font-semibold text-white ${loading ? "bg-gray-700" : "bg-black"}`}
+                className={`w-full mt-2 rounded-xl py-3 font-semibold text-white transition 
+                  ${loading ? "bg-gray-600 cursor-not-allowed" : "bg-black hover:bg-gray-900"}`}
               >
                 {loading ? "Signing in…" : "LOG IN"}
               </button>
@@ -127,11 +129,13 @@ export default function LoginPage() {
                   Create one
                 </Link>
               </div>
+
             </form>
 
             <div className="mt-8 flex items-center justify-center text-xs text-gray-500">
               © FUNIO • Scandinavian Living
             </div>
+
           </div>
         </div>
 

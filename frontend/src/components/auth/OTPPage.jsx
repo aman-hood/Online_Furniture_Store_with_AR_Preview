@@ -16,7 +16,9 @@ export default function OTPPage() {
       await verifyOTP(email, otp);
       navigate(`/reset-password/${email}`);
     } catch (err) {
-      setError(err.response?.data?.message || "Invalid OTP");
+      if (user.otp !== Number(otp)) {
+  return res.status(400).json({ message: "Invalid OTP" });
+}
     }
   };
 

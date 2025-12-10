@@ -25,7 +25,8 @@ const AppRoutes = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         {/* <Route path="/verify-email" element={<EmailVerificationPage />} /> */}
-        <Route path="/otp" element={<OTPPage />} />
+        <Route path="/otp/:email" element={<OTPPage />} />
+
         <Route path="/reset-success" element={<ResetSuccessPage />} />
         <Route path="/verify/:token" element={<VerifyEmail />} />
         <Route path="/wishlist" element={<WishlistPage />} />

@@ -21,7 +21,7 @@ export default function RegisterPage() {
       const res = await registerUser({ firstName, lastName, email, password });
       // backend returns newUser + token etc.
       alert(res?.message || "Registered — check your email for verification");
-      navigate("/login");
+     navigate(`/verify-pending/${email}`);
     } catch (err) {
       console.error(err);
       const msg = err?.response?.data?.message || err.message || "Signup failed";

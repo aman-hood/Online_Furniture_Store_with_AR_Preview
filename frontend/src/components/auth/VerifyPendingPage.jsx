@@ -1,32 +1,36 @@
-import React from "react";
-import { useParams, Link } from "react-router-dom";
+import React, { useState } from "react";
+import { reVerifyEmail } from "../../services/authService";
 
 export default function VerifyPendingPage() {
-  const { email } = useParams();
+  const email = window.location.pathname.split("/").pop();
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleResend = async () => {
+    setLoading(true);
+    try {
+      await reVerifyEmail(email);
+      setMessage("Verification email sent again!");
+    } catch (err) {
+      setMessage(err.response?.data?.message || "Something went wrong");
+    }
+    setLoading(false);
+  };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-white px-6">
-      <div className="max-w-md w-full bg-white shadow-xl border rounded-3xl p-10 text-center">
-        
-        <h1 className="text-3xl font-serif mb-4">Verify Your Email</h1>
-        
-        <p className="text-gray-600 mb-4">
-          You must verify your account before logging in.
-        </p>
+    <div className="min-h-screen flex justify-center items-center">
+      <div className="shadow-lg p-8 rounded-xl bg-white">
+        <h1 className="text-2xl mb-3 font-semibold">Verify Your Email</h1>
+        <p className="mb-5">Verification link sent to: <b>{email}</b></p>
 
-        <p className="text-sm text-gray-500 mb-6">
-          A verification email has been sent to:
-          <br />
-          <strong>{email}</strong>
-        </p>
-
-        <Link
-          to="/login"
-          className="bg-black text-white px-6 py-3 rounded-xl"
+        <button
+          className="bg-black text-white px-4 py-2 rounded-lg"
+          onClick={handleResend}
         >
-          Go to Login
-        </Link>
+          {loading ? "Sending..." : "Resend Email"}
+        </button>
 
+        {message && <p className="mt-4 text-green-600">{message}</p>}
       </div>
     </div>
   );
