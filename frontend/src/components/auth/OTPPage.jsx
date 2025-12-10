@@ -16,10 +16,10 @@ export default function OTPPage() {
       await verifyOTP(email, otp);
       navigate(`/reset-password/${email}`);
     } catch (err) {
-      if (user.otp !== Number(otp)) {
-  return res.status(400).json({ message: "Invalid OTP" });
+  const msg = err?.response?.data?.message || "Invalid OTP";
+  setError(msg);
 }
-    }
+
   };
 
   return (

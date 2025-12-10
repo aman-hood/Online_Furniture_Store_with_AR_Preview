@@ -9,7 +9,9 @@ import OTPPage from "../components/auth/OTPPage";
 import ResetSuccessPage from "../components/auth/ResetSuccessPage";
 import VerifyEmail from "../components/auth/VerifyEmail";
 import VerifyPendingPage from "../components/auth/VerifyPendingPage";
+import ResetPasswordPage from "../components/auth/ResetPasswordPage"; 
 import WishlistPage from "../pages/WishlistPage";
+
 
 
 const AppRoutes = () => {
@@ -31,6 +33,8 @@ const AppRoutes = () => {
         <Route path="/verify/:token" element={<VerifyEmail />} />
         <Route path="/wishlist" element={<WishlistPage />} />
         <Route path="/verify-pending/:email" element={<VerifyPendingPage />} />
+        <Route path="/reset-password/:email" element={<ResetPasswordPage />} />
+
 
 
       </Routes>
