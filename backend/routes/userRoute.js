@@ -3,9 +3,12 @@ import {register, verify, reVerify, login, logout, forgotPassword, verifyOTP, ch
 import { isAdmin, isAuthenticated } from '../middlewares/isAuthenticated.js';
 const router = express.Router()
 
+<<<<<<< HEAD
 // router.get('/verify', verify);
 console.log("User routes loaded!");
 
+=======
+>>>>>>> 4fa3c16479dda62fa76b465898d6fe9199e53196
 router.post('/register', register)
 router.post('/verify', verify)
 router.post('/reVerify', reVerify)
