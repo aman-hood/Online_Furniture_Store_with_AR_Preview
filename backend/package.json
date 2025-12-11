@@ -2,36 +2,24 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
-<<<<<<< HEAD
-    "dev": "nodemon server.js"
-=======
-    "start": "nodemon server.js"
->>>>>>> 4fa3c16479dda62fa76b465898d6fe9199e53196
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
-    "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.5",
-=======
-    "bcryptjs": "^3.0.3",
->>>>>>> 4fa3c16479dda62fa76b465898d6fe9199e53196
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.0.1",
-<<<<<<< HEAD
     "nodemailer": "^7.0.11"
   },
   "devDependencies": {
-=======
-    "nodemailer": "^7.0.11",
->>>>>>> 4fa3c16479dda62fa76b465898d6fe9199e53196
     "nodemon": "^3.1.11"
   }
 }
