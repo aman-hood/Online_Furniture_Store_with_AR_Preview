@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { bannerSlides } from "./BannerData";
+import { Link, useNavigate } from "react-router-dom";
 
 const HeroBanner = () => {
   const [current, setCurrent] = useState(0);
@@ -54,9 +55,9 @@ const HeroBanner = () => {
           {bannerSlides[current].title}
         </h1>
 
-        <button className="bg-black text-white px-8 py-3 rounded-md hover:bg-gray-900 transition">
+        <Link to ="/collections" className="bg-black text-white px-8 py-3 rounded-md hover:bg-gray-900 transition">
           SHOP COLLECTION →
-        </button>
+        </Link>
       </div>
 
       {/* LEFT ARROW */}

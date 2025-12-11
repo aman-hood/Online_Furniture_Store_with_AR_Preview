@@ -36,13 +36,14 @@ const MainMenu = () => {
 
   return (
     <div className="py-4">
-      <div className="max-w-8xl mx-auto px-4 flex justify-between items-center text-white">
+     <div className= "max-w-8xl mx-auto px-4 flex justify-between items-center text-white ">
+
 
         {/* LEFT (Logo + Menu) */}
         <div className="flex items-center gap-20">
 
           {/* LOGO */}
-          <h1 className="text-2xl font-bold">FUNIO</h1>
+          <h1 className="text-2xl font-bold">AR HOMESPACE</h1>
 
           {/* MENU */}
           <ul className="hidden md:flex gap-10 font-medium relative">

@@ -1,143 +1,742 @@
 export const products = [
   // Chairs
+  
   {
-    id: 1,
-    name: "Cream Accent Chair",
-    img: "https://images.unsplash.com/photo-1582582424510-8f3bcfb830a4",
-    price: 12999
+    "id": 1,
+    "name": "Modern Chair",
+    "img": "/src/assets/furniture/chairs/chair1.png",
+    "price": 4999,
+    "category": "chairs"
   },
   {
-    id: 2,
-    name: "Modern Lounge Chair",
-    img: "https://images.unsplash.com/photo-1503602642458-232111445657",
-    price: 15999
+    "id": 2,
+    "name": "Velvet Armchair",
+    "img": "/src/assets/furniture/chairs/chair2.png",
+    "price": 7999,
+    "category": "chairs"
   },
   {
-    id: 3,
-    name: "Vintage Wood Chair",
-    img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36",
-    price: 8999
+    "id": 3,
+    "name": "Ergonomic Office Chair",
+    "img": "/src/assets/furniture/chairs/chair3.png",
+    "price": 12999,
+    "category": "chairs"
   },
+  {
+    "id": 4,
+    "name": "Wooden Dining Chair",
+    "img": "/src/assets/furniture/chairs/chair4.png",
+    "price": 3499,
+    "category": "chairs"
+  },
+  {
+    "id": 5,
+    "name": "Leather Executive Chair",
+    "img": "/src/assets/furniture/chairs/chair5.png",
+    "price": 18999,
+    "category": "chairs"
+  },
+  {
+    "id": 6,
+    "name": "Modern Sofa Set",
+    "img": "/src/assets/furniture/sofas/sofa1.png",
+    "price": 45999,
+    "category": "sofas"
+  },
+  {
+    "id": 7,
+    "name": "Sectional Sofa",
+    "img": "/src/assets/furniture/sofas/sofa2.png",
+    "price": 68999,
+    "category": "sofas"
+  },
+  {
+    "id": 8,
+    "name": "Leather Chesterfield",
+    "img": "/src/assets/furniture/sofas/sofa3.png",
+    "price": 75999,
+    "category": "sofas"
+  },
+  {
+    "id": 9,
+    "name": "Convertible Sofa Bed",
+    "img": "/src/assets/furniture/sofas/sofa4.png",
+    "price": 42999,
+    "category": "sofas"
+  },
+  {
+    "id": 10,
+    "name": "Loveseat Sofa",
+    "img": "/src/assets/furniture/sofas/sofa5.png",
+    "price": 29999,
+    "category": "sofas"
+  },
+  {
+    "id": 11,
+    "name": "Wooden Dining Table",
+    "img": "/src/assets/furniture/tables/table1.png",
+    "price": 24999,
+    "category": "tables"
+  },
+  {
+    "id": 12,
+    "name": "Glass Center Table",
+    "img": "/src/assets/furniture/tables/table2.png",
+    "price": 15999,
+    "category": "tables"
+  },
+  {
+    "id": 13,
+    "name": "Marble Coffee Table",
+    "img": "/src/assets/furniture/tables/table3.png",
+    "price": 28999,
+    "category": "tables"
+  },
+  {
+    "id": 14,
+    "name": "Extendable Dining Table",
+    "img": "/src/assets/furniture/tables/table4.png",
+    "price": 34999,
+    "category": "tables"
+  },
+  {
+    "id": 15,
+    "name": "Study Table",
+    "img": "/src/assets/furniture/tables/table5.png",
+    "price": 11999,
+    "category": "tables"
+  },
+  {
+    "id": 16,
+    "name": "King Size Bed",
+    "img": "/src/assets/furniture/beds/bed1.png",
+    "price": 59999,
+    "category": "beds"
+  },
+  {
+    "id": 17,
+    "name": "Storage Bed",
+    "img": "/src/assets/furniture/beds/bed2.png",
+    "price": 45999,
+    "category": "beds"
+  },
+  {
+    "id": 18,
+    "name": "Modern Platform Bed",
+    "img": "/src/assets/furniture/beds/bed3.png",
+    "price": 38999,
+    "category": "beds"
+  },
+  {
+    "id": 19,
+    "name": "Bunk Bed",
+    "img": "/src/assets/furniture/beds/bed4.png",
+    "price": 32999,
+    "category": "beds"
+  },
+  {
+    "id": 20,
+    "name": "Canopy Bed",
+    "img": "/src/assets/furniture/beds/bed5.png",
+    "price": 78999,
+    "category": "beds"
+  },
+  {
+    "id": 21,
+    "name": "Sliding Door Wardrobe",
+    "img": "/src/assets/furniture/wardrobes/wardrobe1.png",
+    "price": 68999,
+    "category": "wardrobes"
+  },
+  {
+    "id": 22,
+    "name": "Walk-in Wardrobe",
+    "img": "/src/assets/furniture/wardrobes/wardrobe2.png",
+    "price": 89999,
+    "category": "wardrobes"
+  },
+  {
+    "id": 23,
+    "name": "Mirror Wardrobe",
+    "img": "/src/assets/furniture/wardrobes/wardrobe3.png",
+    "price": 54999,
+    "category": "wardrobes"
+  },
+  {
+    "id": 24,
+    "name": "Compact Wardrobe",
+    "img": "/src/assets/furniture/wardrobes/wardrobe4.png",
+    "price": 38999,
+    "category": "wardrobes"
+  },
+  {
+    "id": 25,
+    "name": "Antique Wall Clock",
+    "img": "/src/assets/furniture/decor/decor1.png",
+    "price": 4999,
+    "category": "decor"
+  },
+  {
+    "id": 26,
+    "name": "Modern Wall Art",
+    "img": "/src/assets/furniture/decor/decor2.png",
+    "price": 7999,
+    "category": "decor"
+  },
+  {
+    "id": 27,
+    "name": "Ceramic Vase Set",
+    "img": "/src/assets/furniture/decor/decor3.png",
+    "price": 3499,
+    "category": "decor"
+  },
+  {
+    "id": 28,
+    "name": "Decorative Mirror",
+    "img": "/src/assets/furniture/decor/decor4.png",
+    "price": 8999,
+    "category": "decor"
+  },
+  {
+    "id": 29,
+    "name": "Sculpture Art Piece",
+    "img": "/src/assets/furniture/decor/decor5.png",
+    "price": 12999,
+    "category": "decor"
+  },
+  {
+    "id": 30,
+    "name": "Bookshelf",
+    "img": "/src/assets/furniture/storage/storage1.png",
+    "price": 18999,
+    "category": "storage"
+  },
+  {
+    "id": 31,
+    "name": "Shoe Rack",
+    "img": "/src/assets/furniture/storage/storage2.png",
+    "price": 7999,
+    "category": "storage"
+  },
+  {
+    "id": 32,
+    "name": "TV Cabinet",
+    "img": "/src/assets/furniture/storage/storage3.png",
+    "price": 22999,
+    "category": "storage"
+  },
+  {
+    "id": 33,
+    "name": "Chest of Drawers",
+    "img": "/src/assets/furniture/storage/storage4.png",
+    "price": 15999,
+    "category": "storage"
+  },
+  {
+    "id": 34,
+    "name": "Storage Ottoman",
+    "img": "/src/assets/furniture/storage/storage5.png",
+    "price": 6999,
+    "category": "storage"
+  },
+  {
+    "id": 35,
+    "name": "Modern Floor Lamp",
+    "img": "/src/assets/furniture/lamps/lamp1.png",
+    "price": 5999,
+    "category": "lamps"
+  },
+  {
+    "id": 36,
+    "name": "Table Lamp Set",
+    "img": "/src/assets/furniture/lamps/lamp2.png",
+    "price": 4499,
+    "category": "lamps"
+  },
+  {
+    "id": 37,
+    "name": "Chandelier",
+    "img": "/src/assets/furniture/lamps/lamp3.png",
+    "price": 18999,
+    "category": "lamps"
+  },
+  {
+    "id": 38,
+    "name": "LED Desk Lamp",
+    "img": "/src/assets/furniture/lamps/lamp4.png",
+    "price": 2999,
+    "category": "lamps"
+  },
+  {
+    "id": 39,
+    "name": "Pendant Light",
+    "img": "/src/assets/furniture/lamps/lamp5.png",
+    "price": 7999,
+    "category": "lamps"
+  },
+  {
+    "id": 40,
+    "name": "Patio Dining Set",
+    "img": "/src/assets/furniture/outdoor/outdoor1.png",
+    "price": 45999,
+    "category": "outdoor"
+  },
+  {
+    "id": 41,
+    "name": "Garden Bench",
+    "img": "/src/assets/furniture/outdoor/outdoor2.png",
+    "price": 18999,
+    "category": "outdoor"
+  },
+  {
+    "id": 42,
+    "name": "Outdoor Lounge Set",
+    "img": "/src/assets/furniture/outdoor/outdoor3.png",
+    "price": 68999,
+    "category": "outdoor"
+  },
+  {
+    "id": 43,
+    "name": "Sun Lounger",
+    "img": "/src/assets/furniture/outdoor/outdoor4.png",
+    "price": 15999,
+    "category": "outdoor"
+  },
+  {
+    "id": 44,
+    "name": "Outdoor Coffee Table",
+    "img": "/src/assets/furniture/outdoor/outdoor5.png",
+    "price": 12999,
+    "category": "outdoor"
+  },
+  {
+    "id": 45,
+    "name": "Executive Desk",
+    "img": "/src/assets/furniture/office/office1.png",
+    "price": 34999,
+    "category": "office"
+  },
+  {
+    "id": 46,
+    "name": "Office Storage Cabinet",
+    "img": "/src/assets/furniture/office/office2.png",
+    "price": 22999,
+    "category": "office"
+  },
+  {
+    "id": 47,
+    "name": "Conference Table",
+    "img": "/src/assets/furniture/office/office3.png",
+    "price": 58999,
+    "category": "office"
+  },
+  {
+    "id": 48,
+    "name": "Filing Cabinet",
+    "img": "/src/assets/furniture/office/office4.png",
+    "price": 8999,
+    "category": "office"
+  },
+  {
+    "id": 49,
+    "name": "Workstation Desk",
+    "img": "/src/assets/furniture/office/office5.png",
+    "price": 27999,
+    "category": "office"
+  },
+  {
+    "id": 50,
+    "name": "Accent Chair",
+    "img": "/src/assets/furniture/chairs/chair6.png",
+    "price": 8999,
+    "category": "chairs"
+  },
+  {
+    "id": 51,
+    "name": "Rocking Chair",
+    "img": "/src/assets/furniture/chairs/chair7.png",
+    "price": 12999,
+    "category": "chairs"
+  },
+  {
+    "id": 52,
+    "name": "Bar Stool",
+    "img": "/src/assets/furniture/chairs/chair8.png",
+    "price": 5499,
+    "category": "chairs"
+  },
+  {
+    "id": 53,
+    "name": "Folding Chair",
+    "img": "/src/assets/furniture/chairs/chair9.png",
+    "price": 1999,
+    "category": "chairs"
+  },
+  {
+    "id": 54,
+    "name": "Chaise Lounge",
+    "img": "/src/assets/furniture/chairs/chair10.png",
+    "price": 25999,
+    "category": "chairs"
+  },
+  {
+    "id": 55,
+    "name": "Recliner Sofa",
+    "img": "/src/assets/furniture/sofas/sofa6.png",
+    "price": 51999,
+    "category": "sofas"
+  },
+  {
+    "id": 56,
+    "name": "Futon Sofa",
+    "img": "/src/assets/furniture/sofas/sofa7.png",
+    "price": 24999,
+    "category": "sofas"
+  },
+  {
+    "id": 57,
+    "name": "Corner Sofa",
+    "img": "/src/assets/furniture/sofas/sofa8.png",
+    "price": 78999,
+    "category": "sofas"
+  },
+  {
+    "id": 58,
+    "name": "Daybed",
+    "img": "/src/assets/furniture/sofas/sofa9.png",
+    "price": 33999,
+    "category": "sofas"
+  },
+  {
+    "id": 59,
+    "name": "Sofa with Storage",
+    "img": "/src/assets/furniture/sofas/sofa10.png",
+    "price": 46999,
+    "category": "sofas"
+  },
+  {
+    "id": 60,
+    "name": "Nesting Tables",
+    "img": "/src/assets/furniture/tables/table6.png",
+    "price": 11999,
+    "category": "tables"
+  },
+  {
+    "id": 61,
+    "name": "Console Table",
+    "img": "/src/assets/furniture/tables/table7.png",
+    "price": 13999,
+    "category": "tables"
+  },
+  {
+    "id": 62,
+    "name": "Bar Table",
+    "img": "/src/assets/furniture/tables/table8.png",
+    "price": 16999,
+    "category": "tables"
+  },
+  {
+    "id": 63,
+    "name": "Side Table",
+    "img": "/src/assets/furniture/tables/table9.png",
+    "price": 6999,
+    "category": "tables"
+  },
+  {
+    "id": 64,
+    "name": "Dressing Table",
+    "img": "/src/assets/furniture/tables/table10.png",
+    "price": 22999,
+    "category": "tables"
+  },
+  {
+    "id": 65,
+    "name": "Queen Size Bed",
+    "img": "/src/assets/furniture/beds/bed6.png",
+    "price": 48999,
+    "category": "beds"
+  },
+  {
+    "id": 66,
+    "name": "Murphy Bed",
+    "img": "/src/assets/furniture/beds/bed7.png",
+    "price": 55999,
+    "category": "beds"
+  },
+  {
+    "id": 67,
+    "name": "Four Poster Bed",
+    "img": "/src/assets/furniture/beds/bed8.png",
+    "price": 89999,
+    "category": "beds"
+  },
+  {
+    "id": 68,
+    "name": "Trundle Bed",
+    "img": "/src/assets/furniture/beds/bed9.png",
+    "price": 38999,
+    "category": "beds"
+  },
+  {
+    "id": 69,
+    "name": "Sleigh Bed",
+    "img": "/src/assets/furniture/beds/bed10.png",
+    "price": 67999,
+    "category": "beds"
+  },
+  {
+    "id": 70,
+    "name": "Built-in Wardrobe",
+    "img": "/src/assets/furniture/wardrobes/wardrobe5.png",
+    "price": 75999,
+    "category": "wardrobes"
+  },
+  {
+    "id": 71,
+    "name": "Corner Wardrobe",
+    "img": "/src/assets/furniture/wardrobes/wardrobe6.png",
+    "price": 48999,
+    "category": "wardrobes"
+  },
+  {
+    "id": 72,
+    "name": "Kids Wardrobe",
+    "img": "/src/assets/furniture/wardrobes/wardrobe7.png",
+    "price": 32999,
+    "category": "wardrobes"
+  },
+  {
+    "id": 73,
+    "name": "Wardrobe with Dressing",
+    "img": "/src/assets/furniture/wardrobes/wardrobe8.png",
+    "price": 92999,
+    "category": "wardrobes"
+  },
+  {
+    "id": 74,
+    "name": "Throw Pillow Set",
+    "img": "/src/assets/furniture/decor/decor6.png",
+    "price": 2999,
+    "category": "decor"
+  },
+  {
+    "id": 75,
+    "name": "Wall Shelves Set",
+    "img": "/src/assets/furniture/decor/decor7.png",
+    "price": 5999,
+    "category": "decor"
+  },
+  {
+    "id": 76,
+    "name": "Area Rug",
+    "img": "/src/assets/furniture/decor/decor8.png",
+    "price": 8999,
+    "category": "decor"
+  },
+  {
+    "id": 77,
+    "name": "Curtain Set",
+    "img": "/src/assets/furniture/decor/decor9.png",
+    "price": 6999,
+    "category": "decor"
+  },
+  {
+    "id": 78,
+    "name": "Photo Frames Set",
+    "img": "/src/assets/furniture/decor/decor10.png",
+    "price": 2499,
+    "category": "decor"
+  },
+  {
+    "id": 79,
+    "name": "Display Cabinet",
+    "img": "/src/assets/furniture/storage/storage6.png",
+    "price": 28999,
+    "category": "storage"
+  },
+  {
+    "id": 80,
+    "name": "Wine Rack",
+    "img": "/src/assets/furniture/storage/storage7.png",
+    "price": 9999,
+    "category": "storage"
+  },
+  {
+    "id": 81,
+    "name": "Underbed Storage",
+    "img": "/src/assets/furniture/storage/storage8.png",
+    "price": 4999,
+    "category": "storage"
+  },
+  {
+    "id": 82,
+    "name": "Kitchen Cabinet",
+    "img": "/src/assets/furniture/storage/storage9.png",
+    "price": 44999,
+    "category": "storage"
+  },
+  {
+    "id": 83,
+    "name": "Bathroom Storage",
+    "img": "/src/assets/furniture/storage/storage10.png",
+    "price": 11999,
+    "category": "storage"
+  },
+  {
+    "id": 84,
+    "name": "Wall Sconce",
+    "img": "/src/assets/furniture/lamps/lamp6.png",
+    "price": 3999,
+    "category": "lamps"
+  },
+  {
+    "id": 85,
+    "name": "String Lights",
+    "img": "/src/assets/furniture/lamps/lamp7.png",
+    "price": 1999,
+    "category": "lamps"
+  },
+  {
+    "id": 86,
+    "name": "Arc Floor Lamp",
+    "img": "/src/assets/furniture/lamps/lamp8.png",
+    "price": 8999,
+    "category": "lamps"
+  },
+  {
+    "id": 87,
+    "name": "Night Lamp",
+    "img": "/src/assets/furniture/lamps/lamp9.png",
+    "price": 1499,
+    "category": "lamps"
+  },
+  {
+    "id": 88,
+    "name": "Motion Sensor Lamp",
+    "img": "/src/assets/furniture/lamps/lamp10.png",
+    "price": 3499,
+    "category": "lamps"
+  },
+  {
+    "id": 89,
+    "name": "Outdoor Swing",
+    "img": "/src/assets/furniture/outdoor/outdoor6.png",
+    "price": 25999,
+    "category": "outdoor"
+  },
+  {
+    "id": 90,
+    "name": "Patio Umbrella",
+    "img": "/src/assets/furniture/outdoor/outdoor7.png",
+    "price": 8999,
+    "category": "outdoor"
+  },
+  {
+    "id": 91,
+    "name": "Garden Table Set",
+    "img": "/src/assets/furniture/outdoor/outdoor8.png",
+    "price": 32999,
+    "category": "outdoor"
+  },
+  {
+    "id": 92,
+    "name": "Outdoor Bar Set",
+    "img": "/src/assets/furniture/outdoor/outdoor9.png",
+    "price": 47999,
+    "category": "outdoor"
+  },
+  {
+    "id": 93,
+    "name": "Hammock",
+    "img": "/src/assets/furniture/outdoor/outdoor10.png",
+    "price": 12999,
+    "category": "outdoor"
+  },
+  {
+    "id": 94,
+    "name": "Office Reception Desk",
+    "img": "/src/assets/furniture/office/office6.png",
+    "price": 42999,
+    "category": "office"
+  },
+  {
+    "id": 95,
+    "name": "Executive Office Set",
+    "img": "/src/assets/furniture/office/office7.png",
+    "price": 99999,
+    "category": "office"
+  },
+  {
+    "id": 96,
+    "name": "Office Partition",
+    "img": "/src/assets/furniture/office/office8.png",
+    "price": 18999,
+    "category": "office"
+  },
+  {
+    "id": 97,
+    "name": "Office Credenza",
+    "img": "/src/assets/furniture/office/office9.png",
+    "price": 32999,
+    "category": "office"
+  },
+  {
+    "id": 98,
+    "name": "Conference Chair Set",
+    "img": "/src/assets/furniture/office/office10.png",
+    "price": 45999,
+    "category": "office"
+  },
+  {
+    "id": 99,
+    "name": "Bean Bag Chair",
+    "img": "/src/assets/furniture/chairs/chair11.png",
+    "price": 3999,
+    "category": "chairs"
+  },
+  {
+    "id": 100,
+    "name": "Director's Chair",
+    "img": "/src/assets/furniture/chairs/chair12.png",
+    "price": 7999,
+    "category": "chairs"
+  },
+  {
+    "id": 101,
+    "name": "Swivel Chair",
+    "img": "/src/assets/furniture/chairs/chair13.png",
+    "price": 10999,
+    "category": "chairs"
+  },
+  {
+    "id": 102,
+    "name": "Lounge Sofa",
+    "img": "/src/assets/furniture/sofas/sofa11.png",
+    "price": 63999,
+    "category": "sofas"
+  },
+  {
+    "id": 103,
+    "name": "Console with Drawers",
+    "img": "/src/assets/furniture/tables/table11.png",
+    "price": 17999,
+    "category": "tables"
+  },
+  {
+    "id": 104,
+    "name": "Adjustable Bed",
+    "img": "/src/assets/furniture/beds/bed11.png",
+    "price": 98999,
+    "category": "beds"
+  },
+  {
+    "id": 105,
+    "name": "Wall Clock Set",
+    "img": "/src/assets/furniture/decor/decor11.png",
+    "price": 5499,
+    "category": "decor"
+  }
 
-  // Lamps (tall images)
-  {
-    id: 4,
-    name: "Minimal Floor Lamp",
-    img: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b",
-    price: 4999
-  },
-  {
-    id: 5,
-    name: "Marble Base Lamp",
-    img: "https://images.unsplash.com/photo-1582389687886-b0700bcd1ad7",
-    price: 6999
-  },
-
-  // Tables (wide images)
-  {
-    id: 6,
-    name: "Modern Coffee Table",
-    img: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
-    price: 8500
-  },
-  {
-    id: 7,
-    name: "Wooden Dining Table",
-    img: "https://images.unsplash.com/photo-1598300057691-76a1d4f2d02f",
-    price: 24999
-  },
-
-  // Sofas (big wide)
-  {
-    id: 8,
-    name: "Luxury Beige Sofa",
-    img: "https://images.unsplash.com/photo-1586105459018-5f62d29c4c3f",
-    price: 45000
-  },
-  {
-    id: 9,
-    name: "Contemporary Living Sofa",
-    img: "https://images.unsplash.com/photo-1567016818232-6c3b1c0b77fe",
-    price: 38999
-  },
-
-  // Beds (extra tall images)
-  {
-    id: 10,
-    name: "Modern King Bed",
-    img: "https://images.unsplash.com/photo-1600047509807-ba8f577b2a26",
-    price: 59999
-  },
-  {
-    id: 11,
-    name: "Minimal Bedroom Setup",
-    img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
-    price: 42999
-  },
-
-  // Home Decor
-  {
-    id: 12,
-    name: "Nordic Vase Set",
-    img: "https://images.unsplash.com/photo-1582582494700-9330c33bd583",
-    price: 1999
-  },
-  {
-    id: 13,
-    name: "Wall Art Canvas",
-    img: "https://images.unsplash.com/photo-1582582489977-3f1e48a77fd9",
-    price: 3499
-  },
-
-  // Dining chairs (square-ish)
-  {
-    id: 14,
-    name: "Soft Dining Chair",
-    img: "https://images.unsplash.com/photo-1616628182500-b96250f7f44d",
-    price: 9999
-  },
-  {
-    id: 15,
-    name: "Brown Leather Chair",
-    img: "https://images.unsplash.com/photo-1600585153851-8bb9c9b1860a",
-    price: 13999
-  },
-
-  // Outdoor Furniture
-  {
-    id: 16,
-    name: "Outdoor Patio Set",
-    img: "https://images.unsplash.com/photo-1600585153901-b9a0f12e51e1",
-    price: 25999
-  },
-  {
-    id: 17,
-    name: "Rattan Outdoor Chair",
-    img: "https://images.unsplash.com/photo-1598300057190-0d394bae1821",
-    price: 7499
-  },
-
-  // Kids room furniture (cute, mixed heights)
-  {
-    id: 18,
-    name: "Scandinavian Kids Bed",
-    img: "https://images.unsplash.com/photo-1600047509784-22787cbfbc58",
-    price: 18999
-  },
-  {
-    id: 19,
-    name: "Kids Study Table",
-    img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
-    price: 8999
-  },
-
-  // Decoration items
-  {
-    id: 20,
-    name: "Ceramic Decor Piece",
-    img: "https://images.unsplash.com/photo-1584987605563-0d3b0e0d9f5b",
-    price: 1299
-  },
   
   // Add more if you want
 ];

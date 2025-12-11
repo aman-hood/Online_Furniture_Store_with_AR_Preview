@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import chair from "/src/assets/login/chair.png";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser } from "../../services/authService";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -11,37 +10,28 @@ export default function LoginPage() {
   const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
-    console.log("LOGIN CLICKED", email, password);
-
     e.preventDefault();
     setError("");
     setLoading(true);
 
     try {
-      const res = await loginUser(email, password);
+      const res = await fetch("http://localhost:3000/api/users/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // IMPORTANT — sends cookies
+        body: JSON.stringify({ email, password }),
+      });
 
-      if (res?.accessToken) {
-        // Save token
-        localStorage.setItem("accessToken", res.accessToken);
-        localStorage.setItem("user", JSON.stringify(res.user || {}));
+      const data = await res.json();
 
-        navigate("/");
+      if (data.success) {
+        navigate("/"); // user now logged in via cookie
       } else {
-        setError(res?.message || "Login failed");
+        setError(data.message || "Login failed");
       }
 
     } catch (err) {
-      const msg = err?.response?.data?.message || "Login failed";
-
-      // If user is not verified → send to verify page
-      if (msg.includes("Verify your account") && email) {
-        navigate(`/verify-pending/${email}`);
-        return;
-      }
-
-      setError(msg);
-      console.log(err?.response?.data);
-
+      setError("Login failed. Try again.");
     } finally {
       setLoading(false);
     }
@@ -72,7 +62,7 @@ export default function LoginPage() {
             </div>
 
             <form onSubmit={handleLogin} className="space-y-4">
-              
+
               {error && (
                 <div className="p-3 rounded-lg bg-red-100 text-red-700 text-sm">
                   {error}

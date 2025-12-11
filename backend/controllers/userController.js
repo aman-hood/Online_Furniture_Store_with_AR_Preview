@@ -139,8 +139,17 @@ export const login = async (req, res) => {
     if (!existingUser.isVerified)
       return res.status(400).json({ success: false, message: "Verify your account first" });
 
+    // Tokens
     const accessToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: "10d" });
     const refreshToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: "30d" });
+
+    // 🔥🔥 SET COOKIE HERE (this is what was missing)
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: false,       // MUST be false in localhost
+      sameSite: "lax",     // MUST be lax in localhost
+      maxAge: 10 * 24 * 60 * 60 * 1000,  //10days
+    });
 
     existingUser.isLoggedIn = true;
     await existingUser.save();
@@ -150,18 +159,18 @@ export const login = async (req, res) => {
 
     await Session.create({ userId: existingUser._id });
 
+    // Send user info but NOT token
     return res.status(200).json({
       success: true,
       message: `Welcome back ${existingUser.firstName}`,
       user: existingUser,
-      accessToken,
-      refreshToken,
     });
 
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
+
 
 
 // ================= LOGOUT =================
@@ -172,10 +181,18 @@ export const logout = async (req, res) => {
     await Session.deleteMany({ userId });
     await User.findByIdAndUpdate(userId, { isLoggedIn: false });
 
-    return res.status(200).json({ success: true, message: "User logged out successfully" });
+    res.clearCookie("accessToken");
+
+    return res.status(200).json({
+      success: true,
+      message: "User logged out successfully",
+    });
 
   } catch (error) {
-    return res.status(500).json({ success: false, message: error.message });
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
 

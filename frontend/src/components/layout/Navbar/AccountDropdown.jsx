@@ -8,16 +8,35 @@ export default function AccountDropdown() {
   const [open, setOpen] = useState(false);
   const closeTimeout = useRef(null);
 
+  // -------------------------
+  // Fetch user login status from backend
+  // -------------------------
   useEffect(() => {
-    const stored = localStorage.getItem("user");
-    if (stored) {
-      setUser(JSON.parse(stored));
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
+    const checkLogin = async () => {
+      try {
+        const res = await fetch("http://localhost:3000/api/users/me", {
+          credentials: "include", // important for cookies
+        });
+
+        const data = await res.json();
+
+        if (data?.success) {
+          setIsLoggedIn(true);
+          setUser(data.user);
+        } else {
+          setIsLoggedIn(false);
+          setUser(null);
+        }
+      } catch (err) {
+        setIsLoggedIn(false);
+        setUser(null);
+      }
+    };
+
+    checkLogin();
   }, []);
 
+  // Hover menu behavior
   const openMenu = () => {
     if (closeTimeout.current) clearTimeout(closeTimeout.current);
     setOpen(true);
@@ -29,9 +48,15 @@ export default function AccountDropdown() {
     }, 200);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("user");
+  // -------------------------
+  // Logout handler
+  // -------------------------
+  const handleLogout = async () => {
+    await fetch("http://localhost:3000/api/users/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+
     setUser(null);
     setIsLoggedIn(false);
   };
@@ -50,8 +75,13 @@ export default function AccountDropdown() {
           {!isLoggedIn ? (
             <>
               <div className="pb-4 mb-3 border-b border-gray-300/40 flex justify-between items-center">
-                <span className="text-sm font-medium text-gray-700">New customer?</span>
-                <Link className="text-sm text-blue-600 hover:underline" to="/signup">
+                <span className="text-sm font-medium text-gray-700">
+                  New customer?
+                </span>
+                <Link
+                  className="text-sm text-blue-600 hover:underline"
+                  to="/signup"
+                >
                   Sign Up
                 </Link>
               </div>
@@ -62,7 +92,9 @@ export default function AccountDropdown() {
                 <p className="text-sm font-semibold text-gray-800">
                   Hi, {user?.firstName || "User"}
                 </p>
-                <p className="text-xs text-gray-500 mt-1">Manage your account</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  Manage your account
+                </p>
               </div>
 
               <Link className="block px-2 py-2 text-gray-700 rounded-md border-b border-gray-300/40 text-sm hover:bg-gray-200/60 transition">

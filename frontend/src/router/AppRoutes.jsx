@@ -4,13 +4,15 @@ import ShopPage from "../pages/ShopPage";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import ForgotPasswordPage from "../components/auth/ForgotPasswordPage";
-// import EmailVerificationPage from "../components/auth/EmailVerificationPage";
 import OTPPage from "../components/auth/OTPPage";
 import ResetSuccessPage from "../components/auth/ResetSuccessPage";
 import VerifyEmail from "../components/auth/VerifyEmail";
 import VerifyPendingPage from "../components/auth/VerifyPendingPage";
 import ResetPasswordPage from "../components/auth/ResetPasswordPage"; 
 import WishlistPage from "../pages/WishlistPage";
+import Collections from "../pages/Collections";
+import CategoryPage from "../pages/CategoryPage";
+
 
 
 
@@ -21,12 +23,12 @@ const AppRoutes = () => {
         
         <Route path="/" element={<HomePage />} />
         
-        <Route path="/shop" element={<ShopPage />} />
+        {/* <Route path="/shop" element={<ShopPage />} /> */}
         
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        {/* <Route path="/verify-email" element={<EmailVerificationPage />} /> */}
+        
         <Route path="/otp/:email" element={<OTPPage />} />
 
         <Route path="/reset-success" element={<ResetSuccessPage />} />
@@ -34,6 +36,10 @@ const AppRoutes = () => {
         <Route path="/wishlist" element={<WishlistPage />} />
         <Route path="/verify-pending/:email" element={<VerifyPendingPage />} />
         <Route path="/reset-password/:email" element={<ResetPasswordPage />} />
+
+        <Route path="/collections" element={<Collections />} />
+        <Route path="/collections/:category" element={<CategoryPage />} />
+
 
 
 

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = "http://localhost:8000/api/users";
+const API = "http://localhost:3000/api/users";
 
 
 
@@ -22,7 +22,9 @@ export const loginUser = async (email, password) => {
 // 🔹 Register
 export const registerUser = async (data) => {
   // data = { firstName, lastName, email, password }
-  const res = await axios.post(`${API}/register`, data);
+  const res = await axios.post(`${API}/register`, data, {
+  withCredentials: true, // important for cookies
+});
   return res.data;
 };
 
