@@ -1,11 +1,4 @@
-    //     const { category } = useParams();
-        
-    //     const filtered = products.filter(
-    //       (item) => item.category.toLowerCase() === category.toLowerCase()
-    //     );
-    //   <p className="text-gray-600 mb-10">
-    //     Showing {filtered.length} {category} items
-    //   </p>
+
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { products } from "../data/products";
@@ -52,7 +45,7 @@ export default function CategoryPage() {
   };
 
   return (
-    <div className="pt-28 px-10 max-w-7xl mx-auto">
+    <div className="pt-28  px-6  mx-auto">
 
       {/* Title */}
       <h2 className="text-4xl font-serif tracking-tight mb-6 capitalize">

@@ -5,7 +5,7 @@ const MasonryGrid = ({ products }) => {
   return (
     <div
       className="
-       columns-1 sm:columns-3 lg:columns-4 gap-6
+       columns-1 sm:columns-3 lg:columns-5 gap-6
       "
     >
       {products.map((product, index) => (

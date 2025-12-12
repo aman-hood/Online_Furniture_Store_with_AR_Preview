@@ -1,3 +1,5 @@
+// not used 
+
 import React from "react";
 import MasonryGrid from "../components/shop/MasonryGrid";
 import { products } from "../data/products";

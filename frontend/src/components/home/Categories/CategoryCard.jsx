@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const CategoryCard = ({ title, img, variant = "normal", textPosition = "bottom-left" }) => {
+  const navigate = useNavigate();
+
   const sizeClasses = {
     tall: "h-[450px]",
     wide: "h-[280px]",
@@ -13,9 +16,16 @@ const CategoryCard = ({ title, img, variant = "normal", textPosition = "bottom-l
     "top-right": "top-4 right-4",
   };
 
-  return (
-    <div className={`relative group rounded-2xl overflow-hidden shadow-md bg-white ${sizeClasses[variant]}`}>
+  const handleClick = () => {
+    const slug = title.toLowerCase().replace(/ /g, "-"); 
+    navigate(`/collections/${slug}`);
+  };
 
+  return (
+    <div
+      onClick={handleClick}
+      className={`relative group rounded-2xl overflow-hidden shadow-md bg-white cursor-pointer ${sizeClasses[variant]}`}
+    >
       <img
         src={img}
         alt={title}
@@ -32,7 +42,6 @@ const CategoryCard = ({ title, img, variant = "normal", textPosition = "bottom-l
       >
         {title}
       </h3>
-
     </div>
   );
 };
