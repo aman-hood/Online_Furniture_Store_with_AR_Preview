@@ -1,25 +1,35 @@
-import express from 'express';
-import 'dotenv/config'
-import connectDB from './database/db.js';
-import userRoute from './routes/userRoute.js'
-import cors from 'cors'
+import express from "express";
+import "dotenv/config";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import connectDB from "./database/db.js";
+import userRoute from "./routes/userRoute.js";
 
-const app = express()
+const app = express();
 
-const PORT = process.env.PORT || 3000
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
-// middleware
-app.use(express.json())
-app.use(cors({
-    origin : 'http://localhost:5173',
-    credentials : true
-}))
 
-app.use('/api/v1/user',userRoute)
+app.use(express.json());
+app.use(cookieParser());
 
-// http://localhost:8000/api/v1/user/register
-app.listen(PORT, ()=>{
-    connectDB();
-    console.log(`Server is listening at port : ${PORT}`);
-    
-})
+app.use((req, res, next) => {
+  console.log("REQUEST RECEIVED:", req.method, req.url);
+  next();
+});
+
+// Routes
+app.use("/api/users", userRoute);
+
+const PORT = process.env.PORT || 3000;
+
+connectDB();
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
