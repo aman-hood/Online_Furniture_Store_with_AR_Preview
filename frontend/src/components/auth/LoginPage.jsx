@@ -26,7 +26,9 @@ export default function LoginPage() {
 
       if (data.success) {
         navigate("/"); // user now logged in via cookie
-      } else {
+      } else if (data.code === "EMAIL_NOT_VERIFIED") {
+      navigate("/reverify", { state: { email } });
+    } else {
         setError(data.message || "Login failed");
       }
 
