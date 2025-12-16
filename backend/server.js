@@ -4,6 +4,10 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import connectDB from "./database/db.js";
 import userRoute from "./routes/userRoute.js";
+import productRoute from "./routes/productRoute.js";
+import cartRoute from "./routes/cartRoute.js";
+import wishlistRoute from "./routes/wishlistRoute.js";
+import profileRoute from "./routes/profileRoute.js";
 
 const app = express();
 
@@ -25,6 +29,10 @@ app.use((req, res, next) => {
 
 // Routes
 app.use("/api/users", userRoute);
+app.use("/api/products", productRoute);
+app.use("/api/cart", cartRoute);
+app.use("/api/wishlist", wishlistRoute);
+app.use("/api/profile", profileRoute);
 
 const PORT = process.env.PORT || 3000;
 

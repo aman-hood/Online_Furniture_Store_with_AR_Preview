@@ -12,6 +12,8 @@ import ResetPasswordPage from "../components/auth/ResetPasswordPage";
 import WishlistPage from "../pages/WishlistPage";
 import Collections from "../pages/Collections";
 import CategoryPage from "../pages/CategoryPage";
+import CartPage from "../pages/CartPage";
+import ProfilePage from "../pages/ProfilePage";
 
 const AppRoutes = () => {
   return (
@@ -35,6 +37,10 @@ const AppRoutes = () => {
 
       {/* WishlistPage */}
       <Route path="/wishlist" element={<WishlistPage />} />
+
+      {/* Cart & Profile */}
+      <Route path="/cart" element={<CartPage />} />
+      <Route path="/profile" element={<ProfilePage />} />
 
     </Routes>
   );

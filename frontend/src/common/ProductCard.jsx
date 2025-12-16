@@ -1,5 +1,6 @@
 import React from "react";
 import { FiHeart } from "react-icons/fi";
+import { addToWishlist } from "../services/wishlistService";
 
 const ProductCard = ({ product }) => {
   // More consistent heights (280–360)
@@ -24,13 +25,21 @@ const ProductCard = ({ product }) => {
             scale-75 group-hover:scale-100 
             transition-all duration-300 ease-out
           "
+          onClick={async (e) => {
+            e.stopPropagation();
+            try {
+              await addToWishlist(product._id || product.id);
+            } catch (err) {
+              // silently ignore for now
+            }
+          }}
         >
           <FiHeart size={18} className="text-gray-700" />
         </button>
 
         {/* Product Image */}
         <img
-          src={product.img}
+          src={product.imageUrl || product.img}
           alt={product.name}
           className="
             w-full h-full object-cover 

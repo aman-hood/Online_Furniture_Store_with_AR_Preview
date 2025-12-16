@@ -1,20 +1,29 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { products } from "../data/products";
+import { listProducts } from "../services/productService";
 import MasonryGrid from "../components/shop/MasonryGrid";
 
 export default function CategoryPage() {
   const { category } = useParams();
-
-  // Initial filtered list
-  const categoryProducts = products.filter(
-    (item) => item.category.toLowerCase() === category.toLowerCase()
-  );
-
-  const [filtered, setFiltered] = useState(categoryProducts);
+  const [all, setAll] = useState([]);
+  const [filtered, setFiltered] = useState([]);
   const [sortType, setSortType] = useState("");
   const [priceRange, setPriceRange] = useState([0, 200000]); // min & max
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const prods = await listProducts({ category });
+        setAll(prods);
+        setFiltered(prods);
+      } catch (e) {
+        setAll([]);
+        setFiltered([]);
+      }
+    };
+    fetchData();
+  }, [category]);
 
   // Handle Sorting
   const handleSort = (value) => {
@@ -37,7 +46,7 @@ export default function CategoryPage() {
   const handlePriceChange = (min, max) => {
     setPriceRange([min, max]);
 
-    const updated = categoryProducts.filter(
+    const updated = all.filter(
       (item) => item.price >= min && item.price <= max
     );
 

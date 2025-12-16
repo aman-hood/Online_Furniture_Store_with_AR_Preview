@@ -14,9 +14,13 @@ export default function VerifyEmail() {
 
   const verifyUser = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/users/verify", {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await axios.post(
+        "http://localhost:3000/api/users/verify",
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       if (res.data.success) {
         setStatus("Email verified successfully!");

@@ -97,13 +97,13 @@ export default function AccountDropdown() {
                 </p>
               </div>
 
-              <Link className="block px-2 py-2 text-gray-700 rounded-md border-b border-gray-300/40 text-sm hover:bg-gray-200/60 transition">
+              <Link to="/profile" className="block px-2 py-2 text-gray-700 rounded-md border-b border-gray-300/40 text-sm hover:bg-gray-200/60 transition">
                 <div className="flex items-center gap-2">
                   <FiUser /> My Profile
                 </div>
               </Link>
 
-              <Link className="block px-2 py-2 text-gray-700 rounded-md border-b border-gray-300/40 text-sm hover:bg-gray-200/60 transition">
+              <Link to="/cart" className="block px-2 py-2 text-gray-700 rounded-md border-b border-gray-300/40 text-sm hover:bg-gray-200/60 transition">
                 <div className="flex items-center gap-2">
                   <FiShoppingCart /> Cart
                 </div>

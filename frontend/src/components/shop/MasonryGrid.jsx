@@ -10,7 +10,7 @@ const MasonryGrid = ({ products }) => {
     >
       {products.map((product, index) => (
         <div
-          key={product.id}
+          key={product._id || product.id}
           className={`break-inside-avoid mb-6 animate-fadeUp delay-${(index % 5) + 1}`}
         >
           <ProductCard product={product} />
