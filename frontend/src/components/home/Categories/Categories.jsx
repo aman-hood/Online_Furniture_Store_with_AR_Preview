@@ -1,9 +1,11 @@
 import React from "react";
 import { categories } from "./categoryData";
+import { Link, useNavigate } from "react-router-dom";
 
 import CategoryGrid from "./CategoryGrid";
 
 const Categories = () => {
+   const navigate = useNavigate();
   return (
     <section className="pt-20 bg-white w-full">
 
@@ -13,7 +15,7 @@ const Categories = () => {
       <CategoryGrid categories={categories} />
 
       <div className="flex justify-center pt-15">
-        <button className="px-8 py-2 border border-black text-black hover:bg-black hover:text-white transition">
+        <button onClick={() => navigate("/collections")} className="px-8 py-2 border border-black text-black hover:bg-black hover:text-white transition">
           OPEN CATALOG
         </button>
       </div>

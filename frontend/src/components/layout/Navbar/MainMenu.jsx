@@ -43,7 +43,7 @@ const MainMenu = () => {
         <div className="flex items-center gap-20">
 
           {/* LOGO */}
-          <h1 className="text-2xl font-bold">AR HOMESPACE</h1>
+          <h1 className="text-2xl font-bold">HOMESPACE</h1>
 
           {/* MENU */}
           <ul className="hidden md:flex gap-10 font-medium relative">

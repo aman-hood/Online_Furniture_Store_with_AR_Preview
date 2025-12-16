@@ -9,7 +9,7 @@ import { sendOTPMail } from "../emailVerify/sendOTPMail.js";
 
 // ================= REGISTER =================
 export const register = async (req, res) => {
-  console.log("🔥 REGISTER CONTROLLER HIT");
+  console.log("REGISTER CONTROLLER HIT");
 
   try {
     const { firstName, lastName, email, password } = req.body;
@@ -143,7 +143,7 @@ export const login = async (req, res) => {
     const accessToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: "10d" });
     const refreshToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: "30d" });
 
-    // 🔥🔥 SET COOKIE HERE (this is what was missing)
+    // SET COOKIE HERE (this is what was missing)
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: false,       // MUST be false in localhost

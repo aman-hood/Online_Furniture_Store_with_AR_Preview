@@ -26,13 +26,13 @@ const wishlistData = [
 
 export default function WishlistPage() {
   return (
-    <div className="pt-28 px-10 max-w-7xl mx-auto">
+    <div className="pt-28 px-6  mx-auto">
 
       {/* Title */}
       <h1 className="text-4xl font-semibold mb-10 tracking-wide">My Wishlist</h1>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
         {wishlistData.map((item) => (
           <div
             key={item.id}
