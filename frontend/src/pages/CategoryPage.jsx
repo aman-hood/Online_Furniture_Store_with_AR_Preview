@@ -36,7 +36,8 @@ export default function CategoryPage() {
     } else if (value === "high-low") {
       sorted.sort((a, b) => b.price - a.price);
     } else if (value === "latest") {
-      sorted.sort((a, b) => b.id - a.id); 
+      // Using backend timestamps when available
+      sorted.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0)); 
     }
 
     setFiltered(sorted);

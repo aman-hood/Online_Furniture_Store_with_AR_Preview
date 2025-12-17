@@ -1,16 +1,13 @@
-import axios from "axios";
+import http from "./http";
 
-const API = "http://localhost:3000/api/users";
+const API = "/api/users";
 
 
 
 // 🔹 Login
 export const loginUser = async (email, password) => {
   try {
-    const res = await axios.post(`${API}/login`,
-      { email, password },
-      { withCredentials: true }
-    );
+    const res = await http.post(`${API}/login`, { email, password });
     return res.data;
   } catch (err) {
     console.log("AXIOS LOGIN ERROR:", err);
@@ -22,31 +19,29 @@ export const loginUser = async (email, password) => {
 // 🔹 Register
 export const registerUser = async (data) => {
   // data = { firstName, lastName, email, password }
-  const res = await axios.post(`${API}/register`, data, {
-  withCredentials: true, // important for cookies
-});
+  const res = await http.post(`${API}/register`, data);
   return res.data;
 };
 
 // 🔹 Forgot Password → sends OTP email
 export const forgotPassword = async (email) => {
-  const res = await axios.post(`${API}/forgot-password`, { email });
+  const res = await http.post(`${API}/forgot-password`, { email });
   return res.data;
 };
 
 // 🔹 Verify OTP
 export const verifyOTP = async (email, otp) => {
-  const res = await axios.post(`${API}/verify-otp/${email}`, { otp });
+  const res = await http.post(`${API}/verify-otp/${email}`, { otp });
   return res.data;
 };
 // Reverify
 export const reVerifyEmail = async (email) => {
-  const res = await axios.post(`${API}/reVerify`, { email });
+  const res = await http.post(`${API}/reVerify`, { email });
   return res.data;
 };
 // 🔹 Reset Password (after OTP verification)
 export const resetPassword = async (email, newPassword, confirmPassword) => {
-  const res = await axios.post(`${API}/change-password/${email}`, {
+  const res = await http.post(`${API}/change-password/${email}`, {
     newPassword,
     confirmPassword,
   });

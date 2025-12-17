@@ -1,6 +1,7 @@
 import React from "react";
 import { FiMail, FiPhone, FiMapPin } from "react-icons/fi";
 import { FaInstagram, FaFacebookF, FaPinterestP, FaTwitter } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -54,14 +55,24 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-4 tracking-wide">Shop</h3>
           <ul className="space-y-3 text-gray-700">
-            {["Living Room", "Bedroom", "Sofas", "Lighting", "Tables", "Office"].map((item) => (
-              <li
-                key={item}
-                className="hover:text-black hover:translate-x-1 transition cursor-pointer"
-              >
-                {item}
-              </li>
-            ))}
+            <li className="hover:text-black hover:translate-x-1 transition">
+              <Link to="/shop">Living Room</Link>
+            </li>
+            <li className="hover:text-black hover:translate-x-1 transition">
+              <Link to="/shop">Bedroom</Link>
+            </li>
+            <li className="hover:text-black hover:translate-x-1 transition">
+              <Link to="/collections/sofas">Sofas</Link>
+            </li>
+            <li className="hover:text-black hover:translate-x-1 transition">
+              <Link to="/collections/lighting">Lighting</Link>
+            </li>
+            <li className="hover:text-black hover:translate-x-1 transition">
+              <Link to="/collections/tables">Tables</Link>
+            </li>
+            <li className="hover:text-black hover:translate-x-1 transition">
+              <Link to="/shop">Office</Link>
+            </li>
           </ul>
         </div>
 
@@ -69,14 +80,21 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-4 tracking-wide">Customer Support</h3>
           <ul className="space-y-3 text-gray-700">
-            {["FAQ", "Shipping & Returns", "Warranty", "Order Tracking", "Help Center"].map((item) => (
-              <li
-                key={item}
-                className="hover:text-black hover:translate-x-1 transition cursor-pointer"
-              >
-                {item}
-              </li>
-            ))}
+            <li className="hover:text-black hover:translate-x-1 transition">
+              <Link to="/faq">FAQ</Link>
+            </li>
+            <li className="hover:text-black hover:translate-x-1 transition">
+              <Link to="/support">Shipping & Returns</Link>
+            </li>
+            <li className="hover:text-black hover:translate-x-1 transition">
+              <Link to="/support">Warranty</Link>
+            </li>
+            <li className="hover:text-black hover:translate-x-1 transition">
+              <Link to="/track-order">Order Tracking</Link>
+            </li>
+            <li className="hover:text-black hover:translate-x-1 transition">
+              <Link to="/support">Help Center</Link>
+            </li>
           </ul>
         </div>
 
@@ -104,6 +122,12 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-10 flex flex-col sm:flex-row justify-between text-gray-600 text-sm">
 
           <p>© {new Date().getFullYear()} FUNIO — Crafted for Modern Living.</p>
+
+          <div className="flex items-center gap-6 mt-3 sm:mt-0">
+            <Link to="/privacy" className="hover:text-black">Privacy</Link>
+            <Link to="/terms" className="hover:text-black">Terms</Link>
+            <Link to="/contact" className="hover:text-black">Contact</Link>
+          </div>
 
           <div className="flex gap-4 mt-3 sm:mt-0">
             <img src="/payments/visa.png" alt="Visa" className="h-5 opacity-70" />

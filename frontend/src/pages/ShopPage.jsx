@@ -1,10 +1,24 @@
 // not used 
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MasonryGrid from "../components/shop/MasonryGrid";
-import { products } from "../data/products";
+import { listProducts } from "../services/productService";
 
 const ShopPage = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const prods = await listProducts({});
+        setProducts(prods);
+      } catch (e) {
+        setProducts([]);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="pt-28 px-10 max-w-7xl mx-auto">
       

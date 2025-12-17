@@ -1,13 +1,15 @@
 import React from "react";
 import { FiHeart } from "react-icons/fi";
 import { addToWishlist } from "../services/wishlistService";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
   // More consistent heights (280–360)
   const randomHeight = Math.floor(Math.random() * 80) + 280;
+  const navigate = useNavigate();
 
   return (
-    <div className="break-inside-avoid mb-8 cursor-pointer">
+    <Link to={`/product/${product._id || product.id}`} className="break-inside-avoid mb-8 block cursor-pointer">
 
       {/* Card Container */}
       <div
@@ -30,7 +32,10 @@ const ProductCard = ({ product }) => {
             try {
               await addToWishlist(product._id || product.id);
             } catch (err) {
-              // silently ignore for now
+              const status = err?.response?.status;
+              if (status === 401) {
+                navigate("/login");
+              }
             }
           }}
         >
@@ -56,7 +61,7 @@ const ProductCard = ({ product }) => {
         <p className="text-gray-800 font-medium">{product.name}</p>
         <p className="text-gray-900 font-semibold">₹{product.price}</p>
       </div>
-    </div>
+    </Link>
   );
 };
 

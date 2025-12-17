@@ -12,7 +12,12 @@ export default function WishlistPage() {
     try {
       const wl = await getWishlist();
       setItems(wl.items || []);
-    } catch {
+    } catch (err) {
+      const status = err?.response?.status;
+      if (status === 401) {
+        window.location.href = "/login";
+        return;
+      }
       setItems([]);
     } finally {
       setLoading(false);
@@ -24,14 +29,32 @@ export default function WishlistPage() {
   }, []);
 
   const handleRemove = async (productId) => {
-    await removeFromWishlist(productId);
-    load();
+    try {
+      await removeFromWishlist(productId);
+      load();
+    } catch (err) {
+      const status = err?.response?.status;
+      if (status === 401) {
+        window.location.href = "/login";
+      } else {
+        alert("Failed to remove item from wishlist.");
+      }
+    }
   };
 
   const handleMoveToCart = async (productId) => {
-    await addToCart(productId, 1);
-    await removeFromWishlist(productId);
-    load();
+    try {
+      await addToCart(productId, 1);
+      await removeFromWishlist(productId);
+      load();
+    } catch (err) {
+      const status = err?.response?.status;
+      if (status === 401) {
+        window.location.href = "/login";
+      } else {
+        alert("Failed to move item to cart.");
+      }
+    }
   };
 
   return (

@@ -9,7 +9,12 @@ export default function CartPage() {
     try {
       const c = await getCart();
       setCart(c || { items: [] });
-    } catch {
+    } catch (err) {
+      const status = err?.response?.status;
+      if (status === 401) {
+        window.location.href = "/login";
+        return;
+      }
       setCart({ items: [] });
     } finally {
       setLoading(false);
@@ -21,18 +26,39 @@ export default function CartPage() {
   }, []);
 
   const handleQty = async (productId, qty) => {
-    await updateCartItem(productId, qty);
-    load();
+    try {
+      await updateCartItem(productId, qty);
+      load();
+    } catch (err) {
+      const status = err?.response?.status;
+      if (status === 401) {
+        window.location.href = "/login";
+      }
+    }
   };
 
   const handleRemove = async (productId) => {
-    await removeFromCart(productId);
-    load();
+    try {
+      await removeFromCart(productId);
+      load();
+    } catch (err) {
+      const status = err?.response?.status;
+      if (status === 401) {
+        window.location.href = "/login";
+      }
+    }
   };
 
   const handleClear = async () => {
-    await clearCart();
-    load();
+    try {
+      await clearCart();
+      load();
+    } catch (err) {
+      const status = err?.response?.status;
+      if (status === 401) {
+        window.location.href = "/login";
+      }
+    }
   };
 
   const total = (cart.items || []).reduce((sum, it) => sum + (it.product?.price || 0) * it.quantity, 0);

@@ -103,6 +103,21 @@ export default function AccountDropdown() {
                 </div>
               </Link>
 
+              {user?.role === "admin" && (
+                <>
+                  <Link to="/admin/products" className="block px-2 py-2 text-gray-700 rounded-md border-b border-gray-300/40 text-sm hover:bg-gray-200/60 transition">
+                    <div className="flex items-center gap-2">
+                      🛠️ Admin Products
+                    </div>
+                  </Link>
+                  <Link to="/admin/products/new" className="block px-2 py-2 text-gray-700 rounded-md border-b border-gray-300/40 text-sm hover:bg-gray-200/60 transition">
+                    <div className="flex items-center gap-2">
+                      ➕ Add Product
+                    </div>
+                  </Link>
+                </>
+              )}
+
               <Link to="/cart" className="block px-2 py-2 text-gray-700 rounded-md border-b border-gray-300/40 text-sm hover:bg-gray-200/60 transition">
                 <div className="flex items-center gap-2">
                   <FiShoppingCart /> Cart

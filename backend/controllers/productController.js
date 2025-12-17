@@ -1,4 +1,5 @@
 import { Product } from "../models/productModel.js";
+import { Category } from "../models/categoryModel.js";
 
 export const listProducts = async (req, res) => {
   try {
@@ -26,6 +27,13 @@ export const getProduct = async (req, res) => {
 
 export const createProduct = async (req, res) => {
   try {
+    const { category } = req.body;
+    if (category && category.trim().length > 0) {
+      const cat = await Category.findOne({ name: category, isActive: true });
+      if (!cat) {
+        return res.status(400).json({ success: false, message: "Invalid or inactive category" });
+      }
+    }
     const product = await Product.create(req.body);
     res.status(201).json({ success: true, product });
   } catch (err) {
@@ -35,6 +43,13 @@ export const createProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   try {
+    const { category } = req.body;
+    if (category && category.trim().length > 0) {
+      const cat = await Category.findOne({ name: category, isActive: true });
+      if (!cat) {
+        return res.status(400).json({ success: false, message: "Invalid or inactive category" });
+      }
+    }
     const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!product) return res.status(404).json({ success: false, message: "Product not found" });
     res.status(200).json({ success: true, product });

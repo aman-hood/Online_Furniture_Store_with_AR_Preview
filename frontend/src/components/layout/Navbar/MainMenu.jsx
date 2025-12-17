@@ -90,9 +90,13 @@ const MainMenu = () => {
         {/* RIGHT ICONS */}
         <div className="flex items-center gap-5 text-xl">
           <FiSearch className="cursor-pointer hover:opacity-70" />
-<AccountDropdown />
-          <FiHeart className="cursor-pointer hover:opacity-70" />
-          <FiShoppingCart className="cursor-pointer hover:opacity-70" />
+          <AccountDropdown />
+          <Link to="/wishlist" aria-label="Wishlist" className="hover:opacity-70">
+            <FiHeart className="cursor-pointer" />
+          </Link>
+          <Link to="/cart" aria-label="Cart" className="hover:opacity-70">
+            <FiShoppingCart className="cursor-pointer" />
+          </Link>
         </div>
 
       </div>

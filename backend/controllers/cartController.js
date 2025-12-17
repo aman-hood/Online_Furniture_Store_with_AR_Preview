@@ -6,6 +6,11 @@ const ensureCart = async (userId) => {
   return cart;
 };
 
+const sameId = (a, b) => {
+  const left = a && a._id ? a._id.toString() : a?.toString?.();
+  return left === String(b);
+};
+
 export const getCart = async (req, res) => {
   try {
     const cart = await ensureCart(req.id);
@@ -21,7 +26,7 @@ export const addToCart = async (req, res) => {
     if (!productId) return res.status(400).json({ success: false, message: "productId required" });
 
     const cart = await ensureCart(req.id);
-    const idx = cart.items.findIndex((i) => i.product.toString() === productId);
+    const idx = cart.items.findIndex((i) => sameId(i.product, productId));
     if (idx >= 0) {
       cart.items[idx].quantity += quantity;
     } else {
@@ -39,7 +44,7 @@ export const removeFromCart = async (req, res) => {
   try {
     const { productId } = req.body;
     const cart = await ensureCart(req.id);
-    cart.items = cart.items.filter((i) => i.product.toString() !== productId);
+    cart.items = cart.items.filter((i) => !sameId(i.product, productId));
     await cart.save();
     await cart.populate({ path: "items.product" });
     res.status(200).json({ success: true, cart });
@@ -53,7 +58,7 @@ export const updateCartItem = async (req, res) => {
     const { productId, quantity } = req.body;
     if (quantity <= 0) return res.status(400).json({ success: false, message: "quantity must be > 0" });
     const cart = await ensureCart(req.id);
-    const item = cart.items.find((i) => i.product.toString() === productId);
+    const item = cart.items.find((i) => sameId(i.product, productId));
     if (!item) return res.status(404).json({ success: false, message: "Item not in cart" });
     item.quantity = quantity;
     await cart.save();

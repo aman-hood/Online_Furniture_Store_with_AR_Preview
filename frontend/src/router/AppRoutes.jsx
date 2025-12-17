@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import ShopPage from "../pages/ShopPage";
+import ProductPage from "../pages/ProductPage";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import ForgotPasswordPage from "../components/auth/ForgotPasswordPage";
@@ -14,11 +15,40 @@ import Collections from "../pages/Collections";
 import CategoryPage from "../pages/CategoryPage";
 import CartPage from "../pages/CartPage";
 import ProfilePage from "../pages/ProfilePage";
+import AdminProducts from "../pages/AdminProducts";
+import ProductForm from "../components/admin/ProductForm";
+import BlogList from "../pages/BlogList";
+import BlogPost from "../pages/BlogPost";
+import AboutPage from "../pages/AboutPage";
+import ContactPage from "../pages/ContactPage";
+import FAQPage from "../pages/FAQPage";
+import PrivacyPolicyPage from "../pages/PrivacyPolicyPage";
+import TermsPage from "../pages/TermsPage";
+import OrdersPage from "../pages/OrdersPage";
+import TrackOrderPage from "../pages/TrackOrderPage";
+import SupportPage from "../pages/SupportPage";
+import GiftCardsPage from "../pages/GiftCardsPage";
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/shop" element={<ShopPage />} />
+      <Route path="/product/:id" element={<ProductPage />} />
+      <Route path="/blog" element={<BlogList />} />
+      <Route path="/blog/:slug" element={<BlogPost />} />
+      {/* Info Pages */}
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/contact" element={<ContactPage />} />
+      <Route path="/faq" element={<FAQPage />} />
+      <Route path="/privacy" element={<PrivacyPolicyPage />} />
+      <Route path="/support" element={<SupportPage />} />
+      <Route path="/gift-cards" element={<GiftCardsPage />} />
+      <Route path="/terms" element={<TermsPage />} />
+      {/* Account/Orders */}
+      <Route path="/account" element={<ProfilePage />} />
+      <Route path="/orders" element={<OrdersPage />} />
+      <Route path="/track-order" element={<TrackOrderPage />} />
       {/* auth */}
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
@@ -41,6 +71,11 @@ const AppRoutes = () => {
       {/* Cart & Profile */}
       <Route path="/cart" element={<CartPage />} />
       <Route path="/profile" element={<ProfilePage />} />
+
+      {/* Admin */}
+      <Route path="/admin/products" element={<AdminProducts />} />
+      <Route path="/admin/products/new" element={<ProductForm />} />
+      <Route path="/admin/products/:id/edit" element={<ProductForm />} />
 
     </Routes>
   );
