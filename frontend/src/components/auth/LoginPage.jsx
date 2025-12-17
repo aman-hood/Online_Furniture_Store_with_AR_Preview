@@ -27,7 +27,7 @@ export default function LoginPage() {
       if (data.success) {
         navigate("/"); // user now logged in via cookie
       } else if (data.code === "EMAIL_NOT_VERIFIED") {
-      navigate("/reverify", { state: { email } });
+      navigate(`/verify-pending/${email}`);
     } else {
         setError(data.message || "Login failed");
       }

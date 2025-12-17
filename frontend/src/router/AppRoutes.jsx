@@ -28,6 +28,10 @@ import OrdersPage from "../pages/OrdersPage";
 import TrackOrderPage from "../pages/TrackOrderPage";
 import SupportPage from "../pages/SupportPage";
 import GiftCardsPage from "../pages/GiftCardsPage";
+import Checkout from "../pages/Checkout";
+import GiftCardSuccess from "../pages/GiftCardSuccess";
+import Search from "../pages/Search";
+
 
 const AppRoutes = () => {
   return (
@@ -37,6 +41,8 @@ const AppRoutes = () => {
       <Route path="/product/:id" element={<ProductPage />} />
       <Route path="/blog" element={<BlogList />} />
       <Route path="/blog/:slug" element={<BlogPost />} />
+      <Route path="/search" element={<Search />} />
+
       {/* Info Pages */}
       <Route path="/about" element={<AboutPage />} />
       <Route path="/contact" element={<ContactPage />} />
@@ -45,6 +51,8 @@ const AppRoutes = () => {
       <Route path="/support" element={<SupportPage />} />
       <Route path="/gift-cards" element={<GiftCardsPage />} />
       <Route path="/terms" element={<TermsPage />} />
+      <Route path="/checkout" element={<Checkout />} />
+      <Route path="/gift-card/success" element={<GiftCardSuccess />} />
       {/* Account/Orders */}
       <Route path="/account" element={<ProfilePage />} />
       <Route path="/orders" element={<OrdersPage />} />

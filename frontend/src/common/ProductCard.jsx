@@ -1,67 +1,139 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FiHeart } from "react-icons/fi";
-import { addToWishlist } from "../services/wishlistService";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import {
+  addToWishlist,
+  removeFromWishlist,
+  getWishlist,
+} from "../services/wishlistService";
 
 const ProductCard = ({ product }) => {
-  // More consistent heights (280–360)
-  const randomHeight = Math.floor(Math.random() * 80) + 280;
   const navigate = useNavigate();
 
+  // 🔑 BACKEND PRODUCTS HAVE _id (Mongo ObjectId)
+  const productId = product._id;
+  const isBackendProduct = Boolean(productId);
+
+  const [wishlisted, setWishlisted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  /* -------------------------
+     CHECK WISHLIST STATE
+  ------------------------- */
+  useEffect(() => {
+    const checkWishlist = async () => {
+      if (!isBackendProduct) return;
+
+      try {
+        const wl = await getWishlist();
+        const exists = wl?.products?.some(
+          (item) => item._id === productId
+        );
+        setWishlisted(Boolean(exists));
+      } catch {
+        setWishlisted(false);
+      }
+    };
+
+    checkWishlist();
+  }, [productId, isBackendProduct]);
+
+  /* -------------------------
+     TOGGLE WISHLIST
+  ------------------------- */
+  const toggleWishlist = async (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    // ❌ BLOCK MOCK PRODUCTS
+    if (!isBackendProduct || loading) return;
+
+    try {
+      setLoading(true);
+
+      if (wishlisted) {
+        await removeFromWishlist(productId);
+        setWishlisted(false);
+      } else {
+        await addToWishlist(productId);
+        setWishlisted(true);
+      }
+    } catch (err) {
+      if (err?.response?.status === 401) {
+        window.location.href = "/login";
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <Link to={`/product/${product._id || product.id}`} className="break-inside-avoid mb-8 block cursor-pointer">
-
-      {/* Card Container */}
-      <div
-        className="
-          relative w-full rounded-xl overflow-hidden  bg-white group
-          shadow-sm hover:shadow-xl transition-shadow duration-500
-        "
-        style={{ height: `${randomHeight}px` }}
-      >
-        {/* Floating Wishlist Icon */}
-        <button
-          className="
-            absolute top-3 right-3 z-20 bg-white/80 p-2 rounded-full shadow 
-            opacity-0 group-hover:opacity-100 
-            scale-75 group-hover:scale-100 
-            transition-all duration-300 ease-out
-          "
-          onClick={async (e) => {
-            e.stopPropagation();
-            try {
-              await addToWishlist(product._id || product.id);
-            } catch (err) {
-              const status = err?.response?.status;
-              if (status === 401) {
-                navigate("/login");
-              }
-            }
-          }}
-        >
-          <FiHeart size={18} className="text-gray-700" />
-        </button>
-
-        {/* Product Image */}
+    <div
+      onClick={() =>
+        isBackendProduct && navigate(`/product/${productId}`)
+      }
+      className="
+        cursor-pointer
+        p-4
+        rounded-2xl
+        bg-white
+        min-h-[320px]
+        transition
+        hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)]
+      "
+    >
+      {/* IMAGE */}
+      <div className="relative mb-4 bg-[#f4eee6] rounded-xl overflow-hidden">
         <img
-          src={product.imageUrl || product.img}
+          src={product.img}
           alt={product.name}
           className="
-            w-full h-full object-cover 
-            group-hover:scale-105 
-            transition duration-500
+            w-full h-[220px] object-cover
+            transition-transform duration-500
+            hover:scale-105
           "
         />
 
-        
+        {/* ❤️ HEART ICON */}
+        <button
+          onClick={toggleWishlist}
+          disabled={!isBackendProduct}
+          aria-label="Add to wishlist"
+          title={
+            isBackendProduct
+              ? "Add to wishlist"
+              : "Wishlist available for real products only"
+          }
+          className={`
+            absolute top-3 right-3
+            p-2 rounded-full
+            transition
+            ${
+              wishlisted
+                ? "bg-red-500 text-white scale-110"
+                : "bg-white text-[#3f3a33] hover:bg-[#f4eee6]"
+            }
+            ${!isBackendProduct ? "opacity-40 cursor-not-allowed" : ""}
+          `}
+        >
+          <FiHeart
+            size={18}
+            className={wishlisted ? "fill-current" : ""}
+          />
+        </button>
       </div>
 
-      {/* Info Section */}
-      <div className="mt-3 px-1">
-        <p className="text-gray-800 font-medium">{product.name}</p>
-        <p className="text-gray-900 font-semibold">₹{product.price}</p>
+      {/* CONTENT */}
+      <div>
+        <p className="text-sm font-medium text-[#3f3a33] mb-1">
+          {product.name}
+        </p>
+
+        <p className="text-sm text-[#6b6258]">
+          ₹{product.price.toLocaleString()}
+        </p>
       </div>
-    </Link>
+    </div>
   );
 };
 

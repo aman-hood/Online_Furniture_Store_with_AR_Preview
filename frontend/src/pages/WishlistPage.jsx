@@ -1,118 +1,70 @@
 import React, { useEffect, useState } from "react";
-import { FiTrash2 } from "react-icons/fi";
 import { FiShoppingCart } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import MasonryGrid from "../components/shop/MasonryGrid";
 import { getWishlist, removeFromWishlist } from "../services/wishlistService";
 import { addToCart } from "../services/cartService";
 
 export default function WishlistPage() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const load = async () => {
-    try {
-      const wl = await getWishlist();
-      setItems(wl.items || []);
-    } catch (err) {
-      const status = err?.response?.status;
-      if (status === 401) {
-        window.location.href = "/login";
-        return;
-      }
-      setItems([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [sort, setSort] = useState("recent");
 
   useEffect(() => {
+    const load = async () => {
+      try {
+        const wl = await getWishlist();
+        setItems(wl?.products || []);
+      } catch (err) {
+        if (err?.response?.status === 401) {
+          window.location.href = "/login";
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
     load();
   }, []);
 
-  const handleRemove = async (productId) => {
-    try {
-      await removeFromWishlist(productId);
-      load();
-    } catch (err) {
-      const status = err?.response?.status;
-      if (status === 401) {
-        window.location.href = "/login";
-      } else {
-        alert("Failed to remove item from wishlist.");
-      }
-    }
-  };
+  const sortedItems = [...items].sort((a, b) => {
+    if (sort === "price-low") return a.price - b.price;
+    if (sort === "price-high") return b.price - a.price;
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
 
-  const handleMoveToCart = async (productId) => {
-    try {
-      await addToCart(productId, 1);
-      await removeFromWishlist(productId);
-      load();
-    } catch (err) {
-      const status = err?.response?.status;
-      if (status === 401) {
-        window.location.href = "/login";
-      } else {
-        alert("Failed to move item to cart.");
-      }
+  const handleMoveAllToCart = async () => {
+    for (const product of items) {
+      await addToCart(product._id, 1);
+      await removeFromWishlist(product._id);
     }
+    setItems([]);
   };
 
   return (
-    <div className="pt-28 px-6  mx-auto">
+    <section className="bg-[#fbf9f6] min-h-screen pt-24 px-6">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-3xl mb-6">My Wishlist</h1>
 
-      {/* Title */}
-      <h1 className="text-4xl font-semibold mb-10 tracking-wide">My Wishlist</h1>
+        {loading ? (
+          <p>Loading…</p>
+        ) : items.length === 0 ? (
+          <div className="text-center py-32">
+            <p>Your wishlist is empty</p>
+            <Link to="/collections" className="underline">
+              Browse collections
+            </Link>
+          </div>
+        ) : (
+          <>
+            <button onClick={handleMoveAllToCart} className="mb-6">
+              <FiShoppingCart /> Move all to cart
+            </button>
 
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-          {items.map((product) => (
-            <div
-              key={product._id}
-              className="group border rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-lg transition-all"
-            >
-              {/* Image */}
-              <div className="w-full h-64 relative overflow-hidden">
-                <img
-                  src={product.imageUrl}
-                  alt={product.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
-                />
-
-                {/* Remove Icon */}
-                <button
-                  onClick={() => handleRemove(product._id)}
-                  className="absolute top-3 right-3 bg-white/80 p-2 rounded-full shadow hover:bg-white transition"
-                >
-                  <FiTrash2 size={18} className="text-black" />
-                </button>
-              </div>
-
-              {/* Text */}
-              <div className="p-5">
-                <p className="text-gray-600 text-sm">{product.name}</p>
-                <p className="font-semibold text-lg text-black">₹{product.price}</p>
-
-                {/* Move to Cart */}
-                <button
-                  onClick={() => handleMoveToCart(product._id)}
-                  className="
-                    mt-4 w-full py-2 rounded-lg 
-                    border border-black text-black
-                    hover:bg-black hover:text-white
-                    transition
-                    flex items-center justify-center gap-2
-                  "
-                >
-                  <FiShoppingCart size={18} />
-                  Move to Cart
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+            <MasonryGrid products={sortedItems} />
+          </>
+        )}
+      </div>
+    </section>
   );
 }

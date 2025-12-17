@@ -6,39 +6,47 @@ export default function AccountDropdown() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [open, setOpen] = useState(false);
+
   const closeTimeout = useRef(null);
+  const containerRef = useRef(null);
 
   // -------------------------
-  // Fetch user login status from backend
+  // Check login status
   // -------------------------
-  useEffect(() => {
-    const checkLogin = async () => {
-      try {
-        const res = await fetch("http://localhost:3000/api/users/me", {
-          credentials: "include", // important for cookies
-        });
+  const checkLogin = async () => {
+    try {
+      const res = await fetch("http://localhost:3000/api/users/me", {
+        credentials: "include",
+      });
+      const data = await res.json();
 
-        const data = await res.json();
-
-        if (data?.success) {
-          setIsLoggedIn(true);
-          setUser(data.user);
-        } else {
-          setIsLoggedIn(false);
-          setUser(null);
-        }
-      } catch (err) {
+      if (data?.success) {
+        setIsLoggedIn(true);
+        setUser(data.user);
+      } else {
         setIsLoggedIn(false);
         setUser(null);
       }
-    };
+    } catch {
+      setIsLoggedIn(false);
+      setUser(null);
+    }
+  };
 
+  useEffect(() => {
     checkLogin();
+
+    return () => {
+      if (closeTimeout.current) clearTimeout(closeTimeout.current);
+    };
   }, []);
 
-  // Hover menu behavior
+  // -------------------------
+  // Hover + open logic
+  // -------------------------
   const openMenu = () => {
     if (closeTimeout.current) clearTimeout(closeTimeout.current);
+    checkLogin(); // refresh auth state
     setOpen(true);
   };
 
@@ -49,7 +57,21 @@ export default function AccountDropdown() {
   };
 
   // -------------------------
-  // Logout handler
+  // Click outside close
+  // -------------------------
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // -------------------------
+  // Logout
   // -------------------------
   const handleLogout = async () => {
     await fetch("http://localhost:3000/api/users/logout", {
@@ -59,33 +81,65 @@ export default function AccountDropdown() {
 
     setUser(null);
     setIsLoggedIn(false);
+    setOpen(false);
   };
 
   return (
-    <div className="relative" onMouseEnter={openMenu} onMouseLeave={closeMenu}>
-      <FiUser className="cursor-pointer hover:opacity-70" />
+    <div
+      ref={containerRef}
+      className="relative"
+      onMouseEnter={openMenu}
+      onMouseLeave={closeMenu}
+    >
+      <FiUser
+        className={`cursor-pointer transition ${
+          open ? "opacity-60" : "hover:opacity-70"
+        }`}
+        size={20}
+      />
 
       {open && (
         <div
           className="
             absolute right-0 mt-4 w-60 rounded-xl shadow-lg z-50 border
-            bg-[#f7f3ed] border-[#e6e2d9] p-5 animate-[fadeIn_0.2s_ease-out]
+            bg-[#f7f3ed] border-[#e6e2d9] p-5
+            animate-[fadeIn_0.2s_ease-out]
           "
         >
           {!isLoggedIn ? (
             <>
-              <div className="pb-4 mb-3 border-b border-gray-300/40 flex justify-between items-center">
-                <span className="text-sm font-medium text-gray-700">
-                  New customer?
-                </span>
-                <Link
-                  className="text-sm text-blue-600 hover:underline"
-                  to="/signup"
-                >
-                  Sign Up
-                </Link>
-              </div>
-            </>
+  <div className="flex flex-col gap-3">
+
+    {/* Primary action */}
+    <Link
+      to="/signup"
+      className="group w-full rounded-2xl
+                 bg-[#F6F1EA] px-4 py-3
+                 text-sm font-medium text-gray-800
+                 flex items-center justify-between
+                 hover:bg-[#EFE7DC]
+                 transition"
+    >
+      <span>Create an account</span>
+      <span className="opacity-60 group-hover:translate-x-0.5 transition">
+        →
+      </span>
+    </Link>
+
+    {/* Secondary action */}
+    <div className="text-center text-xs text-gray-500">
+      Already have an account?{" "}
+      <Link
+        to="/login"
+        className="text-gray-700 font-medium hover:text-gray-900"
+      >
+        Log in
+      </Link>
+    </div>
+
+  </div>
+</>
+
           ) : (
             <>
               <div className="pb-4 mb-3 border-b border-gray-300/40">
@@ -97,7 +151,10 @@ export default function AccountDropdown() {
                 </p>
               </div>
 
-              <Link to="/profile" className="block px-2 py-2 text-gray-700 rounded-md border-b border-gray-300/40 text-sm hover:bg-gray-200/60 transition">
+              <Link
+                to="/profile"
+                className="block px-2 py-2 text-gray-700 text-sm border-b border-gray-300/40 rounded-md hover:bg-gray-200/60 transition"
+              >
                 <div className="flex items-center gap-2">
                   <FiUser /> My Profile
                 </div>
@@ -105,20 +162,26 @@ export default function AccountDropdown() {
 
               {user?.role === "admin" && (
                 <>
-                  <Link to="/admin/products" className="block px-2 py-2 text-gray-700 rounded-md border-b border-gray-300/40 text-sm hover:bg-gray-200/60 transition">
-                    <div className="flex items-center gap-2">
-                      🛠️ Admin Products
-                    </div>
+                  <Link
+                    to="/admin/products"
+                    className="block px-2 py-2 text-gray-700 text-sm border-b border-gray-300/40 rounded-md hover:bg-gray-200/60 transition"
+                  >
+                    🛠️ Admin Products
                   </Link>
-                  <Link to="/admin/products/new" className="block px-2 py-2 text-gray-700 rounded-md border-b border-gray-300/40 text-sm hover:bg-gray-200/60 transition">
-                    <div className="flex items-center gap-2">
-                      ➕ Add Product
-                    </div>
+
+                  <Link
+                    to="/admin/products/new"
+                    className="block px-2 py-2 text-gray-700 text-sm border-b border-gray-300/40 rounded-md hover:bg-gray-200/60 transition"
+                  >
+                    ➕ Add Product
                   </Link>
                 </>
               )}
 
-              <Link to="/cart" className="block px-2 py-2 text-gray-700 rounded-md border-b border-gray-300/40 text-sm hover:bg-gray-200/60 transition">
+              <Link
+                to="/cart"
+                className="block px-2 py-2 text-gray-700 text-sm border-b border-gray-300/40 rounded-md hover:bg-gray-200/60 transition"
+              >
                 <div className="flex items-center gap-2">
                   <FiShoppingCart /> Cart
                 </div>
@@ -126,7 +189,7 @@ export default function AccountDropdown() {
 
               <button
                 onClick={handleLogout}
-                className="w-full mt-3 py-2 rounded-md bg-black text-white hover:bg-gray-900 transition text-sm"
+                className="w-full mt-3 py-2 rounded-md bg-black text-white text-sm hover:bg-gray-900 transition"
               >
                 Logout
               </button>

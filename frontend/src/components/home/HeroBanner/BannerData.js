@@ -2,19 +2,19 @@ export const bannerSlides = [
   {
     id: 1,
     img: "src/assets/heroBanner/banner1.jpg",
-    subtitle: "10% OFF ALL ITEMS",
-    title: "Hanging lamp collections",
+    subtitle: "LIGHTING COLLECTION",
+    title: "Sculpted Hanging Lamps",
   },
   {
     id: 2,
-    img: "src/assets/heroBanner/banner2.avif",
-    subtitle: "Latest Furniture",
-    title: "Modern Living Style",
+    img: "src/assets/heroBanner/banner2.png",
+    subtitle: "BEDROOM ESSENTIALS",
+    title: "Modern Bedroom Comfort",
   },
   {
     id: 3,
-    img: "src/assets/heroBanner/banner3.jpg",
-    subtitle: "Premium Designs",
+    img: "src/assets/heroBanner/banner3.png",
+    subtitle: "LIVING ROOM EDIT",
     title: "Comfort Meets Style",
   }
 ];

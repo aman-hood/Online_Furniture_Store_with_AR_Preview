@@ -1,58 +1,108 @@
 import React from "react";
 
+
 const MenuDropdown = ({ items = [], sections = [], mega = false, open }) => {
   if (!open) return null;
 
-  
+  /* =========================
+     MEGA MENU
+  ========================= */
   if (mega) {
     return (
       <div
         className="
-          absolute top-full left-0 mt-4 p-8 rounded-xl shadow-lg z-50
-          transition-all duration-200 bg-[#f7f3ed]
-          border border-[#e6e2d9]
-          flex gap-10 
+          absolute top-full mt-4 z-50
+          left-1/2 -translate-x-[45%]
+
+          bg-[#fbf9f6]
+          rounded-3xl
+          px-8 py-7
+          flex gap-14
+
+          backdrop-blur-[2px]
+          origin-top
+          animate-dropdown
+
+          shadow-[0_24px_70px_rgba(0,0,0,0.18)]
+
+          before:absolute before:-top-3 before:left-1/2
+          before:-translate-x-1/2
+          before:w-6 before:h-6
+          before:bg-[#fbf9f6]
+          before:rotate-45
+          before:rounded-sm
         "
       >
         {sections.map((col, index) => (
-          <div
-            key={index}
-            className={`min-w-[190px] ${
-              index !== sections.length - 1 ? "border-r border-gray-300 pr-6" : ""
-            }`}
-          >
-            {/* Column Heading */}
-            <h3 className="text-sm font-semibold text-gray-700 mb-3 tracking-wide uppercase">
+          <div key={index} className="min-w-[180px]">
+            
+            {/* ✅ UNIFORM STRONG HEADING */}
+            <h3
+              className="
+                text-xs font-semibold uppercase tracking-wider
+                mb-6
+                text-[#4a433b]
+              "
+            >
               {col.heading}
             </h3>
 
-            {/* Column Items */}
-            <ul className="space-y-1">
+            {/* Items */}
+            <ul className="space-y-2">
               {col.items.map((item, idx) => (
                 <li
                   key={idx}
                   className="
-                    cursor-pointer px-2 py-2 text-gray-700 rounded-md
-                    border-b border-gray-300/40  text-xs
-                    hover:bg-gray-200/60 transition
+                    group cursor-pointer
+                    px-3 py-2
+                    rounded-lg
+
+                    text-[13px] font-normal text-[#5a534a]
+
+                    transition-all duration-200
+                    hover:bg-[#efe7dc]
+                    hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)]
                   "
                 >
-                  {item}
+                  <span className="inline-block transition-transform group-hover:translate-x-0.5">
+                    {item}
+                  </span>
                 </li>
               ))}
             </ul>
+
           </div>
         ))}
       </div>
     );
   }
 
-
+  /* =========================
+     SIMPLE DROPDOWN
+  ========================= */
   return (
     <div
       className="
-        absolute top-full left-0 mt-3 bg-white z-50
-        w-48 p-4 rounded-xl shadow-xl border border-gray-200
+        absolute top-full mt-3 z-50
+        left-1/2 -translate-x-1/2
+
+        w-52
+        bg-[#fbf9f6]
+        rounded-2xl
+        px-4 py-3
+
+        backdrop-blur-[2px]
+        origin-top
+        animate-dropdown
+
+        shadow-[0_18px_50px_rgba(0,0,0,0.15)]
+
+        before:absolute before:-top-3 before:left-1/2
+        before:-translate-x-1/2
+        before:w-5 before:h-5
+        before:bg-[#fbf9f6]
+        before:rotate-45
+        before:rounded-sm
       "
     >
       <ul className="space-y-2">
@@ -60,11 +110,20 @@ const MenuDropdown = ({ items = [], sections = [], mega = false, open }) => {
           <li
             key={index}
             className="
-              cursor-pointer py-1 border-b border-gray-200/70 
-              hover:text-gray-600 transition
+              group cursor-pointer
+              px-3 py-2
+              rounded-lg
+
+              text-[13px] font-normal text-[#5a534a]
+
+              transition-all duration-200
+              hover:bg-[#efe7dc]
+              hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)]
             "
           >
-            {item}
+            <span className="inline-block transition-transform group-hover:translate-x-0.5">
+              {item}
+            </span>
           </li>
         ))}
       </ul>
