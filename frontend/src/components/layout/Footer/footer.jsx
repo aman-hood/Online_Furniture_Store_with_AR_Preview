@@ -84,10 +84,10 @@ const Footer = () => {
               <Link to="/faq">FAQ</Link>
             </li>
             <li className="hover:text-black hover:translate-x-1 transition">
-              <Link to="/support">Shipping & Returns</Link>
+              <Link to="/shipping">Shipping</Link>
             </li>
             <li className="hover:text-black hover:translate-x-1 transition">
-              <Link to="/support">Warranty</Link>
+              <Link to="/refund">Refund Policy</Link>
             </li>
             <li className="hover:text-black hover:translate-x-1 transition">
               <Link to="/track-order">Order Tracking</Link>

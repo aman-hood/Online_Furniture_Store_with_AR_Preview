@@ -1,17 +1,141 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-export default function PrivacyPolicyPage() {
+const PremiumPrivacyPolicy = () => {
+  const sections = [
+    {
+      id: "01",
+      title: "Information Inventory",
+      content:
+        "We curate a limited selection of data including your identity details, delivery coordinates, and transaction history to ensure a seamless Homespace experience.",
+    },
+    {
+      id: "02",
+      title: "Data Stewardship",
+      content:
+        "Your information is never 'used'; it is protected. We utilize data solely to refine our craftsmanship and bridge the gap between our products and your home.",
+    },
+    {
+      id: "03",
+      title: "Digital Security",
+      content:
+        "Architecture for the digital age. Our systems employ industry-grade encryption protocols, ensuring your personal data remains as private as your home.",
+    },
+    {
+      id: "04",
+      title: "Client Relations",
+      content:
+        "Our privacy concierge is available for personalized inquiries regarding your data rights. Direct communications to support@homespace.com.",
+    },
+  ];
+
   return (
-    <div className="pt-28 px-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-semibold mb-6">Privacy Policy</h1>
-      <p className="text-gray-700 leading-7 mb-4">
-        Your privacy matters. This page describes how we collect, use, and protect your information.
-      </p>
-      <ul className="list-disc pl-6 text-gray-700 space-y-2">
-        <li>We collect only necessary data for orders and support.</li>
-        <li>We never sell your personal information.</li>
-        <li>You can request data deletion at any time.</li>
-      </ul>
+    <div className="min-h-screen bg-[#d2cfc8] text-[#1A1816] selection:bg-[#E7DFD4] font-sans">
+      
+      {/* NAV */}
+      <nav className="h-20 border-b border-[#E7DFD4]/40 flex items-center px-12 justify-between bg-white/60 backdrop-blur-md sticky top-0 z-50">
+        <span className="text-[12px] tracking-[0.4em] uppercase font-semibold">
+          Homespace
+        </span>
+
+        <Link
+          to="/shop"
+          className="text-[11px] uppercase tracking-widest border border-[#1A1816] px-5 py-2 hover:bg-[#1A1816] hover:text-white transition-all duration-500"
+        >
+          Back to Shop
+        </Link>
+      </nav>
+
+      <main className="max-w-7xl mx-auto px-8 pt-20 pb-32">
+
+        {/* HEADER */}
+        <header className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-24 items-end">
+          <div className="lg:col-span-8">
+            <h2 className="text-[11px] uppercase tracking-[0.5em] text-[#8a8177] mb-6">
+              Legal Protocol
+            </h2>
+
+            <h1 className="text-[42px] sm:text-[64px] md:text-[84px] font-light leading-[0.9] tracking-tighter">
+              Privacy <br />
+              <span className="italic font-serif pl-6 sm:pl-20 text-[#3f3a33]">
+                Standards
+              </span>
+            </h1>
+          </div>
+
+          <p className="lg:col-span-4 text-[14px] text-[#8a8177] leading-relaxed border-l border-[#E7DFD4] pl-8">
+            Reliability and transparency are the foundations of luxury. We treat
+            your data with the same precision as our artisanal furniture.
+          </p>
+        </header>
+
+        {/* CONTENT */}
+        <section className="border-t border-[#E7DFD4]">
+          {sections.map((section) => (
+            <article
+              key={section.id}
+              className="group grid grid-cols-1 lg:grid-cols-12 gap-8 py-12 border-b border-[#E7DFD4] hover:bg-[#F3F2F0] transition-all duration-700 ease-in-out px-4"
+            >
+              <div className="lg:col-span-4 flex items-baseline gap-6">
+                <span className="text-[13px] font-serif italic text-[#8a8177]">
+                  {section.id}
+                </span>
+
+                <h3 className="text-[18px] uppercase tracking-[0.15em] font-medium transition-transform duration-500 group-hover:translate-x-1">
+                  {section.title}
+                </h3>
+              </div>
+
+              <div className="lg:col-span-6">
+                <p className="text-[16px] text-[#5A544D] leading-[1.8] font-light group-hover:text-[#1A1816] transition-colors duration-500">
+                  {section.content}
+                </p>
+              </div>
+
+              <div className="lg:col-span-2 flex justify-end items-center opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                <div className="h-[1px] w-12 bg-[#8a8177]" />
+              </div>
+            </article>
+          ))}
+        </section>
+
+        {/* FOOTER */}
+        <footer className="mt-20 flex flex-col md:flex-row justify-between gap-12">
+          <div className="max-w-xs">
+            <p className="text-[10px] uppercase tracking-[0.3em] text-[#8a8177] mb-4">
+              Verification
+            </p>
+            <p className="text-[13px] leading-relaxed text-[#6b6258]">
+              This document is audited annually. Last revision: Nov 12, 2025.
+            </p>
+          </div>
+
+          <div className="flex gap-16">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-[#8a8177] mb-2">
+                Legal
+              </p>
+              <ul className="text-[13px] space-y-2">
+                <li><Link to="/terms">Terms of Service</Link></li>
+                <li><Link to="/privacy">Privacy Policy</Link></li>
+              </ul>
+            </div>
+
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-[#8a8177] mb-2">
+                Support
+              </p>
+              <ul className="text-[13px] space-y-2">
+                <li><Link to="/support">Help Center</Link></li>
+                <li><Link to="/contact">Contact</Link></li>
+              </ul>
+            </div>
+          </div>
+        </footer>
+
+      </main>
     </div>
   );
-}
+};
+
+export default PremiumPrivacyPolicy;

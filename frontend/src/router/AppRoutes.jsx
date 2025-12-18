@@ -14,7 +14,7 @@ import WishlistPage from "../pages/WishlistPage";
 import Collections from "../pages/Collections";
 import CategoryPage from "../pages/CategoryPage";
 import CartPage from "../pages/CartPage";
-import ProfilePage from "../pages/ProfilePage";
+import ProfilePage from "../pages/account/AccountPage";
 import AdminProducts from "../pages/AdminProducts";
 import ProductForm from "../components/admin/ProductForm";
 import BlogList from "../pages/BlogList";
@@ -31,6 +31,9 @@ import GiftCardsPage from "../pages/GiftCardsPage";
 import Checkout from "../pages/Checkout";
 import GiftCardSuccess from "../pages/GiftCardSuccess";
 import Search from "../pages/Search";
+import Shipping from "../pages/ShippingPolicyPage";
+import Refund from "../pages/RefundPolicyPage";
+
 
 
 const AppRoutes = () => {
@@ -53,10 +56,12 @@ const AppRoutes = () => {
       <Route path="/terms" element={<TermsPage />} />
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/gift-card/success" element={<GiftCardSuccess />} />
+      <Route path="/refund" element={<Refund />} />
+      <Route path="/shipping" element={<Shipping />} />
       {/* Account/Orders */}
       <Route path="/account" element={<ProfilePage />} />
       <Route path="/orders" element={<OrdersPage />} />
-      <Route path="/track-order" element={<TrackOrderPage />} />
+      <Route path="/track" element={<TrackOrderPage />} />
       {/* auth */}
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
