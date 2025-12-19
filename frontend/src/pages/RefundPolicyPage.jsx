@@ -6,7 +6,7 @@ import {
   FiHelpCircle,
 } from "react-icons/fi";
 
-/* ---------------- Accordion Item ---------------- */
+/* ---------------- According Item ---------------- */
 const PolicyItem = ({ icon: Icon, title, children }) => {
   const [open, setOpen] = useState(false);
 

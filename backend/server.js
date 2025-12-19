@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import "dotenv/config";
 import cors from "cors";
@@ -10,6 +12,7 @@ import wishlistRoute from "./routes/wishlistRoute.js";
 import profileRoute from "./routes/profileRoute.js";
 import categoryRoute from "./routes/categoryRoute.js";
 import { Category } from "./models/categoryModel.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
 
 const app = express();
 
@@ -36,7 +39,7 @@ app.use("/api/cart", cartRoute);
 app.use("/api/wishlist", wishlistRoute);
 app.use("/api/profile", profileRoute);
 app.use("/api/categories", categoryRoute);
-
+app.use("/api/upload", uploadRoutes);
 const PORT = process.env.PORT || 3000;
 
 connectDB();

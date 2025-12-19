@@ -1,15 +1,19 @@
+import { Product } from "../models/productModel.js";
 import { Category } from "../models/categoryModel.js";
+
 
 export const listCategories = async (req, res) => {
   try {
     const onlyActive = req.query.active === "true";
     const q = onlyActive ? { isActive: true } : {};
+
     const categories = await Category.find(q).sort({ name: 1 });
     res.status(200).json({ success: true, categories });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 };
+
 
 export const getCategory = async (req, res) => {
   try {

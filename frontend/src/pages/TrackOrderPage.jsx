@@ -68,10 +68,10 @@ const TrackOrderPage = () => {
               </div>
 
               <div className="space-y-8 relative">
-                <div className="absolute left-[7px] top-2 bottom-2 w-[1px] bg-[#E7DFD4]" />
+                <div className="absolute left-[7px] top-2 bottom-2 w-px bg-[#E7DFD4]" />
                 {orderData.steps.map((step, i) => (
                   <div key={i} className="relative pl-10">
-                    <div className={`absolute left-0 top-[6px] h-4 w-4 rounded-full border-2 border-white ${step.completed ? 'bg-black' : 'bg-[#E7DFD4]'}`} />
+                    <div className={`absolute left-0 top-1.5 h-4 w-4 rounded-full border-2 border-white ${step.completed ? 'bg-black' : 'bg-[#E7DFD4]'}`} />
                     <p className={`text-[13px] uppercase tracking-widest ${step.completed ? 'text-black' : 'text-[#A19B91]'}`}>{step.status}</p>
                     <p className="text-xs text-[#8a8177] italic">{step.date}</p>
                   </div>

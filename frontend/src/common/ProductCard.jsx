@@ -110,8 +110,8 @@ const ProductCard = ({ product }) => {
             transition
             ${
               wishlisted
-                ? "bg-red-500 text-white scale-110"
-                : "bg-white text-[#3f3a33] hover:bg-[#f4eee6]"
+                ? "text-red-500  scale-110"
+                : " text-[#3f3a33] hover:bg-[#f4eee6]"
             }
             ${!isBackendProduct ? "opacity-40 cursor-not-allowed" : ""}
           `}

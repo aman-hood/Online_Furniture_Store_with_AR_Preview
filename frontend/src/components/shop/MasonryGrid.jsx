@@ -2,7 +2,10 @@ import React from "react";
 import ProductCard from "../../common/ProductCard";
 
 const MasonryGrid = ({ products }) => {
+   console.log("Products:", products);
+  console.log("First image:", products?.[0]?.img);
   return (
+    
     <div className="mt-4">
 
       {/* subtle grid rhythm */}
@@ -27,6 +30,7 @@ const MasonryGrid = ({ products }) => {
               "
             >
               <ProductCard product={product} />
+              
             </div>
           </div>
         ))}

@@ -4,9 +4,22 @@ import { Category } from "../models/categoryModel.js";
 export const listProducts = async (req, res) => {
   try {
     const { category, q } = req.query;
-    const filter = { isActive: true };
-    if (category) filter.category = category;
-    if (q) filter.name = { $regex: q, $options: "i" };
+    const filter = {};
+
+    // OPTIONAL active filter
+    if (req.query.active === "true") {
+      filter.isActive = true;
+    }
+
+    // Category (case-insensitive)
+    if (category) {
+      filter.category = new RegExp(`^${category}$`, "i");
+    }
+
+    // Search
+    if (q) {
+      filter.name = { $regex: q, $options: "i" };
+    }
 
     const products = await Product.find(filter).sort({ createdAt: -1 });
     res.status(200).json({ success: true, products });

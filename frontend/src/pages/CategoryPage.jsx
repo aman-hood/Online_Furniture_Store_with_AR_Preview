@@ -1,81 +1,77 @@
-
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { listProducts } from "../services/productService";
 import MasonryGrid from "../components/shop/MasonryGrid";
 
 export default function CategoryPage() {
+  
   const { category } = useParams();
   const [all, setAll] = useState([]);
-  const [filtered, setFiltered] = useState([]);
   const [sortType, setSortType] = useState("");
-  const [priceRange, setPriceRange] = useState([0, 200000]); // min & max
+  const [priceRange, setPriceRange] = useState([0, 500000]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const prods = await listProducts({ category });
-        setAll(prods);
-        setFiltered(prods);
-      } catch (e) {
-        setAll([]);
-        setFiltered([]);
-      }
-    };
-    fetchData();
-  }, [category]);
-
-  // Handle Sorting
-  const handleSort = (value) => {
-    setSortType(value);
-
-    let sorted = [...filtered];
-
-    if (value === "low-high") {
-      sorted.sort((a, b) => a.price - b.price);
-    } else if (value === "high-low") {
-      sorted.sort((a, b) => b.price - a.price);
-    } else if (value === "latest") {
-      // Using backend timestamps when available
-      sorted.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0)); 
+  const fetchData = async () => {
+    try {
+      const prods = await listProducts({
+        category: category?.toLowerCase(),
+      });
+      setAll(prods);
+      console.log("Fetched:", prods.length);
+    } catch {
+      setAll([]);
     }
-
-    setFiltered(sorted);
   };
 
-  // Handle Price Filtering
-  const handlePriceChange = (min, max) => {
-    setPriceRange([min, max]);
+  fetchData();
+}, [category]);
 
-    const updated = all.filter(
-      (item) => item.price >= min && item.price <= max
+
+  // 🔥 Derived filtered list
+  const filtered = useMemo(() => {
+    let data = all.filter(
+      (item) =>
+        item.price >= priceRange[0] &&
+        item.price <= priceRange[1]
     );
 
-    setFiltered(updated);
-  };
+    if (sortType === "low-high") {
+      data.sort((a, b) => a.price - b.price);
+    } else if (sortType === "high-low") {
+      data.sort((a, b) => b.price - a.price);
+    } else if (sortType === "latest") {
+      data.sort(
+        (a, b) =>
+          new Date(b.createdAt || 0) -
+          new Date(a.createdAt || 0)
+      );
+    }
+
+    return data;
+  }, [all, sortType, priceRange]);
+  
 
   return (
-    <div className="pt-28  px-6  mx-auto">
+    <div className="pt-28 px-6 mx-auto">
 
-      {/* Title */}
-      <h2 className="text-4xl font-serif tracking-tight mb-6 capitalize">
+      <h2 className="text-4xl font-serif mb-6 capitalize">
         {category} Collection
       </h2>
 
-      {/* Filter Bar */}
-      <div className="flex flex-wrap justify-between items-center gap-4 mb-10 p-4 bg-[#f8f8f8] rounded-xl shadow-sm">
+      <div className="flex flex-wrap justify-between items-center gap-4 mb-10 p-4 bg-[#f8f8f8] rounded-xl">
 
-        {/* Price Filter */}
+        {/* Price */}
         <div className="flex items-center gap-3">
-          <label className="text-gray-700 font-medium">Price:</label>
+          <label className="font-medium">Price:</label>
           <select
             className="border px-3 py-2 rounded-lg"
             onChange={(e) => {
               const val = e.target.value;
-              if (val === "0-5000") handlePriceChange(0, 5000);
-              else if (val === "5000-10000") handlePriceChange(5000, 10000);
-              else if (val === "10000-50000") handlePriceChange(10000, 50000);
-              else handlePriceChange(0, 200000);
+              if (val === "0-5000") setPriceRange([0, 5000]);
+              else if (val === "5000-10000") setPriceRange([5000, 10000]);
+              else if (val === "10000-50000") setPriceRange([10000, 50000]);
+              else if (val === "50000-500000") setPriceRange([50000, 500000]);
+              else setPriceRange([0, 500000]);
             }}
           >
             <option value="all">All Prices</option>
@@ -86,12 +82,12 @@ export default function CategoryPage() {
           </select>
         </div>
 
-        {/* Sort Filter */}
+        {/* Sort */}
         <div className="flex items-center gap-3">
-          <label className="text-gray-700 font-medium">Sort:</label>
+          <label className="font-medium">Sort:</label>
           <select
             className="border px-3 py-2 rounded-lg"
-            onChange={(e) => handleSort(e.target.value)}
+            onChange={(e) => setSortType(e.target.value)}
           >
             <option value="">Popular</option>
             <option value="latest">Newest</option>
@@ -101,13 +97,12 @@ export default function CategoryPage() {
         </div>
 
       </div>
-        <p className="text-gray-600 mb-10">
-        Showing {filtered.length} {category} items
+
+      <p className="text-gray-600 mb-10">
+        Showing {filtered.length} items
       </p>
 
-      {/* Masonry Grid */}
       <MasonryGrid products={filtered} />
     </div>
   );
 }
-
