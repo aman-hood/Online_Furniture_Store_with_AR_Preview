@@ -10,7 +10,12 @@ export default function WishlistPage() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const { setWishlistCount, setCartCount } = useApp();
+const {
+  setWishlistIds,
+  setWishlistCount,
+  setCartCount,
+} = useApp();
+
 
   useEffect(() => {
     const load = async () => {
@@ -30,16 +35,29 @@ export default function WishlistPage() {
     load();
   }, []);
 
-  const handleMoveAllToCart = async () => {
+const handleMoveAllToCart = async () => {
+  try {
     for (const product of items) {
       await addToCart(product._id, 1);
       await removeFromWishlist(product._id);
     }
 
+    // ✅ CLEAR LOCAL STATE
     setItems([]);
+
+    // ✅ CLEAR GLOBAL CONTEXT (THIS WAS MISSING)
+    setWishlistIds([]);   
+
+     // 🔥 THIS LINE FIXES HEART ISSUE
     setWishlistCount(0);
-    setCartCount((prev) => prev + items.length);
-  };
+
+    // ✅ UPDATE CART COUNT
+    setCartCount((c) => c + items.length);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 
   return (
     <section className="min-h-screen pt-24 px-6">
