@@ -4,7 +4,7 @@ const API = "http://localhost:3000/api/wishlist";
 
 export const getWishlist = async () => {
   const res = await axios.get(API, { withCredentials: true });
-  return res.data.wishlist;
+  return res.data.wishlist.items;
 };
 
 export const addToWishlist = async (productId) => {

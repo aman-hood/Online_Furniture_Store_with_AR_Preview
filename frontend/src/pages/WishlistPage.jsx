@@ -13,8 +13,9 @@ export default function WishlistPage() {
   useEffect(() => {
     const load = async () => {
       try {
-        const wl = await getWishlist();
-        setItems(wl?.products || []);
+        const wlItems = await getWishlist();
+        setItems(wlItems || []);
+
       } catch (err) {
         if (err?.response?.status === 401) {
           window.location.href = "/login";
@@ -61,7 +62,13 @@ export default function WishlistPage() {
               <FiShoppingCart /> Move all to cart
             </button>
 
-            <MasonryGrid products={sortedItems} />
+            <MasonryGrid
+                products={sortedItems.map((p) => ({
+                  ...p,
+                  initiallyLiked: true,
+                }))}
+            />
+
           </>
         )}
       </div>

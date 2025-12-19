@@ -9,6 +9,7 @@ const productSchema = new mongoose.Schema(
     imageUrl: { type: String, default: "" },
     stock: { type: Number, default: 0 },
     isActive: { type: Boolean, default: true },
+    isBestSeller: {type: Boolean,default: false },
   },
   { timestamps: true }
 );
