@@ -17,8 +17,9 @@ import CartPage from "../pages/CartPage";
 import ProfilePage from "../pages/account/AccountPage";
 import AdminProducts from "../pages/AdminProducts";
 import ProductForm from "../components/admin/ProductForm";
-import BlogList from "../pages/BlogList";
-import BlogPost from "../pages/BlogPost";
+import BlogList from "../pages/blog/BlogList";
+import BlogGrid from "../pages/blog/BlogGrid";
+import BlogPost from "../pages/blog/BlogPost";
 import AboutPage from "../pages/AboutPage";
 import ContactPage from "../pages/ContactPage";
 import FAQPage from "../pages/FAQPage";
@@ -33,6 +34,9 @@ import GiftCardSuccess from "../pages/GiftCardSuccess";
 import Search from "../pages/Search";
 import Shipping from "../pages/ShippingPolicyPage";
 import Refund from "../pages/RefundPolicyPage";
+import ProductInfo from "../pages/product/ProductInfo"
+import CareWarranty from "../pages/product/CareWarranty"
+import Help from "../pages/product/Help"
 
 
 
@@ -43,8 +47,12 @@ const AppRoutes = () => {
       <Route path="/shop" element={<ShopPage />} />
       <Route path="/product/:id" element={<ProductPage />} />
       <Route path="/blog" element={<BlogList />} />
+      <Route path="/blog/grid" element={<BlogGrid />} />
       <Route path="/blog/:slug" element={<BlogPost />} />
       <Route path="/search" element={<Search />} />
+      <Route path="/product-info" element={<ProductInfo />} />
+      <Route path="/care-warranty" element={<CareWarranty />} />
+      <Route path="/help" element={<Help />} />
 
       {/* Info Pages */}
       <Route path="/about" element={<AboutPage />} />

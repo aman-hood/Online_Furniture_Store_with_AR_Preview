@@ -1,7 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const MenuDropdown = ({ items = [], sections = [], mega = false, open }) => {
+  const navigate = useNavigate();
+
   if (!open) return null;
 
   /* =========================
@@ -52,23 +55,20 @@ const MenuDropdown = ({ items = [], sections = [], mega = false, open }) => {
               {col.items.map((item, idx) => (
                 <li
                   key={idx}
+                  onClick={() => navigate(item.path)}
                   className="
                     group cursor-pointer
-                    px-3 py-2
-                    rounded-lg
-
-                    text-[13px] font-normal text-[#5a534a]
-
-                    transition-all duration-200
+                    px-3 py-2 rounded-lg
+                    text-[13px] text-[#5a534a]
                     hover:bg-[#efe7dc]
-                    hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)]
                   "
                 >
-                  <span className="inline-block transition-transform group-hover:translate-x-0.5">
-                    {item}
+                  <span className="inline-block group-hover:translate-x-0.5 transition">
+                    {item.label}
                   </span>
                 </li>
               ))}
+
             </ul>
 
           </div>
@@ -109,6 +109,7 @@ const MenuDropdown = ({ items = [], sections = [], mega = false, open }) => {
         {items.map((item, index) => (
           <li
             key={index}
+            onClick={() => navigate(item.path)}
             className="
               group cursor-pointer
               px-3 py-2

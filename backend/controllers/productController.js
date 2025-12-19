@@ -80,3 +80,15 @@ export const deleteProduct = async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
+export const getBestSellers = async (req, res) => {
+  try {
+    const products = await Product.find({
+      isBestSeller: true,
+      isActive: true,
+    }).sort({ createdAt: -1 });
+
+    res.status(200).json({ success: true, products });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};

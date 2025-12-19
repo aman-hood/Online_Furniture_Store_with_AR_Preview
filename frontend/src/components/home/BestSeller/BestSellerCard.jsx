@@ -6,55 +6,56 @@ import {
   addToWishlist,
   removeFromWishlist,
 } from "../../../services/wishlistService";
+import { useApp } from "../../../context/AppContext";
 
-const ProductCard = ({ product, initiallyLiked = false }) => {
-  const [liked, setLiked] = useState(initiallyLiked);
-  const [loading, setLoading] = useState(false);
+const ProductCard = ({ product }) => {
   const navigate = useNavigate();
 
- const handleWishlist = async (e) => {
-  e.preventDefault();
-  e.stopPropagation();
+  const {
+    wishlistIds = [],
+    setWishlistIds,
+    setWishlistCount,
+  } = useApp();
 
-  // 🔍 DEBUG LOGS — PUT THEM HERE
-  console.log("Product object:", product);
-  console.log("Product _id:", product?._id);
+  const [loading, setLoading] = useState(false);
 
-  if (!product?._id) {
-    console.warn("❌ product._id is missing — wishlist blocked");
-    return;
-  }
+  // ✅ SINGLE SOURCE OF TRUTH
+  const liked = wishlistIds.includes(product._id);
 
-  if (loading) return;
+  const handleWishlist = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-  setLoading(true);
-  try {
-    if (liked) {
-      await removeFromWishlist(product._id);
-      setLiked(false);
-    } else {
-      await addToWishlist(product._id);
-      setLiked(true);
+    if (!product?._id || loading) return;
+    setLoading(true);
+
+    try {
+      if (liked) {
+        await removeFromWishlist(product._id);
+        setWishlistIds((ids) => ids.filter((id) => id !== product._id));
+        setWishlistCount((c) => Math.max(c - 1, 0));
+      } else {
+        await addToWishlist(product._id);
+        setWishlistIds((ids) => [...ids, product._id]);
+        setWishlistCount((c) => c + 1);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
-  } catch (err) {
-    console.error(err);
-  } finally {
-    setLoading(false);
-  }
-};
-;
+  };
 
   return (
     <div className="group">
-
-      {/* IMAGE AREA ONLY navigates */}
       <div
         onClick={() => navigate(`/products/${product._id}`)}
-        className="relative cursor-pointer w-70 h-65 bg-white border border-gray-500 overflow-hidden"
+        className="relative cursor-pointer w-70 h-65 bg-white border overflow-hidden"
       >
         {/* ❤️ Wishlist */}
         <button
           onClick={handleWishlist}
+          disabled={loading}
           className="absolute top-3 right-3 z-50"
         >
           {liked ? (
@@ -65,7 +66,7 @@ const ProductCard = ({ product, initiallyLiked = false }) => {
         </button>
 
         <img
-          src={product.img}
+          src={product.imageUrl || null}
           alt={product.name}
           className="w-full h-full object-cover pointer-events-none"
         />

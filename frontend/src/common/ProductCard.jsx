@@ -1,138 +1,60 @@
-import React, { useEffect, useState } from "react";
 import { FiHeart } from "react-icons/fi";
+import { FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import {
-  addToWishlist,
-  removeFromWishlist,
-  getWishlist,
-} from "../services/wishlistService";
+import { addToWishlist, removeFromWishlist } from "../services/wishlistService";
+import { useApp } from "../context/AppContext";
 
 const ProductCard = ({ product }) => {
+  const { wishlistIds = [], wishlistLoading, setWishlistIds, setWishlistCount } = useApp();
+
+  // ✅ HOOK ORDER SAFE
+  if (wishlistLoading) return null;
+
   const navigate = useNavigate();
 
-  // 🔑 BACKEND PRODUCTS HAVE _id (Mongo ObjectId)
   const productId = product._id;
-  const isBackendProduct = Boolean(productId);
+  const liked = wishlistIds.includes(productId);
 
-  const [wishlisted, setWishlisted] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  /* -------------------------
-     CHECK WISHLIST STATE
-  ------------------------- */
-  useEffect(() => {
-    const checkWishlist = async () => {
-      if (!isBackendProduct) return;
-
-      try {
-        const wl = await getWishlist();
-        const exists = wl?.products?.some(
-          (item) => item._id === productId
-        );
-        setWishlisted(Boolean(exists));
-      } catch {
-        setWishlisted(false);
-      }
-    };
-
-    checkWishlist();
-  }, [productId, isBackendProduct]);
-
-  /* -------------------------
-     TOGGLE WISHLIST
-  ------------------------- */
-  const toggleWishlist = async (e) => {
-    e.stopPropagation();
+  const handleWishlist = async (e) => {
     e.preventDefault();
+    e.stopPropagation();
 
-    // ❌ BLOCK MOCK PRODUCTS
-    if (!isBackendProduct || loading) return;
+    if (!productId) return;
 
-    try {
-      setLoading(true);
-
-      if (wishlisted) {
-        await removeFromWishlist(productId);
-        setWishlisted(false);
-      } else {
-        await addToWishlist(productId);
-        setWishlisted(true);
-      }
-    } catch (err) {
-      if (err?.response?.status === 401) {
-        window.location.href = "/login";
-      }
-    } finally {
-      setLoading(false);
+    if (liked) {
+      await removeFromWishlist(productId);
+      setWishlistIds((ids) => ids.filter((id) => id !== productId));
+      setWishlistCount((c) => Math.max(c - 1, 0));
+    } else {
+      await addToWishlist(productId);
+      setWishlistIds((ids) => [...ids, productId]);
+      setWishlistCount((c) => c + 1);
     }
   };
 
   return (
     <div
-      onClick={() =>
-        isBackendProduct && navigate(`/product/${productId}`)
-      }
-      className="
-        cursor-pointer
-        p-4
-        rounded-2xl
-        bg-white
-        min-h-[320px]
-        transition
-        hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)]
-      "
+      onClick={() => navigate(`/products/${productId}`)}
+      className="relative cursor-pointer bg-white rounded-xl"
     >
-      {/* IMAGE */}
-      <div className="relative mb-4 bg-[#f4eee6] rounded-xl overflow-hidden">
+      <button onClick={handleWishlist} className="absolute top-3 right-3 z-10">
+        {liked ? (
+          <FaHeart className="text-red-500 scale-110" />
+        ) : (
+          <FiHeart className="text-gray-600 hover:text-black" />
+        )}
+      </button>
+
+      {product.imageUrl && (
         <img
-          src={product.img}
+          src={product.imageUrl}
           alt={product.name}
-          className="
-            w-full h-[220px] object-cover
-            transition-transform duration-500
-            hover:scale-105
-          "
+          className="w-full h-56 object-cover rounded-xl"
         />
+      )}
 
-        {/* ❤️ HEART ICON */}
-        <button
-          onClick={toggleWishlist}
-          disabled={!isBackendProduct}
-          aria-label="Add to wishlist"
-          title={
-            isBackendProduct
-              ? "Add to wishlist"
-              : "Wishlist available for real products only"
-          }
-          className={`
-            absolute top-3 right-3
-            p-2 rounded-full
-            transition
-            ${
-              wishlisted
-                ? "text-red-500  scale-110"
-                : " text-[#3f3a33] hover:bg-[#f4eee6]"
-            }
-            ${!isBackendProduct ? "opacity-40 cursor-not-allowed" : ""}
-          `}
-        >
-          <FiHeart
-            size={18}
-            className={wishlisted ? "fill-current" : ""}
-          />
-        </button>
-      </div>
-
-      {/* CONTENT */}
-      <div>
-        <p className="text-sm font-medium text-[#3f3a33] mb-1">
-          {product.name}
-        </p>
-
-        <p className="text-sm text-[#6b6258]">
-          ₹{product.price.toLocaleString()}
-        </p>
-      </div>
+      <p className="mt-2 font-medium">{product.name}</p>
+      <p className="text-gray-600">₹{product.price}</p>
     </div>
   );
 };

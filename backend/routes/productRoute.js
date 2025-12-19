@@ -1,13 +1,25 @@
 import express from "express";
-import { listProducts, getProduct, createProduct, updateProduct, deleteProduct } from "../controllers/productController.js";
-import { isAuthenticated, isAdmin } from "../middlewares/isAuthenticated.js";
+import {
+  listProducts,
+  getProduct,
+  getBestSellers,
+} from "../controllers/productController.js";
 
 const router = express.Router();
 
+/* ======================
+   🔥 STATIC ROUTES FIRST
+   ====================== */
+router.get("/best-sellers", getBestSellers);
+
+/* ======================
+   NORMAL ROUTES
+   ====================== */
 router.get("/", listProducts);
+
+/* ======================
+   ❗ DYNAMIC ROUTES LAST
+   ====================== */
 router.get("/:id", getProduct);
-router.post("/", isAuthenticated, isAdmin, createProduct);
-router.put("/:id", isAuthenticated, isAdmin, updateProduct);
-router.delete("/:id", isAuthenticated, isAdmin, deleteProduct);
 
 export default router;

@@ -10,6 +10,7 @@ const productSchema = new mongoose.Schema(
     stock: { type: Number, default: 0 },
     isActive: { type: Boolean, default: true },
     isBestSeller: {type: Boolean,default: false },
+    isPopular: {type: Boolean,default: false },
   },
   { timestamps: true }
 );

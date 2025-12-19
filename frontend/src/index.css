@@ -104,3 +104,10 @@ body::-webkit-scrollbar {
   animation: dropdown 180ms ease-out forwards;
 }
 
+@keyframes shake {
+  0% { transform: rotate(0); }
+  25% { transform: rotate(-8deg); }
+  50% { transform: rotate(8deg); }
+  75% { transform: rotate(-4deg); }
+  100% { transform: rotate(0); }
+}

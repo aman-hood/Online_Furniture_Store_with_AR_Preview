@@ -1,47 +1,72 @@
-import React from "react";
 import { FiHeart } from "react-icons/fi";
+import { FaHeart } from "react-icons/fa";
+import {
+  addToWishlist,
+  removeFromWishlist,
+} from "../../../services/wishlistService";
+import { useApp } from "../../../context/AppContext";
 
 const PopularCard = ({ product }) => {
+  const {
+    wishlistIds = [],
+    wishlistLoading,
+    setWishlistIds,
+    setWishlistCount,
+  } = useApp();
+
+  // ⛔ WAIT until wishlist loads
+  if (wishlistLoading) return null;
+
+  // ✅ DERIVED STATE (NO LOCAL STATE)
+  const liked = wishlistIds.includes(product._id);
+
+  const handleWishlist = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!product?._id) return;
+
+    try {
+      if (liked) {
+        await removeFromWishlist(product._id);
+        setWishlistIds((prev) => prev.filter((id) => id !== product._id));
+        setWishlistCount((c) => Math.max(c - 1, 0));
+      } else {
+        await addToWishlist(product._id);
+        setWishlistIds((prev) => [...prev, product._id]);
+        setWishlistCount((c) => c + 1);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
-    <div className="w-60 cursor-pointer select-none">
+    <div className="w-60 select-none">
+      <div className="relative w-full h-64 bg-white border rounded-lg overflow-hidden group">
 
-      {/* IMAGE CONTAINER */}
-      <div className="relative w-full h-64 bg-white border border-gray-300 rounded-lg overflow-hidden flex items-center justify-center group">
-
-        {/* Sale Badge */}
-        {product.sale && (
-          <span className="absolute top-3 left-3 bg-red-500 text-white text-xs px-2 py-1 rounded z-20">
-            {product.sale}
-          </span>
-        )}
-
-        {/* Wishlist */}
-        <button className="absolute top-3 right-3 text-gray-600 hover:text-black transition z-20">
-          <FiHeart size={18} />
+        <button
+          onClick={handleWishlist}
+          className="absolute top-3 right-3 z-20"
+        >
+          {liked ? (
+            <FaHeart size={18} className="text-red-500" />
+          ) : (
+            <FiHeart size={18} className="text-gray-600 hover:text-black" />
+          )}
         </button>
 
-        {/* Image */}
-        <img
-          src={product.img}
-          alt={product.name}
-          className="w-full h-full object-cover transition duration-300 group-hover:scale-115 "
-        />
+        {(product.imageUrl || product.img) && (
+          <img
+            src={product.imageUrl || product.img}
+            alt={product.name}
+            className="w-full h-full object-cover transition group-hover:scale-110"
+          />
+        )}
       </div>
 
-      {/* NAME */}
-      <p className="mt-3 text-gray-700 font-medium text-sm">{product.name}</p>
-
-      {/* RATING */}
-      <div className="text-yellow-500 text-sm mt-1">
-        {"⭐".repeat(Math.round(product.rating))}
-      </div>
-
-      {/* PRICE */}
-      <div className="flex gap-2 text-sm items-center mt-1">
-        <span className="font-semibold text-black">₹{product.price}</span>
-        <span className="line-through text-gray-400 font-semibold">₹{product.oldPrice}</span>
-      </div>
-
+      <p className="mt-3 text-sm font-medium">{product.name}</p>
+      <p className="font-semibold">₹{product.price}</p>
     </div>
   );
 };

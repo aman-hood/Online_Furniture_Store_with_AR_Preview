@@ -1,44 +1,86 @@
 export const shopMenu = [
   {
     heading: "FURNITURE",
-    items: ["Sofas", "Beds", "Chairs", "Tables", "Storage"]
+    items: [
+  { label: "Sofas", path: "/collections/sofas" },
+  { label: "Beds", path: "/collections/beds" },
+  { label: "Chairs", path: "/collections/chairs" },
+  { label: "Tables", path: "/collections/tables" },
+  { label: "Storage", path: "/collections/storage" },
+]
+
   },
   {
     heading: "LIGHTING",
-    items: ["Ceiling Lamps", "Wall Lamps", "Table Lamps", "Floor Lamps"]
+    items: [
+      { label: "Ceiling Lamps", path: "/collections/ceiling-lamps" },
+      { label: "Wall Lamps", path: "/collections/wall-lamps" },
+      { label: "Table Lamps", path: "/collections/table-lamps" },
+      { label: "Floor Lamps", path: "/collections/floor-lamps" }
+    ]
   },
   {
     heading: "DECOR",
-    items: ["Mirrors", "Rugs", "Vases", "Wall Art"]
+    items: [
+      { label: "Mirrors", path: "/collections/mirrors" },
+      { label: "Rugs", path: "/collections/rugs" },
+      { label: "Vases", path: "/collections/vases" },
+      { label: "Wall Arts", path: "/collections/wall-arts" }
+    ]
   }
 ];
 
 export const productMenu = [
   {
-    heading: "PRODUCT VIEWS",
-    items: ["Product Details", "3D Viewer", "AR View"]
+    heading: "PRODUCT INFO",
+    items: [
+      { label: "Product Overview", path: "/product-info" },
+      { label: "Materials & Finish", path: "/product-info" },
+      { label: "Dimensions Guide", path: "/product-info" }
+    ]
   },
   {
-    heading: "FEATURES",
-    items: ["Material Guide", "Size Guide", "Warranty Info"]
+    heading: "QUALITY & CARE",
+    items: [
+      { label: "Craftsmanship", path: "/care-warranty" },
+      { label: "Care Instructions", path: "/care-warranty" },
+      { label: "Warranty Coverage", path: "/care-warranty" }
+    ]
   },
   {
-    heading: "TOOLS",
-    items: ["Compare Products", "Wishlist", "Recently Viewed"]
+    heading: "BUYING HELP",
+    items: [
+      { label: "How to Choose", path: "/help" },
+      { label: "Delivery Process", path: "/help" },
+      { label: "Returns & Support", path: "/help" }
+    ]
   }
 ];
 
 export const pageMenu = [
   {
     heading: "INFORMATION",
-    items: ["About Us", "Contact", "FAQ", "Privacy Policy"]
+    items: [
+      { label: "About Us", path: "/about" },
+      { label: "Contact", path: "/contact" },
+      { label: "FAQ", path: "/faq" },
+      { label: "Privacy Policy", path: "/privacy" }
+    ]
   },
   {
     heading: "USER",
-    items: ["My Account", "Orders", "Track Order"]
+    items: [
+      { label: "My Account", path: "/account" },
+      { label: "Orders", path: "/account/orders" },
+      { label: "Track Order", path: "/track" }
+    ]
   },
   {
     heading: "OTHER",
-    items: ["Gift Cards", "Support", "Terms of Use"]
+    items: [
+      { label: "Gift Cards", path: "/gift-cards" },
+      { label: "Support", path: "/contact" },
+      { label: "Terms of Use", path: "/terms" }
+    ]
   }
 ];

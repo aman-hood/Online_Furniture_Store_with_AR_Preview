@@ -2,17 +2,15 @@ import React from "react";
 import ProductCard from "../../common/ProductCard";
 
 const MasonryGrid = ({ products }) => {
-  console.log("Products:", products);
-  console.log("First image:", products?.[0]?.img);
-
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
       {products.map((product) => (
         <ProductCard
-          key={product._id}
-          product={product}
-          initiallyLiked={product.initiallyLiked}
-        />
+  key={product._id}
+  product={product}
+  initiallyLiked={product.initiallyLiked}
+/>
+
       ))}
     </div>
   );
