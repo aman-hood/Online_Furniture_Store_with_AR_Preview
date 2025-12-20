@@ -13,6 +13,8 @@ import profileRoute from "./routes/profileRoute.js";
 import categoryRoute from "./routes/categoryRoute.js";
 import { Category } from "./models/categoryModel.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
+import newsletterRoute from "./routes/newsletterRoute.js";
+
 
 const app = express();
 
@@ -31,7 +33,7 @@ app.use((req, res, next) => {
   console.log("REQUEST RECEIVED:", req.method, req.url);
   next();
 });
-
+app.use(express.static("public"));
 // Routes
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
@@ -40,6 +42,8 @@ app.use("/api/wishlist", wishlistRoute);
 app.use("/api/profile", profileRoute);
 app.use("/api/categories", categoryRoute);
 app.use("/api/upload", uploadRoutes);
+app.use("/api/newsletter", newsletterRoute);
+
 const PORT = process.env.PORT || 3000;
 
 connectDB();

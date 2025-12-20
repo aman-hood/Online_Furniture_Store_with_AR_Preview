@@ -5,12 +5,8 @@ import { addToWishlist, removeFromWishlist } from "../services/wishlistService";
 import { useApp } from "../context/AppContext";
 
 const ProductCard = ({ product }) => {
-  const { wishlistIds = [], wishlistLoading, setWishlistIds, setWishlistCount } = useApp();
-
-  // ✅ HOOK ORDER SAFE
-  if (wishlistLoading) return null;
-
   const navigate = useNavigate();
+  const { wishlistIds = [], setWishlistIds, setWishlistCount } = useApp();
 
   const productId = product._id;
   const liked = wishlistIds.includes(productId);
@@ -18,8 +14,6 @@ const ProductCard = ({ product }) => {
   const handleWishlist = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-
-    if (!productId) return;
 
     if (liked) {
       await removeFromWishlist(productId);
@@ -33,28 +27,64 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <div
-      onClick={() => navigate(`/products/${productId}`)}
-      className="relative cursor-pointer bg-white rounded-xl"
-    >
-      <button onClick={handleWishlist} className="absolute top-3 right-3 z-10">
-        {liked ? (
-          <FaHeart className="text-red-500 scale-110" />
-        ) : (
-          <FiHeart className="text-gray-600 hover:text-black" />
-        )}
-      </button>
+    <div className="group space-y-3">
+      {/* IMAGE PIN */}
+      <div
+        onClick={() => navigate(`/products/${productId}`)}
+        className="
+          relative
+          bg-white
+          rounded-3xl
+          overflow-hidden
+          cursor-pointer
+          shadow-[0_8px_30px_rgba(0,0,0,0.06)]
+          transition
+          hover:shadow-[0_18px_60px_rgba(0,0,0,0.12)]
+        "
+      >
+        {/* ❤️ Wishlist */}
+        <button
+          onClick={handleWishlist}
+          className="
+            absolute top-4 right-4 z-10
+            bg-white/90 backdrop-blur
+            p-2 rounded-full
+            shadow
+            opacity-0 group-hover:opacity-100
+            transition
+          "
+        >
+          {liked ? (
+            <FaHeart className="text-red-500" />
+          ) : (
+            <FiHeart className="text-gray-600 hover:text-black" />
+          )}
+        </button>
 
-      {product.imageUrl && (
+        {/* IMAGE */}
         <img
-          src={product.imageUrl}
+          src={`http://localhost:3000${product.img}`}
           alt={product.name}
-          className="w-full h-56 object-cover rounded-xl"
+          className="
+            w-full
+            h-auto
+            object-contain
+            px-6 py-10
+            transition-transform duration-700
+            group-hover:scale-105
+          "
         />
-      )}
+      </div>
 
-      <p className="mt-2 font-medium">{product.name}</p>
-      <p className="text-gray-600">₹{product.price}</p>
+      {/* TEXT BELOW (PIN STYLE) */}
+      <div className="px-1">
+        <p className="text-[14px] font-medium text-[#1a1816] leading-snug">
+          {product.name}
+        </p>
+        <p className="text-[13px] text-gray-600 mt-0.5">
+          ₹{product.price.toLocaleString()}
+        </p>
+      </div>
     </div>
   );
 };

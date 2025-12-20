@@ -46,17 +46,46 @@ export default function CategoryPage() {
     return data;
   }, [all, sortType, priceRange]);
 
-  return (
-    <div className="pt-28 px-6 mx-auto">
-      <h2 className="text-4xl font-serif mb-6 capitalize">
-        {category} Collection
-      </h2>
+ return (
+  <div className="bg-[#e8e4d8] min-h-screen w-full">
 
-      <div className="flex flex-wrap justify-between items-center gap-4 mb-10 p-4 bg-[#f8f8f8] rounded-xl">
+    {/* 🌿 CATEGORY HEADER */}
+    <section className="pt-30 pb-12 px-10 text-center">
+      <h1 style={{ fontFamily: "'Great Vibes', cursive" }}
+       className="text-6xl  tracking-tight capitalize text-[#1a1816]">
+        {category} Collection
+      </h1>
+      <p className="text-gray-600 max-w-2xl mx-auto">
+        Thoughtfully curated pieces designed to elevate modern living.
+      </p>
+    </section>
+
+    {/* 🔍 FILTER BAR – FULL WIDTH */}
+    <section className="px-10 mb-10">
+      <div
+        className="
+          w-full
+          flex flex-wrap justify-between items-center gap-6
+          bg-white/70 backdrop-blur-md
+          border border-black/5
+          rounded-2xl
+          px-8 py-4
+          shadow-sm
+        "
+      >
+        {/* PRICE */}
         <div className="flex items-center gap-3">
-          <label className="font-medium">Price:</label>
+          <span className="text-sm font-medium text-gray-700">Price</span>
           <select
-            className="border px-3 py-2 rounded-lg"
+            className="
+              bg-transparent
+              border border-black/10
+              rounded-lg
+              px-4 py-2
+              text-sm
+              focus:outline-none
+              focus:ring-1 focus:ring-black/20
+            "
             onChange={(e) => {
               const val = e.target.value;
               if (val === "0-5000") setPriceRange([0, 5000]);
@@ -74,10 +103,19 @@ export default function CategoryPage() {
           </select>
         </div>
 
+        {/* SORT */}
         <div className="flex items-center gap-3">
-          <label className="font-medium">Sort:</label>
+          <span className="text-sm font-medium text-gray-700">Sort</span>
           <select
-            className="border px-3 py-2 rounded-lg"
+            className="
+              bg-transparent
+              border border-black/10
+              rounded-lg
+              px-4 py-2
+              text-sm
+              focus:outline-none
+              focus:ring-1 focus:ring-black/20
+            "
             onChange={(e) => setSortType(e.target.value)}
           >
             <option value="">Popular</option>
@@ -87,14 +125,21 @@ export default function CategoryPage() {
           </select>
         </div>
       </div>
+    </section>
 
-      <p className="text-gray-600 mb-10">
-        Showing {filtered.length} items
+    {/* 📦 PRODUCT COUNT */}
+    <div className="px-10 mb-6">
+      <p className="text-sm text-gray-600">
+        Showing <span className="font-medium text-[#1a1816]">{filtered.length}</span> items
       </p>
-
-      {/* ✅ FIXED */}
-      <MasonryGrid products={filtered} />
-
     </div>
-  );
+
+    {/* 🪑 PRODUCTS – EDGE TO EDGE */}
+    <section className="px-6 pb-20">
+      <MasonryGrid products={filtered} />
+    </section>
+
+  </div>
+);
+
 }

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../components/layout/Navbar/Navbar.jsx";
 
 const collection = [
   {
@@ -58,17 +57,14 @@ const collection = [
 export default function Collections() {
   return (
    <>
-  <nav className=" h-20 bg-[#655c56]">
-      
-      <Navbar/>
-    </nav>
 
-  <div className="min-h-screen bg-white px-10 py-15">
+
+  <div className="min-h-screen bg-white px-5 pt-30">
 
     {/* Heading */}
     <div className="text-center mb-14">
       <h1 style={{ fontFamily: "'Great Vibes', cursive" }}
-       className="text-6xl  tracking-tight text-[#111]">
+       className="text-6xl  tracking-tight text-[#1a1816]">
         Shop by Category
       </h1>
       <p className="mt-3 text-gray-600 text-lg tracking-wide">

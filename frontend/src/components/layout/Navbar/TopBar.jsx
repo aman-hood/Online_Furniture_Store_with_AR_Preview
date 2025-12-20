@@ -2,71 +2,42 @@ import React from "react";
 import { FiMail, FiGift, FiMapPin } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
-const TopBar = () => {
+const TopBar = ({ isHome }) => {
   const navigate = useNavigate();
 
-  const openLocation = () => {
-    window.open(
-      "https://www.google.com/maps/search/furniture+store",
-      "_blank"
-    );
-  };
-
-  const sendMail = () => {
-    window.location.href = "mailto:arhomespace@gmail.com";
-  };
-
   return (
-    <div className="text-white text-[13px] py-1 border-b border-white/20">
+    <div
+      className={`
+        text-[13px] py-1 border-b
+        ${isHome
+          ? "bg-transparent text-white border-white/20"
+          : "bg-[#f8f8f8] text-[#1a1816] border-black/10"}
+      `}
+    >
       <div className="max-w-8xl mx-auto flex justify-between items-center px-4">
-
-        {/* LEFT */}
         <div className="flex items-center">
-
-          {/* Store Location */}
-          <button
-            onClick={openLocation}
-            className="flex items-center gap-2 px-2 hover:opacity-100 opacity-80 transition"
-          >
-            <FiMapPin size={14} />
-            Store Location
-            <span className="ml-2 h-4 w-px bg-white/30"></span>
+          <button className="flex items-center gap-2 px-2 opacity-80 hover:opacity-100">
+            <FiMapPin size={14} /> Store Location
           </button>
-
-          {/* Email */}
-          <button
-            onClick={sendMail}
-            className="flex items-center gap-2 px-2 hover:opacity-100 opacity-80 transition"
-          >
-            <FiMail size={14} />
-            arhomespace@gmail.com
+          <button className="flex items-center gap-2 px-2 opacity-80 hover:opacity-100">
+            <FiMail size={14} /> arhomespace@gmail.com
           </button>
-
         </div>
 
-        {/* RIGHT */}
         <div className="hidden md:flex items-center">
-
-          {/* Gift Cards */}
           <button
             onClick={() => navigate("/gift-cards")}
-            className="flex items-center gap-2 px-2 hover:opacity-100 opacity-80 transition"
+            className="flex items-center gap-2 px-2 opacity-80 hover:opacity-100"
           >
-            <FiGift size={14} />
-            Gift Cards
-            <span className="ml-2 h-4 w-px bg-white/30"></span>
+            <FiGift size={14} /> Gift Cards
           </button>
-
-          {/* FAQ */}
           <button
             onClick={() => navigate("/faq")}
-            className="px-2 hover:opacity-100 opacity-80 transition"
+            className="px-2 opacity-80 hover:opacity-100"
           >
             FAQ
           </button>
-
         </div>
-
       </div>
     </div>
   );

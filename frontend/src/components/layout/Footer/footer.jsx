@@ -1,44 +1,108 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { FiMail, FiPhone, FiMapPin } from "react-icons/fi";
 import { FaInstagram, FaFacebookF, FaPinterestP, FaTwitter } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+    const [emails, setEmails] = useState([]);
+    const [email, setEmail] = useState("");
+
+
+   useEffect(() => {
+    axios
+      .get("http://localhost:3000/api/newsletter/all", {
+        withCredentials: true,
+      })
+      .then((res) => setEmails(res.data))
+      .catch(console.error);
+  }, []);
+
+  const handleSubscribe = async () => {
+    if (!email || !email.includes("@")) {
+      setMessage("Please enter a valid email");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setMessage("");
+
+      await axios.post("http://localhost:3000/api/newsletter/subscribe", {
+        email,
+      });
+
+      setMessage("🎉 You’re subscribed!");
+      setEmail("");
+    } catch (err) {
+  console.log("NEWSLETTER ERROR:", err.response?.data || err.message);
+
+  if (err.response?.status === 409) {
+    setMessage("You’re already subscribed");
+  } else if (err.response?.status === 400) {
+    setMessage("Invalid email");
+  } else {
+    setMessage("Something went wrong. Try again.");
+  }
+}
+ finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <footer className="relative bg-[#f7f5f1] text-black pt-36 pb-12 mt-32">
 
       {/* GLASS NEWSLETTER CARD */}
       <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[90%] max-w-3xl bg-white/70 backdrop-blur-xl shadow-xl rounded-2xl p-10 border border-white/60 animate-fadeUp">
-        <h3 className="text-2xl font-semibold text-center tracking-wide">Join Our Home Inspiration Club</h3>
+        <h3 className="text-2xl font-semibold text-center tracking-wide">
+          Join Our Home Inspiration Club
+        </h3>
+
         <p className="text-center text-gray-600 mt-2">
           Weekly curated picks, modern interior trends, and exclusive discounts.
         </p>
 
-        {/* INPUT FIELD */}
+        {/* INPUT */}
         <div className="flex mt-6 gap-3 justify-center">
           <input
             type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
             className="px-4 py-3 w-72 border border-gray-300 rounded-xl outline-none focus:border-black"
           />
-          <button className="px-6 py-3 bg-black text-white rounded-xl hover:bg-gray-800 transition">
-            Subscribe
+
+          <button
+            onClick={handleSubscribe}
+            disabled={loading}
+            className="px-6 py-3 bg-black text-white rounded-xl hover:bg-gray-800 transition disabled:opacity-50"
+          >
+            {loading ? "Subscribing..." : "Subscribe"}
           </button>
         </div>
+
+        {/* MESSAGE */}
+        {message && (
+          <p className="text-center text-sm mt-4 text-gray-700">
+            {message}
+          </p>
+        )}
       </div>
 
+      {/* 👇 REST OF YOUR FOOTER (UNCHANGED) */}
       {/* MAIN FOOTER CONTENT */}
       <div className="max-w-7xl mx-auto px-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-18 mt-10">
-
         {/* BRAND */}
         <div>
           <h1 className="text-4xl font-bold tracking-wide">FUNIO</h1>
           <p className="text-gray-700 mt-3 leading-relaxed">
-            Crafted for comfort. Designed for elegance.  
+            Crafted for comfort. Designed for elegance.
             Your luxury home journey starts here.
           </p>
 
-          {/* SOCIAL ICONS */}
           <div className="flex gap-5 mt-6">
             {[FaInstagram, FaFacebookF, FaPinterestP, FaTwitter].map((Icon, i) => (
               <div
@@ -55,24 +119,12 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-4 tracking-wide">Shop</h3>
           <ul className="space-y-3 text-gray-700">
-            <li className="hover:text-black hover:translate-x-1 transition">
-              <Link to="/shop">Living Room</Link>
-            </li>
-            <li className="hover:text-black hover:translate-x-1 transition">
-              <Link to="/shop">Bedroom</Link>
-            </li>
-            <li className="hover:text-black hover:translate-x-1 transition">
-              <Link to="/collections/sofas">Sofas</Link>
-            </li>
-            <li className="hover:text-black hover:translate-x-1 transition">
-              <Link to="/collections/lighting">Lighting</Link>
-            </li>
-            <li className="hover:text-black hover:translate-x-1 transition">
-              <Link to="/collections/tables">Tables</Link>
-            </li>
-            <li className="hover:text-black hover:translate-x-1 transition">
-              <Link to="/shop">Office</Link>
-            </li>
+            <li><Link to="/shop">Living Room</Link></li>
+            <li><Link to="/shop">Bedroom</Link></li>
+            <li><Link to="/collections/sofas">Sofas</Link></li>
+            <li><Link to="/collections/lighting">Lighting</Link></li>
+            <li><Link to="/collections/tables">Tables</Link></li>
+            <li><Link to="/shop">Office</Link></li>
           </ul>
         </div>
 
@@ -80,64 +132,43 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-4 tracking-wide">Customer Support</h3>
           <ul className="space-y-3 text-gray-700">
-            <li className="hover:text-black hover:translate-x-1 transition">
-              <Link to="/faq">FAQ</Link>
-            </li>
-            <li className="hover:text-black hover:translate-x-1 transition">
-              <Link to="/shipping">Shipping</Link>
-            </li>
-            <li className="hover:text-black hover:translate-x-1 transition">
-              <Link to="/refund">Refund Policy</Link>
-            </li>
-            <li className="hover:text-black hover:translate-x-1 transition">
-              <Link to="/track-order">Order Tracking</Link>
-            </li>
-            <li className="hover:text-black hover:translate-x-1 transition">
-              <Link to="/support">Help Center</Link>
-            </li>
+            <li><Link to="/faq">FAQ</Link></li>
+            <li><Link to="/shipping">Shipping</Link></li>
+            <li><Link to="/refund">Refund Policy</Link></li>
+            <li><Link to="/track-order">Order Tracking</Link></li>
+            <li><Link to="/support">Help Center</Link></li>
           </ul>
         </div>
 
         {/* CONTACT */}
         <div>
           <h3 className="text-lg font-semibold mb-4 tracking-wide">Contact</h3>
-
           <ul className="space-y-4 text-gray-700">
             <li className="flex items-center gap-3">
-              <FiMapPin className="text-xl" /> New Delhi, India
+              <FiMapPin /> New Delhi, India
             </li>
             <li className="flex items-center gap-3">
-              <FiPhone className="text-xl" /> +91 98765 43210
+              <FiPhone /> +91 98765 43210
             </li>
             <li className="flex items-center gap-3">
-              <FiMail className="text-xl" /> support@funio.com
+              <FiMail /> support@funio.com
             </li>
           </ul>
         </div>
-
       </div>
 
       {/* BOTTOM BAR */}
       <div className="mt-20 border-t border-gray-300 pt-6">
         <div className="max-w-7xl mx-auto px-10 flex flex-col sm:flex-row justify-between text-gray-600 text-sm">
-
           <p>© {new Date().getFullYear()} FUNIO — Crafted for Modern Living.</p>
 
-          <div className="flex items-center gap-6 mt-3 sm:mt-0">
-            <Link to="/privacy" className="hover:text-black">Privacy</Link>
-            <Link to="/terms" className="hover:text-black">Terms</Link>
-            <Link to="/contact" className="hover:text-black">Contact</Link>
+          <div className="flex gap-6">
+            <Link to="/privacy">Privacy</Link>
+            <Link to="/terms">Terms</Link>
+            <Link to="/contact">Contact</Link>
           </div>
-
-          <div className="flex gap-4 mt-3 sm:mt-0">
-            <img src="/payments/visa.png" alt="Visa" className="h-5 opacity-70" />
-            <img src="/payments/mastercard.png" alt="Mastercard" className="h-5 opacity-70" />
-            <img src="/payments/paypal.png" alt="PayPal" className="h-5 opacity-70" />
-          </div>
-
         </div>
       </div>
-
     </footer>
   );
 };
