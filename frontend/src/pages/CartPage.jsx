@@ -78,7 +78,7 @@ export default function CartPage() {
   );
 
   return (
-    <div className="pt-28 px-6 mx-auto max-w-5xl">
+    <div className="pt-30 px-6 mx-auto max-w-5xl">
       <h1 className="text-3xl font-semibold mb-6">My Cart</h1>
 
       {loading ? (

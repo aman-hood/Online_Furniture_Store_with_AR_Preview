@@ -201,7 +201,7 @@ const Address = ({ user, setUser, saving, setSaving }) => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 ">
       <Field label="Street Address" name="address" value={user.address} onChange={handleChange} />
       <TwoCol>
         <Field label="City" name="city" value={user.city} onChange={handleChange} />

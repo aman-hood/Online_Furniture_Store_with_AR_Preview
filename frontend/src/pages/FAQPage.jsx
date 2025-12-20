@@ -45,7 +45,7 @@ const Faq = () => {
     <section className="bg-[#fbf9f6] min-h-screen">
 
       {/* HERO */}
-      <div className="max-w-5xl mx-auto px-6 pt-10 pb-14 text-center">
+      <div className="max-w-5xl mx-auto px-6 pt-30 pb-14 text-center">
         <p className="uppercase text-[12px] tracking-[0.35em] text-[#7a7166] mb-4">
           Help & Support
         </p>
@@ -91,24 +91,8 @@ const Faq = () => {
         </div>
       </div>
 
-      {/* BACK TO HOME BUTTON */}
-      <div className="text-center pb-2">
-        <Link
-          to="/"
-          className="
-            inline-flex items-center gap-2
-            px-6 py-3
-            rounded-full
-            border border-[#d8d2c7]
-            text-sm font-medium text-[#3f3a33]
-            bg-transparent
-            hover:bg-[#f4eee6]
-            transition
-          "
-        >
-          Back to Home
-        </Link>
-      </div>
+  
+      
 
     </section>
   );

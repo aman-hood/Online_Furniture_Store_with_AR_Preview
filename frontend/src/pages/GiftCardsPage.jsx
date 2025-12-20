@@ -17,7 +17,7 @@ const GiftCard = () => {
     <section className="bg-[#fbf9f6] min-h-screen">
 
       {/* HERO */}
-      <div className="max-w-7xl mx-auto px-6 pt-20 pb-12 text-center">
+      <div className="max-w-7xl mx-auto px-6 pt-30 pb-12 text-center">
         <p className="uppercase text-[12px] tracking-[0.35em] text-[#7a7166] mb-4">
           Thoughtful Gifting
         </p>

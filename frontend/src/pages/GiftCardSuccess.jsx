@@ -12,7 +12,7 @@ const GiftCardSuccess = () => {
   const message = state?.message || "";
 
   return (
-    <section className="bg-[#fbf9f6] min-h-screen flex items-center justify-center px-6">
+    <section className="bg-[#fbf9f6] min-h-screen flex items-center justify-center px-6 pt-30">
       <div className="max-w-xl w-full bg-white rounded-3xl p-10 text-center shadow-[0_30px_70px_rgba(0,0,0,0.12)]">
 
         {/* ICON */}

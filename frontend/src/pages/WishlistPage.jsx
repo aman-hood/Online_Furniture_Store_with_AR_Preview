@@ -60,7 +60,7 @@ const handleMoveAllToCart = async () => {
 
 
   return (
-    <section className="min-h-screen pt-24 px-6">
+    <section className="min-h-screen pt-30 px-6">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl mb-6">My Wishlist</h1>
 

@@ -88,7 +88,7 @@ const SupportPage = () => {
       {/* PAGE */}
       <section
         className={`
-          bg-[#fbf9f6] min-h-screen pt-15 pb-4 px-6
+          bg-[#fbf9f6] min-h-screen pt-30 pb-4 px-6
           transition-all duration-700
           ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
         `}

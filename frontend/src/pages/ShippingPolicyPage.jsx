@@ -41,7 +41,7 @@ const PolicyItem = ({ icon: Icon, title, children }) => {
 /* ---------------- Page ---------------- */
 const ShippingPolicyPage = () => {
   return (
-    <section className="bg-[#fbf9f6] min-h-screen pt-28 pb-32 px-6">
+    <section className="bg-[#fbf9f6] min-h-screen pt-30 pb-32 px-6">
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}

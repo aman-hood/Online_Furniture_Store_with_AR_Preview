@@ -20,7 +20,7 @@ const ShopPage = () => {
   }, []);
 
   return (
-    <div className="pt-28 px-10 max-w-7xl mx-auto">
+    <div className="pt-30 px-10 max-w-7xl mx-auto">
       
       {/* Title */}
       <h2 className="text-3xl font-semibold tracking-wide mb-6">

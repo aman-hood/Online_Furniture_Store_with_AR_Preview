@@ -27,7 +27,7 @@ const ProductPage = () => {
 
   if (loading) {
     return (
-      <div className="pt-28 px-6 max-w-6xl mx-auto">
+      <div className="pt-30 px-6 max-w-6xl mx-auto">
         <p>Loading...</p>
       </div>
     );

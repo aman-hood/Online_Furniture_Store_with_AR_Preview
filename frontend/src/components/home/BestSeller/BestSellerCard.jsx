@@ -66,10 +66,11 @@ const ProductCard = ({ product }) => {
         </button>
 
         <img
-          src={product.imageUrl || null}
-          alt={product.name}
-          className="w-full h-full object-cover pointer-events-none"
-        />
+  src={`http://localhost:3000${product.img}`}
+  alt={product.name}
+  className="w-full h-full object-cover pointer-events-none"
+/>
+
       </div>
 
       <p className="text-gray-600 text-sm mt-3">{product.name}</p>

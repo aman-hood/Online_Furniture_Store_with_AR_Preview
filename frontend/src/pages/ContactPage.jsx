@@ -2,7 +2,7 @@ import React from "react";
 
 export default function ContactPage() {
   return (
-    <div className="pt-28 px-6 max-w-5xl mx-auto">
+    <div className="pt-30 px-6 max-w-5xl mx-auto">
       <h1 className="text-3xl font-semibold mb-4">Contact Us</h1>
       <p className="text-gray-700 mb-8">We'd love to hear from you. Reach out with any questions.</p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

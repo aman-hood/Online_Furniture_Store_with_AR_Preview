@@ -30,7 +30,7 @@ const PremiumPrivacyPolicy = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#d2cfc8] text-[#1A1816] selection:bg-[#E7DFD4] font-sans">
+    <div className="min-h-screen bg-[#d2cfc8] text-[#1A1816] selection:bg-[#E7DFD4] font-sans pt-30">
       
       {/* NAV */}
       <nav className="h-20 border-b border-[#E7DFD4]/40 flex items-center px-12 justify-between bg-white/60 backdrop-blur-md sticky top-0 z-50">

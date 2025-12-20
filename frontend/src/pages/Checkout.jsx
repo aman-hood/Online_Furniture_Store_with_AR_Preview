@@ -17,7 +17,7 @@ const Checkout = () => {
   }
 
   return (
-    <section className="min-h-screen bg-[#fbf9f6] flex items-center justify-center px-6">
+    <section className="min-h-screen bg-[#fbf9f6] flex items-center justify-center px-6 pt-30">
 
       <div className="max-w-lg w-full bg-white rounded-3xl shadow-[0_30px_80px_rgba(0,0,0,0.12)] p-10">
 
