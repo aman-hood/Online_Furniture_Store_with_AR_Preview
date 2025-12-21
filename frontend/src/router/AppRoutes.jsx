@@ -34,7 +34,8 @@ import ProductDetailPage from "../pages/ProductDetailPage";
 import WishlistPage from "../pages/WishlistPage";
 import CartPage from "../pages/CartPage";
 
-import ShopByRoomPage from "../pages/ShopByRoomPage";
+import RoomOverviewPage from "../pages/RoomOverviewPage";
+import RoomCategoryPage from "../pages/RoomCategoryPage";
 
 import AdminProducts from "../pages/AdminProducts";
 import ProductForm from "../components/admin/ProductForm";
@@ -59,7 +60,8 @@ const AppRoutes = () => {
         <Route path="/shop" element={<ShopPage />} />
         <Route path="/product/:id" element={<ProductPage />} />
 
-        <Route path="/shop/:room" element={<ShopByRoomPage />} />
+        <Route path="/shop/:room" element={<RoomOverviewPage  />} />
+        <Route path="/shop/:room/:category" element={<RoomCategoryPage />} />
 
         {/* Blog */}
         <Route path="/blog" element={<BlogList />} />
