@@ -1,53 +1,86 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { listProducts } from "../services/productService";
+import { getRoomBySlug } from "../services/roomService";
+import RoomHotspotSection from "./RoomHotspotSection";
 
-const RoomCategoryPage = () => {
-  const { room, category } = useParams();
+const RoomOverviewPage = () => {
+  const { room } = useParams();
   const navigate = useNavigate();
+
+  const [roomData, setRoomData] = useState(null);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const load = async () => {
+      // ✅ get room data (image comes from here)
+      const roomRes = await getRoomBySlug(room);
+      setRoomData(roomRes);
+
+      // products for that room
       const all = await listProducts();
       const filtered = all.filter(
-        (p) =>
-          p.room?.toLowerCase() === room.toLowerCase() &&
-          p.category === category
+        (p) => p.room?.toLowerCase() === room.toLowerCase()
       );
       setProducts(filtered);
     };
+
     load();
-  }, [room, category]);
+  }, [room]);
+
+  // categories with image (option 2)
+  const categories = useMemo(() => {
+    const map = {};
+    products.forEach((p) => {
+      if (!map[p.category]) {
+        map[p.category] = p.img; // or p.img
+      }
+    });
+    return Object.entries(map);
+  }, [products]);
+
+  if (!roomData) return null;
 
   return (
     <div className="max-w-7xl mx-auto px-8 pt-28">
-      <h1 className="text-3xl font-semibold capitalize mb-8">
-        {category.replace("-", " ")} for {room.replace("-", " ")}
+
+      {/* Room Title */}
+      <h1 className="text-4xl font-semibold capitalize mb-10">
+        {roomData.title}
       </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {products.map((p) => (
+      {/* ===================== */}
+      {/* CATEGORY CARDS */}
+      {/* ===================== */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 mb-16">
+        {categories.map(([cat, image]) => (
           <div
-            key={p._id}
-            onClick={() => navigate(`/products/${p._id}`)}
-            className="group relative cursor-pointer overflow-hidden rounded-xl bg-white"
+            key={cat}
+            onClick={() => navigate(`/shop/${room}/${cat}`)}
+            className="cursor-pointer rounded-xl border bg-white p-6 
+                       flex flex-col items-center gap-4
+                       hover:shadow-lg transition"
           >
             <img
-              src={`${import.meta.env.VITE_BACKEND_URL}${p.img}`}
-              className="h-64 w-full object-cover group-hover:scale-105 transition"
+              src={`${import.meta.env.VITE_BACKEND_URL}${image}`}
+              alt={cat}
+              className="h-20 w-20 object-contain"
             />
-
-            <div className="absolute inset-0 bg-black/50 opacity-0 
-              group-hover:opacity-100 transition flex flex-col justify-end p-4">
-              <p className="text-white font-medium">{p.name}</p>
-              <p className="text-white text-sm">₹{p.price}</p>
-            </div>
+            <p className="capitalize font-medium">{cat}</p>
           </div>
         ))}
       </div>
+
+      {/* ===================== */}
+      {/* IKEA-STYLE ROOM IMAGE */}
+      {/* ===================== */}
+      <RoomHotspotSection
+        roomImage={roomData.image}   // 🔥 FROM API
+        products={products}
+      />
+
     </div>
   );
 };
 
-export default RoomCategoryPage;
+export default RoomOverviewPage;

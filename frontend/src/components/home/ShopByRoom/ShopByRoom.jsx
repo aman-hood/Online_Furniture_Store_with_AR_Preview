@@ -34,7 +34,7 @@ const ShopByRoom = () => {
           <RoomCard
             key={room._id}
             title={room.title}
-            img={`${import.meta.env.VITE_BACKEND_URL}${room.image}`}
+            img={`${import.meta.env.VITE_BACKEND_URL}${room.img}`}
             slug={room.slug}
             variant="tall"
             textPosition={i === 1 ? "bottom-left" : "top-left"}
@@ -48,7 +48,7 @@ const ShopByRoom = () => {
           <RoomCard
             key={room._id}
             title={room.title}
-            img={`${import.meta.env.VITE_BACKEND_URL}${room.image}`}
+            img={`${import.meta.env.VITE_BACKEND_URL}${room.img}`}
             slug={room.slug}
             variant="wide"
             textPosition="bottom-left"
