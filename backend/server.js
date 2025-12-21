@@ -14,7 +14,8 @@ import categoryRoute from "./routes/categoryRoute.js";
 import { Category } from "./models/categoryModel.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import newsletterRoute from "./routes/newsletterRoute.js";
-
+import roomRoutes from "./routes/roomRoutes.js";
+import path from "path";
 
 const app = express();
 
@@ -43,6 +44,10 @@ app.use("/api/profile", profileRoute);
 app.use("/api/categories", categoryRoute);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/newsletter", newsletterRoute);
+app.use("/images", express.static(path.join(process.cwd(), "public/images")));
+app.use("/api/rooms", roomRoutes);
+
+
 
 const PORT = process.env.PORT || 3000;
 

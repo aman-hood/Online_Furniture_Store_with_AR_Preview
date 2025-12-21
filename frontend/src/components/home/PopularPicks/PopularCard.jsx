@@ -58,7 +58,7 @@ const PopularCard = ({ product }) => {
 
         {(product.imageUrl || product.img) && (
           <img
-            src={product.imageUrl || product.img}
+            src={`http://localhost:3000${product.img}`}
             alt={product.name}
             className="w-full h-full object-cover transition group-hover:scale-110"
           />

@@ -1,0 +1,13 @@
+import mongoose from "mongoose";
+
+const roomSchema = new mongoose.Schema(
+  {
+    title: { type: String, required: true },
+    slug: { type: String, required: true, unique: true },
+    image: { type: String, required: true }, // /images/rooms/bedroom.jpg
+    isActive: { type: Boolean, default: true },
+  },
+  { timestamps: true }
+);
+
+export default mongoose.model("Room", roomSchema);

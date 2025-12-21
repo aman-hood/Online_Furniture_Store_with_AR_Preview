@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RoomCard from "./RoomCard";
-import { roomData } from "./roomData";
+import { getRooms } from "../../../services/roomService";
 
 const ShopByRoom = () => {
+  const [rooms, setRooms] = useState([]);
+
+  useEffect(() => {
+    const loadRooms = async () => {
+      try {
+        const data = await getRooms();
+        setRooms(data);
+      } catch {
+        setRooms([]);
+      }
+    };
+    loadRooms();
+  }, []);
+
+  if (!rooms.length) return null;
+
   return (
     <section className="py-20 bg-white max-w-7xl mx-auto px-8">
-      
-      {/* TITLE */}
       <h2 className="text-4xl pb-3 tracking-wider text-center font-semibold">
         Shop by Room
       </h2>
@@ -14,44 +28,32 @@ const ShopByRoom = () => {
         Design each space with the perfect mood.
       </p>
 
-      {/* ROW 1 – 3 TALL CARDS */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[360px]">
-
-        <RoomCard
-          title={roomData[0].title}
-          img={roomData[0].img}
-          variant="tall"
-          textPosition="top-left"
-        />
-        <RoomCard
-          title={roomData[1].title}
-          img={roomData[1].img}
-          variant="tall"
-          textPosition="bottom-left"
-        />
-        <RoomCard
-          title={roomData[2].title}
-          img={roomData[2].img}
-          variant="tall"
-          textPosition="top-right"
-        />
+      {/* ROW 1 */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {rooms.slice(0, 3).map((room, i) => (
+          <RoomCard
+            key={room._id}
+            title={room.title}
+            img={`${import.meta.env.VITE_BACKEND_URL}${room.image}`}
+            slug={room.slug}
+            variant="tall"
+            textPosition={i === 1 ? "bottom-left" : "top-left"}
+          />
+        ))}
       </div>
 
-      {/* ROW 2 – 2 WIDE CARDS */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6 min-h-[260px]">
-
-        <RoomCard
-          title={roomData[3].title}
-          img={roomData[3].img}
-          variant="wide"
-          textPosition="top-left"
-        />
-        <RoomCard
-          title={roomData[4].title}
-          img={roomData[4].img}
-          variant="wide"
-          textPosition="bottom-left"
-        />
+      {/* ROW 2 */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
+        {rooms.slice(3, 5).map((room) => (
+          <RoomCard
+            key={room._id}
+            title={room.title}
+            img={`${import.meta.env.VITE_BACKEND_URL}${room.image}`}
+            slug={room.slug}
+            variant="wide"
+            textPosition="bottom-left"
+          />
+        ))}
       </div>
     </section>
   );

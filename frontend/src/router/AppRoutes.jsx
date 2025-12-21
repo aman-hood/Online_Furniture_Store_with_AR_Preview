@@ -30,8 +30,11 @@ import TrackOrderPage from "../pages/TrackOrderPage";
 
 import Collections from "../pages/Collections";
 import CategoryPage from "../pages/CategoryPage";
+import ProductDetailPage from "../pages/ProductDetailPage";
 import WishlistPage from "../pages/WishlistPage";
 import CartPage from "../pages/CartPage";
+
+import ShopByRoomPage from "../pages/ShopByRoomPage";
 
 import AdminProducts from "../pages/AdminProducts";
 import ProductForm from "../components/admin/ProductForm";
@@ -55,6 +58,8 @@ const AppRoutes = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/shop" element={<ShopPage />} />
         <Route path="/product/:id" element={<ProductPage />} />
+
+        <Route path="/shop/:room" element={<ShopByRoomPage />} />
 
         {/* Blog */}
         <Route path="/blog" element={<BlogList />} />
@@ -87,6 +92,7 @@ const AppRoutes = () => {
         {/* Collections */}
         <Route path="/collections" element={<Collections />} />
         <Route path="/collections/:category" element={<CategoryPage />} />
+        <Route path="/products/:id" element={<ProductDetailPage />} /> 
 
         {/* Wishlist / Cart */}
         <Route path="/wishlist" element={<WishlistPage />} />
