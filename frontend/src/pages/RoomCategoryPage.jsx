@@ -33,7 +33,7 @@ const RoomOverviewPage = () => {
     const map = {};
     products.forEach((p) => {
       if (!map[p.category]) {
-        map[p.category] = p.img; // or p.img
+        map[p.category] = p.img; 
       }
     });
     return Object.entries(map);
@@ -53,31 +53,54 @@ const RoomOverviewPage = () => {
       {/* CATEGORY CARDS */}
       {/* ===================== */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 mb-16">
-        {categories.map(([cat, image]) => (
-          <div
-            key={cat}
-            onClick={() => navigate(`/shop/${room}/${cat}`)}
-            className="cursor-pointer rounded-xl border bg-white p-6 
-                       flex flex-col items-center gap-4
-                       hover:shadow-lg transition"
-          >
-            <img
-              src={`${import.meta.env.VITE_BACKEND_URL}${image}`}
-              alt={cat}
-              className="h-20 w-20 object-contain"
-            />
-            <p className="capitalize font-medium">{cat}</p>
-          </div>
-        ))}
-      </div>
+
+  {/* 🔙 BACK TO SHOP BY ROOM CARD */}
+  <div
+    onClick={() =>
+      navigate("/", { state: { scrollTo: "shop-by-room" } })
+    }
+    className="cursor-pointer rounded-xl border-2 border-dashed
+               bg-[#f6f4ef] p-6 flex flex-col items-center gap-4
+               hover:bg-white hover:shadow-lg transition"
+  >
+    <div className="h-20 w-20 flex items-center justify-center
+                    rounded-full border text-2xl">
+      ←
+    </div>
+    <p className="font-medium text-center">
+      Back to<br />Shop by Room
+    </p>
+  </div>
+
+  {/* 🪑 CATEGORY CARDS */}
+  {categories.map(([cat, image]) => (
+    <div
+      key={cat}
+      onClick={() => navigate(`/collections/${cat}`)}
+      className="cursor-pointer rounded-xl border bg-white p-6 
+                 flex flex-col items-center gap-4
+                 hover:shadow-lg transition"
+    >
+      <img
+        src={`${import.meta.env.VITE_BACKEND_URL}${image}`}
+        alt={cat}
+        className="h-20 w-20 object-contain"
+      />
+      <p className="capitalize font-medium">{cat}</p>
+    </div>
+  ))}
+</div>
+
 
       {/* ===================== */}
       {/* IKEA-STYLE ROOM IMAGE */}
       {/* ===================== */}
       <RoomHotspotSection
-        roomImage={roomData.image}   // 🔥 FROM API
+        roomImg={roomData.img}
+        roomSlug={room}
         products={products}
       />
+
 
     </div>
   );

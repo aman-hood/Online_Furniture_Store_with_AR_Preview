@@ -20,7 +20,7 @@ const ShopByRoom = () => {
   if (!rooms.length) return null;
 
   return (
-    <section className="py-20 bg-white max-w-7xl mx-auto px-8">
+    <section id="shop-by-room" className="py-20 bg-white max-w-7xl mx-auto px-8">
       <h2 className="text-4xl pb-3 tracking-wider text-center font-semibold">
         Shop by Room
       </h2>

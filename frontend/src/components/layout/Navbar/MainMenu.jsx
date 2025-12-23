@@ -55,39 +55,50 @@ const MainMenu = ({ isHome }) => {
   const searchRef = useRef(null);
 
   /* INITIAL LOAD */
-  useEffect(() => {
-    const initNavbar = async () => {
-      try {
-        const userRes = await fetch("http://localhost:3000/api/users/me", {
-          credentials: "include",
-        });
-        const userData = await userRes.json();
-        setUser(userData.success ? userData.user : null);
+useEffect(() => {
+  const initNavbar = async () => {
+    try {
+      // USER
+      const userRes = await fetch("http://localhost:3000/api/users/me", {
+        credentials: "include",
+      });
+      const userData = await userRes.json();
+      setUser(userData.success ? userData.user : null);
 
-        const wlRes = await fetch("http://localhost:3000/api/wishlist", {
-          credentials: "include",
-        });
-        const wlData = await wlRes.json();
-        setWishlistCount(wlData?.wishlist?.items?.length || 0);
+      // WISHLIST
+      const wlRes = await fetch("http://localhost:3000/api/wishlist", {
+        credentials: "include",
+      });
+      const wlData = await wlRes.json();
+      setWishlistCount(
+        wlData?.wishlist?.items?.length ?? 0
+      );
 
-        const cartRes = await fetch("http://localhost:3000/api/cart", {
-          credentials: "include",
-        });
-        const cartData = await cartRes.json();
-        setCartCount(
-          cartData?.items?.length ??
-            cartData?.cart?.items?.length ??
-            0
-        );
-      } catch {
-        setUser(null);
-        setWishlistCount(0);
-        setCartCount(0);
-      }
-    };
+      // CART (🔥 quantity-aware)
+      const cartRes = await fetch("http://localhost:3000/api/cart", {
+        credentials: "include",
+      });
+      const cartData = await cartRes.json();
 
-    initNavbar();
-  }, []);
+      const cartItems =
+        cartData?.items ?? cartData?.cart?.items ?? [];
+
+      const totalQty = cartItems.reduce(
+        (sum, it) => sum + (it.quantity || 1),
+        0
+      );
+
+      setCartCount(totalQty);
+    } catch {
+      setUser(null);
+      setWishlistCount(0);
+      setCartCount(0);
+    }
+  };
+
+  initNavbar();
+}, []);
+
 
   /* CLOSE SEARCH ON OUTSIDE CLICK */
   useEffect(() => {
