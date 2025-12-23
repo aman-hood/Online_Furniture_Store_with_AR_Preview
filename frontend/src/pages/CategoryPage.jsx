@@ -47,7 +47,7 @@ export default function CategoryPage() {
   }, [all, sortType, priceRange]);
 
  return (
-  <div className="bg-[#e8e4d8] min-h-screen w-full">
+  <div className="bg-[#f6f4ef] min-h-screen w-full">
 
     {/* 🌿 CATEGORY HEADER */}
     <section className="pt-30 pb-12 px-10 text-center">

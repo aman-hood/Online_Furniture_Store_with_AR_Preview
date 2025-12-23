@@ -20,10 +20,11 @@ const ShopPage = () => {
   }, []);
 
   return (
-    <div className="pt-30 px-10 max-w-7xl mx-auto">
+    <div className="pt-30 px-10  mx-auto bg-[#d2cfc8]">
       
       {/* Title */}
-      <h2 className="text-3xl font-semibold tracking-wide mb-6">
+      <h2 style={{ fontFamily: "'Great Vibes', cursive" }}
+       className="text-6xl  tracking-wide capitalize text-[#1a1816] mb-3">
         Shop All Products
       </h2>
 

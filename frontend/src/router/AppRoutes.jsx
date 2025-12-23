@@ -6,11 +6,13 @@ import ShopPage from "../pages/ShopPage";
 import ProductPage from "../pages/ProductPage";
 import BlogList from "../pages/blog/BlogList";
 import BlogGrid from "../pages/blog/BlogGrid";
-import BlogPost from "../pages/blog/BlogPost";
+import BlogDetails from "../pages/blog/BlogDetails";
+import AdminBlogList from "../pages/admin/AdminBlogList";
+import AdminCreateBlog from "../pages/admin/AdminCreateBlog";
+import UserCreateBlog from "../pages/blog/UserCreateBlog";
+
+
 import Search from "../pages/Search";
-import ProductInfo from "../pages/product/ProductInfo";
-import CareWarranty from "../pages/product/CareWarranty";
-import Help from "../pages/product/Help";
 
 import AboutPage from "../pages/AboutPage";
 import ContactPage from "../pages/ContactPage";
@@ -39,6 +41,7 @@ import RoomCategoryPage from "../pages/RoomCategoryPage";
 
 import AdminProducts from "../pages/AdminProducts";
 import ProductForm from "../components/admin/ProductForm";
+import AdminMessages from "../components/admin/AdminMessages";
 
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
@@ -64,14 +67,17 @@ const AppRoutes = () => {
         <Route path="/shop/:room/:category" element={<RoomCategoryPage />} />
 
         {/* Blog */}
-        <Route path="/blog" element={<BlogList />} />
-        <Route path="/blog/grid" element={<BlogGrid />} />
-        <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/blog" element={<BlogGrid />} />
+        <Route path="/blog/list" element={<BlogList />} />
+        <Route path="/blog/:slug" element={<BlogDetails />} />
+        <Route path="/admin/blogs" element={<AdminBlogList />} />
+        <Route path="/admin/blogs/new" element={<AdminCreateBlog />} />
+        <Route path="/blog/write" element={<UserCreateBlog />} />
+
+
 
         <Route path="/search" element={<Search />} />
-        <Route path="/product-info" element={<ProductInfo />} />
-        <Route path="/care-warranty" element={<CareWarranty />} />
-        <Route path="/help" element={<Help />} />
+       
 
         {/* Info Pages */}
         <Route path="/about" element={<AboutPage />} />
@@ -95,6 +101,8 @@ const AppRoutes = () => {
         <Route path="/collections" element={<Collections />} />
         <Route path="/collections/:category" element={<CategoryPage />} />
         <Route path="/products/:id" element={<ProductDetailPage />} /> 
+        <Route path="/admin/messages" element={<AdminMessages />} />
+
 
         {/* Wishlist / Cart */}
         <Route path="/wishlist" element={<WishlistPage />} />

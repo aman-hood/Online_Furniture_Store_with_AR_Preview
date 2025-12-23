@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import AppRoutes from "./router/AppRoutes";
 import ScrollToTop from "./common/ScrollToTop";
 import { useApp } from "/src/context/AppContext";
+import { Toaster } from "react-hot-toast";
 
 
 export default function App() {
@@ -36,6 +37,7 @@ export default function App() {
     <>
       <ScrollToTop />
       <AppRoutes />
+      <Toaster position="top-right" />
     </>
   );
 }

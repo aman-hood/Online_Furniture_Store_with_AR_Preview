@@ -30,23 +30,11 @@ const PremiumPrivacyPolicy = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#d2cfc8] text-[#1A1816] selection:bg-[#E7DFD4] font-sans pt-30">
+    <div className="min-h-screen bg-[#f6f4ef] text-[#1A1816] font-sans pt-30">
       
-      {/* NAV */}
-      <nav className="h-20 border-b border-[#E7DFD4]/40 flex items-center px-12 justify-between bg-white/60 backdrop-blur-md sticky top-0 z-50">
-        <span className="text-[12px] tracking-[0.4em] uppercase font-semibold">
-          Homespace
-        </span>
+      
 
-        <Link
-          to="/shop"
-          className="text-[11px] uppercase tracking-widest border border-[#1A1816] px-5 py-2 hover:bg-[#1A1816] hover:text-white transition-all duration-500"
-        >
-          Back to Shop
-        </Link>
-      </nav>
-
-      <main className="max-w-7xl mx-auto px-8 pt-20 pb-32">
+      <main className="max-w-7xl mx-auto px-8  pb-32">
 
         {/* HEADER */}
         <header className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-24 items-end">

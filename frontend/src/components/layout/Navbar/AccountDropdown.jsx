@@ -35,7 +35,6 @@ export default function AccountDropdown() {
 
   useEffect(() => {
     checkLogin();
-
     return () => {
       if (closeTimeout.current) clearTimeout(closeTimeout.current);
     };
@@ -46,7 +45,7 @@ export default function AccountDropdown() {
   // -------------------------
   const openMenu = () => {
     if (closeTimeout.current) clearTimeout(closeTimeout.current);
-    checkLogin(); // refresh auth state
+    checkLogin();
     setOpen(true);
   };
 
@@ -107,39 +106,32 @@ export default function AccountDropdown() {
           "
         >
           {!isLoggedIn ? (
-            <>
-  <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3">
+              <Link
+                to="/signup"
+                className="group w-full rounded-2xl
+                           bg-[#F6F1EA] px-4 py-3
+                           text-sm font-medium text-gray-800
+                           flex items-center justify-between
+                           hover:bg-[#EFE7DC]
+                           transition"
+              >
+                <span>Create an account</span>
+                <span className="opacity-60 group-hover:translate-x-0.5 transition">
+                  →
+                </span>
+              </Link>
 
-    {/* Primary action */}
-    <Link
-      to="/signup"
-      className="group w-full rounded-2xl
-                 bg-[#F6F1EA] px-4 py-3
-                 text-sm font-medium text-gray-800
-                 flex items-center justify-between
-                 hover:bg-[#EFE7DC]
-                 transition"
-    >
-      <span>Create an account</span>
-      <span className="opacity-60 group-hover:translate-x-0.5 transition">
-        →
-      </span>
-    </Link>
-
-    {/* Secondary action */}
-    <div className="text-center text-xs text-gray-500">
-      Already have an account?{" "}
-      <Link
-        to="/login"
-        className="text-gray-700 font-medium hover:text-gray-900"
-      >
-        Log in
-      </Link>
-    </div>
-
-  </div>
-</>
-
+              <div className="text-center text-xs text-gray-500">
+                Already have an account?{" "}
+                <Link
+                  to="/login"
+                  className="text-gray-700 font-medium hover:text-gray-900"
+                >
+                  Log in
+                </Link>
+              </div>
+            </div>
           ) : (
             <>
               <div className="pb-4 mb-3 border-b border-gray-300/40">
@@ -160,6 +152,7 @@ export default function AccountDropdown() {
                 </div>
               </Link>
 
+              {/* ===== ADMIN SECTION ===== */}
               {user?.role === "admin" && (
                 <>
                   <Link
@@ -175,6 +168,16 @@ export default function AccountDropdown() {
                   >
                     ➕ Add Product
                   </Link>
+
+                  {/* 🔥 ADDED BLOG MANAGEMENT */}
+                  <Link
+                    to="/admin/blogs"
+                    className="block px-2 py-2 text-gray-700 text-sm border-b border-gray-300/40 rounded-md hover:bg-gray-200/60 transition"
+                  >
+                    📝 Manage Blogs
+                  </Link>
+
+                 
                 </>
               )}
 
