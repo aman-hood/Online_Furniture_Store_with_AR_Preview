@@ -1,19 +1,23 @@
 import mongoose from "mongoose";
 
-const blogSchema = new mongoose.Schema(
-  {
-    title: String,
-    slug: String,
-    excerpt: String,
-    content: String,
-    coverImage: String, // 👈 IMAGE URL STORED HERE
-    status: {
-      type: String,
-      enum: ["pending", "published"],
-      default: "pending",
-    },
+const blogSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  slug: { type: String, required: true, unique: true },
+  excerpt: String,
+  content: String,
+  coverImage: String,
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
   },
-  { timestamps: true }
-);
+  status: {
+    type: String,
+    enum: ["pending", "published"],
+    default: "pending",
+  },
+}, { timestamps: true });
 
-export default mongoose.model("Blog", blogSchema);
+const Blog = mongoose.model("Blog", blogSchema);
+
+export default Blog; // ✅ REQUIRED

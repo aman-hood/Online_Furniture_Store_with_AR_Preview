@@ -11,6 +11,8 @@ const AdminMessages = () => {
   const [activeMessage, setActiveMessage] = useState(null);
   const [replyText, setReplyText] = useState("");
   const [sending, setSending] = useState(false);
+  const [copiedId, setCopiedId] = useState(null);
+
 
   const loadMessages = async () => {
     try {
@@ -183,13 +185,21 @@ const AdminMessages = () => {
                     </button>
 
                     <button
-                      onClick={() =>
-                        navigator.clipboard.writeText(m.email)
-                      }
-                      className="px-4 py-2 text-sm rounded-full border hover:bg-gray-100 transition"
+                      onClick={async () => {
+                        await navigator.clipboard.writeText(m.email);
+                        setCopiedId(m._id);
+
+                        setTimeout(() => setCopiedId(null), 2000);
+                      }}
+                      className={`px-4 py-2 text-sm rounded-full border transition ${
+                        copiedId === m._id
+                          ? "bg-green-100 text-green-700 border-green-300"
+                          : "hover:bg-gray-100"
+                      }`}
                     >
-                      Copy Email
+                      {copiedId === m._id ? "Copied!" : "Copy Email"}
                     </button>
+
                   </div>
                 </div>
               </div>

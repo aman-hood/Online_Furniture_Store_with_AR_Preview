@@ -1,98 +1,154 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useApp } from "../context/AppContext";
+import { clearCart } from "../services/cartService";
 
 const Checkout = () => {
   const navigate = useNavigate();
+  const { setCartCount } = useApp();
   const { state } = useLocation();
 
-  // fallback safety
-  const amount = state?.amount || 0;
-  const email = state?.email || "Not provided";
-  const message = state?.message || "";
+  const [giftCode, setGiftCode] = useState("");
+  const [giftUsed, setGiftUsed] = useState(0);
 
-  // If user directly opens /checkout
-  if (!state) {
-    navigate("/gift-cards");
-    return null;
-  }
+  useEffect(() => {
+    if (!state) navigate("/", { replace: true });
+  }, [state, navigate]);
+
+  if (!state) return null;
+
+  const isGiftCard = state.type === "gift";
+  const isCart = state.type === "cart";
+
+  const total = isGiftCard ? state.amount : state.total;
+  const items = isCart ? state.items : [];
+
+  const finalTotal = Math.max(total - giftUsed, 0);
+
+  // 🎁 APPLY GIFT CARD
+  const applyGiftCard = async () => {
+    const res = await fetch("http://localhost:3000/api/giftcards/validate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code: giftCode }),
+    });
+
+    const data = await res.json();
+
+    if (data.valid) {
+      setGiftUsed(Math.min(data.balance, total));
+    } else {
+      alert("Invalid gift card");
+    }
+  };
+
+  // 💳 PAY
+  const handlePayment = async () => {
+    try {
+      // 🎁 BUYING A GIFT CARD
+      if (isGiftCard) {
+        const res = await fetch("http://localhost:3000/api/giftcards", {
+          method: "POST",
+          credentials: "include", // 🔥 REQUIRED
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            amount: state.amount,
+            email: state.email,
+            message: state.message,
+          }),
+        });
+
+        if (!res.ok) throw new Error("Gift card creation failed");
+
+        const data = await res.json();
+
+        navigate("/gift-card/success", {
+          replace: true,
+          state: {
+            amount: state.amount,
+            email: state.email,
+            message: state.message,
+            code: data.code, // ✅ REAL CODE
+          },
+        });
+
+        return;
+      }
+
+      // 🛒 CART CHECKOUT
+      await fetch("http://localhost:3000/api/orders", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: items.map((it) => ({
+            product: it.product._id,
+            name: it.product.name,
+            price: it.product.price,
+            quantity: it.quantity,
+            img: it.product.img,
+          })),
+          totalAmount: finalTotal,
+          giftCode: giftUsed > 0 ? giftCode : null,
+          giftUsed,
+        }),
+      });
+
+      await clearCart();
+      setCartCount(0);
+      navigate("/order-success");
+    } catch (err) {
+      console.error("PAYMENT ERROR:", err);
+      alert("Payment failed. Check console.");
+    }
+  };
 
   return (
     <section className="min-h-screen bg-[#fbf9f6] flex items-center justify-center px-6 pt-30">
+      <div className="max-w-lg w-full bg-white rounded-3xl p-10 shadow-xl">
 
-      <div className="max-w-lg w-full bg-white rounded-3xl shadow-[0_30px_80px_rgba(0,0,0,0.12)] p-10">
+        {isCart && (
+          <>
+            <div className="mb-4">
+              {items.map((it) => (
+                <div key={it.product._id} className="flex justify-between text-sm">
+                  <span>{it.product.name} × {it.quantity}</span>
+                  <span>₹{it.product.price * it.quantity}</span>
+                </div>
+              ))}
+            </div>
 
-        {/* HEADER */}
-        <div className="text-center mb-10">
-          <p className="uppercase text-[11px] tracking-[0.35em] text-[#7a7166] mb-4">
-            Secure Checkout
-          </p>
+            {/* APPLY GIFT CARD */}
+            <div className="bg-[#f7f3ed] p-4 rounded mb-4">
+              <input
+                value={giftCode}
+                onChange={(e) => setGiftCode(e.target.value)}
+                placeholder="Gift card code"
+                className="border px-3 py-2 w-full mb-2"
+              />
+              <button
+                onClick={applyGiftCard}
+                className="bg-black text-white px-4 py-2 w-full rounded"
+              >
+                Apply Gift Card
+              </button>
 
-          <h1 className="text-[28px] font-medium text-[#3f3a33] mb-3">
-            Review Your Gift Card
-          </h1>
+              {giftUsed > 0 && (
+                <p className="text-green-700 mt-2">
+                  Applied: -₹{giftUsed}
+                </p>
+              )}
+            </div>
+          </>
+        )}
 
-          <p className="text-sm text-[#6b6258]">
-            Please confirm your details before payment.
-          </p>
-        </div>
-
-        {/* ORDER SUMMARY */}
-        <div className="bg-[#f7f3ed] rounded-2xl p-6 mb-8 text-sm text-[#5f564c]">
-
-          <div className="flex justify-between mb-3">
-            <span>Gift Card Amount</span>
-            <span>₹{amount.toLocaleString()}</span>
-          </div>
-
-          <div className="flex justify-between mb-3">
-            <span>Delivery</span>
-            <span>Free</span>
-          </div>
-
-          <div className="border-t border-[#e6dfd5] pt-4 flex justify-between font-medium text-[#3f3a33]">
-            <span>Total</span>
-            <span>₹{amount.toLocaleString()}</span>
-          </div>
-        </div>
-
-        {/* RECIPIENT INFO */}
-        <div className="mb-8 text-sm text-[#5f564c]">
-          <p><strong>Email:</strong> {email}</p>
-          {message && (
-            <p className="mt-2 italic text-[#6b6258]">
-              “{message}”
-            </p>
-          )}
-        </div>
-
-        {/* PAYMENT BUTTON */}
         <button
-            className="
-                w-full
-                bg-[#3f3a33] text-white
-                py-4 rounded-full
-                text-sm font-medium tracking-wide
-                hover:bg-[#2f2a25]
-                transition
-            "
-            onClick={() => {
-                setTimeout(() => {
-                navigate("/gift-card/success", {
-                    state: { amount, email, message },
-                });
-                }, 800);
-            }}
-            >
-            Pay ₹{amount.toLocaleString()}
+          onClick={handlePayment}
+          className="w-full bg-black text-white py-4 rounded"
+        >
+          Pay ₹{finalTotal}
         </button>
-
-
-        <p className="text-[11px] text-center text-[#8a8177] mt-6">
-          Payments are encrypted and securely processed.
-        </p>
-
       </div>
-
     </section>
   );
 };

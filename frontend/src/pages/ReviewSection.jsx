@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
-import StarRating from "../common/StarRating";
+import StarRating from "./StarRating";
 import { getReviews, addReview } from "../services/reviewService";
+import { useNavigate } from "react-router-dom";
 
 export default function ReviewSection({ productId }) {
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const load = async () => {
     const r = await getReviews(productId);
@@ -17,9 +21,37 @@ export default function ReviewSection({ productId }) {
   }, [productId]);
 
   const submit = async () => {
-    await addReview({ productId, rating, comment });
-    setComment("");
-    load();
+    if (!comment.trim()) {
+      alert("Please write a comment");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      await addReview({
+        productId,
+        rating,
+        comment,
+      });
+
+      // reset
+      setComment("");
+      setRating(5);
+
+      await load();
+    } catch (err) {
+      const status = err?.response?.status;
+
+      if (status === 401) {
+        alert("Please login to submit a review");
+        navigate("/login");
+      } else {
+        alert("Failed to submit review");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -28,6 +60,7 @@ export default function ReviewSection({ productId }) {
       <div className="border p-5 rounded-xl bg-white">
         <h3 className="font-semibold mb-3">Write a Review</h3>
 
+        {/* ⭐ Adjustable Rating */}
         <StarRating rating={rating} setRating={setRating} editable />
 
         <textarea
@@ -39,13 +72,14 @@ export default function ReviewSection({ productId }) {
 
         <button
           onClick={submit}
-          className="mt-3 bg-black text-white px-6 py-2 rounded"
+          disabled={loading}
+          className="mt-3 bg-black text-white px-6 py-2 rounded disabled:opacity-60"
         >
-          Submit Review
+          {loading ? "Submitting..." : "Submit Review"}
         </button>
       </div>
 
-      {/* LIST */}
+      {/* REVIEWS LIST */}
       {reviews.map((r) => (
         <div key={r._id} className="border p-5 rounded-xl bg-white">
           <div className="flex justify-between">
@@ -54,6 +88,7 @@ export default function ReviewSection({ productId }) {
               {new Date(r.createdAt).toDateString()}
             </span>
           </div>
+
           <StarRating rating={r.rating} />
           <p className="mt-2">{r.comment}</p>
         </div>

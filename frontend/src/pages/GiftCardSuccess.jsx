@@ -10,10 +10,33 @@ const GiftCardSuccess = () => {
   const amount = state?.amount || 0;
   const email = state?.email || "recipient email";
   const message = state?.message || "";
+  const code = state?.code || "GC-XXXXXX";
+
 
   return (
+    
     <section className="bg-[#fbf9f6] min-h-screen flex items-center justify-center px-6 pt-30">
+      
       <div className="max-w-xl w-full bg-white rounded-3xl p-10 text-center shadow-[0_30px_70px_rgba(0,0,0,0.12)]">
+        <div className="bg-[#f7f3ed] rounded-2xl p-6 mb-6 text-center">
+  <p className="text-xs uppercase tracking-widest text-[#7a7166] mb-2">
+    Gift Card Code
+  </p>
+
+  <div className="flex items-center justify-center gap-3">
+    <span className="font-mono text-lg font-semibold tracking-wider">
+      {code}
+    </span>
+
+    <button
+      onClick={() => navigator.clipboard.writeText(code)}
+      className="text-sm px-3 py-1 rounded bg-[#3f3a33] text-white"
+    >
+      Copy
+    </button>
+  </div>
+</div>
+
 
         {/* ICON */}
         <div className="flex justify-center mb-6">
@@ -45,6 +68,12 @@ const GiftCardSuccess = () => {
             <span className="text-[#7a7166]">Sent To</span>
             <span className="text-[#3f3a33] font-medium">
               {email}
+            </span>
+          </div>
+          <div className="flex justify-between text-sm">
+            <span className="text-[#7a7166]">Gift Card Code</span>
+            <span className="text-[#3f3a33] font-medium">
+              {code}
             </span>
           </div>
 

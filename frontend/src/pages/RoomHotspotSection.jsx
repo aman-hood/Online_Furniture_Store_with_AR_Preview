@@ -66,7 +66,7 @@ const RoomHotspotSection = ({ roomImg, products, roomSlug }) => {
   return (
     <div className="relative w-full mt-8 overflow-hidden">
       <img
-        src={`${import.meta.env.VITE_BACKEND_URL}${roomImg}`}
+        src={roomImg}
         alt="Room"
         className="w-full block "
       />
@@ -84,7 +84,7 @@ const RoomHotspotSection = ({ roomImg, products, roomSlug }) => {
           <button
             onMouseEnter={() => setActive(i)}
             onMouseLeave={() => setActive(null)}
-            onClick={() => navigate(`/products/${p._id}`)}
+            onClick={() => navigate(`/product/${p._id}`)}
             className="w-5 h-5 bg-white border-2 border-black rounded-full flex items-center justify-center"
           >
             <span className="w-2 h-2 bg-black rounded-full" />

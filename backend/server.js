@@ -17,7 +17,6 @@ import cartRoute from "./routes/cartRoute.js";
 import wishlistRoute from "./routes/wishlistRoute.js";
 import profileRoute from "./routes/profileRoute.js";
 import categoryRoute from "./routes/categoryRoute.js";
-import uploadRoutes from "./routes/uploadRoutes.js";
 import newsletterRoute from "./routes/newsletterRoute.js";
 import roomRoutes from "./routes/roomRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
@@ -25,6 +24,8 @@ import contactRoutes from "./routes/contactRoutes.js";
 import adminContactRoutes from "./routes/adminContactRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
 import uploadBlogImageRoute from "./routes/uploadBlogImage.js";
+import orderRoutes from "./routes/orderRoutes.js";
+import giftCardRoutes from "./routes/giftCardRoutes.js";
 
 // ===============================
 // CREATE EXPRESS APP
@@ -56,6 +57,20 @@ app.use(
   express.static(path.join(process.cwd(), "public/images"))
 );
 
+// ✅ ADD / FIX THIS (DO NOT COMMENT)
+app.use(
+  "/models",
+  express.static(path.join(process.cwd(), "public/models"), {
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith(".glb")) {
+        res.setHeader("Content-Type", "model/gltf-binary");
+      }
+    },
+  })
+);
+
+
+
 // ===============================
 // ROUTES
 // ===============================
@@ -65,7 +80,6 @@ app.use("/api/cart", cartRoute);
 app.use("/api/wishlist", wishlistRoute);
 app.use("/api/profile", profileRoute);
 app.use("/api/categories", categoryRoute);
-app.use("/api/upload", uploadRoutes);
 app.use("/api/newsletter", newsletterRoute);
 app.use("/api/rooms", roomRoutes);
 app.use("/api/contact", contactRoutes);
@@ -73,6 +87,9 @@ app.use("/api/admin/contacts", adminContactRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/blogs", blogRoutes);
 app.use("/api/upload/blog", uploadBlogImageRoute);
+app.use("/api/orders", orderRoutes);
+app.use("/api/giftcards", giftCardRoutes);
+
 
 
 

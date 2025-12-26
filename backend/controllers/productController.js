@@ -1,51 +1,56 @@
 import Product from "../models/productModel.js";
 import { Category } from "../models/categoryModel.js";
 
-// GET /api/products?room=bedroom&category=Beds&q=bed
 export const listProducts = async (req, res) => {
   try {
     const { category, q, room } = req.query;
     const filter = {};
 
-    // Active filter
-    if (req.query.active === "true") {
-      filter.isActive = true;
-    }
-
-    // Room filter
-    if (room) {
-      filter.room = new RegExp(`^${room}$`, "i");
-    }
-
-    // Category filter
-    if (category) {
-      filter.category = new RegExp(`^${category}$`, "i");
-    }
-
-    // Search
-    if (q) {
-      filter.name = { $regex: q, $options: "i" };
-    }
+    if (req.query.active === "true") filter.isActive = true;
+    if (room) filter.room = new RegExp(`^${room}$`, "i");
+    if (category) filter.category = new RegExp(`^${category}$`, "i");
+    if (q) filter.name = { $regex: q, $options: "i" };
 
     const products = await Product.find(filter).sort({ createdAt: -1 });
 
-    res.status(200).json({ success: true, products });
+    const baseUrl = `${req.protocol}://${req.get("host")}`;
+
+    const normalized = products.map((p) => ({
+      ...p.toObject(),
+      img: p.img ? `${baseUrl}${p.img}` : null,
+      model: p.modelUrl ? `${baseUrl}${p.modelUrl}` : null,
+    }));
+
+    res.status(200).json({ success: true, products: normalized });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 };
+
 
 export const getProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
-    if (!product)
-      return res.status(404).json({ success: false, message: "Product not found" });
 
-    res.status(200).json({ success: true, product });
+    if (!product) {
+      return res.status(404).json({ success: false, message: "Product not found" });
+    }
+
+    const baseUrl = `${req.protocol}://${req.get("host")}`;
+
+    const normalizedProduct = {
+      ...product.toObject(),
+      img: product.img ? `${baseUrl}${product.img}` : null,
+      model: product.modelUrl ? `${baseUrl}${product.modelUrl}` : null,
+    };
+
+    res.status(200).json({ success: true, product: normalizedProduct });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 };
+
+
 
 export const createProduct = async (req, res) => {
   try {

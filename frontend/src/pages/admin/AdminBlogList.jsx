@@ -27,12 +27,13 @@ const AdminBlogList = () => {
   };
 
   const remove = async (id) => {
-    await axios.delete(
-      `http://localhost:3000/api/blogs/admin/${id}`,
-      { withCredentials: true }
-    );
-    loadBlogs();
-  };
+  await axios.delete(
+    `http://localhost:3000/api/blogs/admin/${id}`,
+    { withCredentials: true }
+  );
+  loadBlogs();
+};
+
 
   return (
     <div className="pt-28 max-w-6xl mx-auto px-6">

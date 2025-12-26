@@ -6,10 +6,14 @@ import {
   FiAlertTriangle,
   FiHelpCircle,
 } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+
 
 /* ---------------- Accordion Item ---------------- */
 const PolicyItem = ({ icon: Icon, title, children }) => {
   const [open, setOpen] = useState(false);
+  
+
 
   return (
     <div className="border-b last:border-none pb-6">
@@ -40,6 +44,7 @@ const PolicyItem = ({ icon: Icon, title, children }) => {
 
 /* ---------------- Page ---------------- */
 const ShippingPolicyPage = () => {
+  const navigate = useNavigate();
   return (
     <section className="bg-[#fbf9f6] min-h-screen pt-30 pb-32 px-6">
       <div className="max-w-5xl mx-auto">
@@ -94,17 +99,17 @@ const ShippingPolicyPage = () => {
               </div>
             </div>
 
-            <button className="px-7 py-3 rounded-full bg-[#3f3a33] text-white text-sm hover:opacity-90 transition">
+            <button
+              onClick={() => navigate("/contact")}
+              className="px-7 py-3 rounded-full bg-[#3f3a33] text-white text-sm hover:opacity-90 transition"
+            >
               Contact Support
             </button>
+
           </div>
 
         </div>
-
-        {/* Footer */}
-        <p className="text-center text-sm text-[#8a8177] mt-24">
-          Shipping policy updated · March 2025
-        </p>
+    
 
       </div>
     </section>

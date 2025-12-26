@@ -25,6 +25,8 @@ const ProductCard = ({ product }) => {
       setWishlistCount((c) => c + 1);
     }
   };
+  console.log("IMG URL 👉", product.img);
+
 
   return (
     <div className="group space-y-3">
@@ -63,17 +65,22 @@ const ProductCard = ({ product }) => {
 
         {/* IMAGE */}
         <img
-          src={`http://localhost:3000${product.img}`}
-          alt={product.name}
-          className="
-            w-full
-            h-auto
-            object-contain
-            px-6 py-10
-            transition-transform duration-700
-            group-hover:scale-105
-          "
-        />
+  src={
+    product?.img?.startsWith("http")
+      ? product.img
+      : `${import.meta.env.VITE_API_URL}${product.img}`
+  }
+  alt={product.name}
+  className="
+    w-full
+    h-auto
+    object-contain
+    px-6 py-10
+    transition-transform duration-700
+    group-hover:scale-105
+  "
+/>
+
       </div>
 
       {/* TEXT BELOW (PIN STYLE) */}

@@ -3,19 +3,19 @@ import { createContext, useContext, useEffect, useState } from "react";
 const AppContext = createContext(null);
 
 export const AppProvider = ({ children }) => {
-  /* ================= USER ================= */
+  /*  USER */
   const [user, setUser] = useState(null);
   const [loadingUser, setLoadingUser] = useState(true);
 
-  /* ================= WISHLIST ================= */
+  /* WISHLIST */
   const [wishlistIds, setWishlistIds] = useState([]);
   const [wishlistCount, setWishlistCount] = useState(0);
   const [wishlistLoading, setWishlistLoading] = useState(false);
 
-  /* ================= CART ================= */
+  /* CART */
   const [cartCount, setCartCount] = useState(0);
 
-  /* ================= LOAD USER ON APP START ================= */
+  /* LOAD USER ON APP START */
   useEffect(() => {
     const loadUser = async () => {
       try {
@@ -23,7 +23,7 @@ export const AppProvider = ({ children }) => {
           "http://localhost:3000/api/users/me",
           {
             method: "GET",
-            credentials: "include", // 🔥 REQUIRED
+            credentials: "include", //  REQUIRED
           }
         );
 

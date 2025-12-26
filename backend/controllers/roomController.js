@@ -4,7 +4,15 @@ import Room from "../models/Room.js";
 export const getRooms = async (req, res) => {
   try {
     const rooms = await Room.find({ isActive: true }).sort({ createdAt: 1 });
-    res.json(rooms);
+
+    const normalizedRooms = rooms.map((r) => ({
+      ...r.toObject(),
+      img: r.img
+        ? `${process.env.BASE_URL}${r.img}`
+        : null,
+    }));
+
+    res.json(normalizedRooms);
   } catch {
     res.status(500).json({ message: "Failed to fetch rooms" });
   }
@@ -22,7 +30,14 @@ export const getRoomBySlug = async (req, res) => {
       return res.status(404).json({ message: "Room not found" });
     }
 
-    res.json(room);
+    const normalizedRoom = {
+      ...room.toObject(),
+      img: room.img
+        ? `${process.env.BASE_URL}${room.img}`
+        : null,
+    };
+
+    res.json(normalizedRoom);
   } catch {
     res.status(500).json({ message: "Failed to fetch room" });
   }

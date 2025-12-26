@@ -42,7 +42,7 @@ const RoomOverviewPage = () => {
       {/* 🟤 HERO SECTION */}
       <div className="relative h-[55vh] w-full overflow-hidden">
         <img
-          src={`${import.meta.env.VITE_BACKEND_URL}${roomData.img}`}
+          src={roomData.img}
           alt={roomData.title}
           className="w-full h-full object-cover"
         />
@@ -76,7 +76,7 @@ const RoomOverviewPage = () => {
               >
                 <div className="h-24 w-24 flex items-center justify-center">
                   <img
-                    src={`${import.meta.env.VITE_BACKEND_URL}${img}`}
+                    src={img}
                     alt={cat}
                     className="h-full w-full object-contain group-hover:scale-110 transition-transform duration-300"
                   />

@@ -1,6 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FiUser, FiShoppingCart } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  FiBox,
+  FiPlusSquare,
+  FiMail,
+  FiEdit,
+} from "react-icons/fi";
+
 
 export default function AccountDropdown() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -9,6 +16,8 @@ export default function AccountDropdown() {
 
   const closeTimeout = useRef(null);
   const containerRef = useRef(null);
+  const navigate = useNavigate();
+
 
   // -------------------------
   // Check login status
@@ -81,6 +90,8 @@ export default function AccountDropdown() {
     setUser(null);
     setIsLoggedIn(false);
     setOpen(false);
+    
+    navigate("/login");
   };
 
   return (
@@ -144,7 +155,7 @@ export default function AccountDropdown() {
               </div>
 
               <Link
-                to="/profile"
+                to="/account"
                 className="block px-2 py-2 text-gray-700 text-sm border-b border-gray-300/40 rounded-md hover:bg-gray-200/60 transition"
               >
                 <div className="flex items-center gap-2">
@@ -159,22 +170,36 @@ export default function AccountDropdown() {
                     to="/admin/products"
                     className="block px-2 py-2 text-gray-700 text-sm border-b border-gray-300/40 rounded-md hover:bg-gray-200/60 transition"
                   >
-                    🛠️ Admin Products
+                    <div className="flex items-center gap-2">
+                      <FiBox /> Admin Products
+                    </div>
                   </Link>
 
                   <Link
                     to="/admin/products/new"
                     className="block px-2 py-2 text-gray-700 text-sm border-b border-gray-300/40 rounded-md hover:bg-gray-200/60 transition"
                   >
-                    ➕ Add Product
+                    <div className="flex items-center gap-2">
+                      <FiPlusSquare /> Add Product
+                    </div>
                   </Link>
 
-                  {/* 🔥 ADDED BLOG MANAGEMENT */}
+                  <Link
+                    to="/admin/messages"
+                    className="block px-2 py-2 text-gray-700 text-sm border-b border-gray-300/40 rounded-md hover:bg-gray-200/60 transition"
+                  >
+                    <div className="flex items-center gap-2">
+                      <FiMail /> Contact Messages
+                    </div>
+                  </Link>
+
                   <Link
                     to="/admin/blogs"
                     className="block px-2 py-2 text-gray-700 text-sm border-b border-gray-300/40 rounded-md hover:bg-gray-200/60 transition"
                   >
-                    📝 Manage Blogs
+                    <div className="flex items-center gap-2">
+                      <FiEdit /> Manage Blogs
+                    </div>
                   </Link>
 
                  

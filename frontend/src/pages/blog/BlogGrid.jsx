@@ -4,46 +4,46 @@ import { getAllBlogs } from "../../services/blogService";
 import { useApp } from "../../context/AppContext";
 
 const BlogGrid = () => {
-  
   const [posts, setPosts] = useState([]);
   const { user, loadingUser } = useApp();
-  console.log("BLOGGRID USER 👉", user);
-
 
   useEffect(() => {
     getAllBlogs().then(setPosts);
   }, []);
 
+  if (loadingUser) {
+    return (
+      <div className="pt-28 px-6 max-w-7xl mx-auto">
+        <p className="text-gray-500">Loading blogs…</p>
+      </div>
+    );
+  }
+
   return (
     <div className="pt-28 px-6 max-w-7xl mx-auto">
-     <div className="flex justify-between mb-8">
-  <h1 className="text-3xl font-semibold">Blogs</h1>
+      <div className="flex justify-between mb-8">
+        <h1 className="text-3xl font-semibold">Blogs</h1>
 
-  {/* USER */}
-  {user?.role === "user" && (
-    <Link
-      to="/blog/write"
-      className="bg-black text-white px-4 py-2 rounded"
-    >
-      ✍ Write Blog
-    </Link>
-  )}
+        {/* USER */}
+        {user?.role === "user" && (
+          <Link
+            to="/blog/write"
+            className="bg-[#242220] text-white px-4 py-2 rounded"
+          >
+            ✍ Write Blog
+          </Link>
+        )}
 
-  {/* ADMIN */}
-  {user?.role === "admin" && (
-    <div className="flex gap-2">
-      
-
-      <Link
-        to="/admin/blogs/new"
-        className="bg-black text-white px-4 py-2 rounded"
-      >
-        ➕ Create Blog
-      </Link>
-    </div>
-  )}
-</div>
-
+        {/* ADMIN */}
+        {user?.role === "admin" && (
+          <Link
+            to="/admin/blogs/new"
+            className="bg-[#242220] text-white px-4 py-2 rounded"
+          >
+            ➕ Create Blog
+          </Link>
+        )}
+      </div>
 
       <div className="grid md:grid-cols-3 gap-6">
         {posts.map((p) => (
@@ -55,8 +55,6 @@ const BlogGrid = () => {
                 className="h-40 w-full object-cover rounded mb-3"
               />
             )}
-
-
             <h2 className="font-semibold">{p.title}</h2>
             <p className="text-sm text-gray-600">{p.excerpt}</p>
           </Link>

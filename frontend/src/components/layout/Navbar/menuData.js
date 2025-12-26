@@ -50,7 +50,7 @@ export const pageMenu = [
     heading: "USER",
     items: [
       { label: "My Account", path: "/account" },
-      { label: "Orders", path: "/account/orders" },
+      { label: "Orders", path: "/orders" },
       { label: "Track Order", path: "/track" }
     ]
   },

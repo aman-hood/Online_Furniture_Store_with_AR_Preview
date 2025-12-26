@@ -1,72 +1,86 @@
-import { useRef, useState } from "react";
-import { updateProfile, uploadAvatar } from "../../../services/profileService";
+import { useState } from "react";
+import { updateProfile } from "../../../services/profileService";
 
 export default function ProfileTab({ user, setUser }) {
   const [saving, setSaving] = useState(false);
-  const [uploading, setUploading] = useState(false);
-  const fileRef = useRef(null);
 
-  const handleAvatar = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    setUploading(true);
-    const updated = await uploadAvatar(file);
-    setUser(updated);
-    setUploading(false);
+  const handleChange = (e) => {
+    setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const save = async (e) => {
+  const saveProfile = async (e) => {
     e.preventDefault();
     setSaving(true);
+
     const updated = await updateProfile({
       firstName: user.firstName,
       lastName: user.lastName,
       phoneNo: user.phoneNo,
     });
+
     setUser(updated);
     setSaving(false);
   };
 
   return (
-    <>
-      <div className="flex items-center gap-6 mb-12">
-        <div className="relative">
-          <img
-            src={user.avatar || "https://i.pravatar.cc/120"}
-            className="w-28 h-28 rounded-full object-cover"
-          />
-          <button
-            onClick={() => fileRef.current.click()}
-            className="absolute bottom-2 right-2 w-8 h-8 bg-[#3f3a33] text-white rounded-full text-xs"
-          >
-            {uploading ? "…" : "✎"}
-          </button>
-          <input type="file" hidden ref={fileRef} onChange={handleAvatar} />
-        </div>
+    <form onSubmit={saveProfile} className="space-y-6 max-w-xl">
+
+      {/* INITIALS AVATAR */}
+      <div className="w-24 h-24 rounded-full bg-black text-white flex items-center justify-center text-3xl font-semibold mb-8">
+        {user.firstName[0]}
+        {user.lastName[0]}
       </div>
 
-      <form onSubmit={save} className="space-y-6">
-        <Input label="First Name" value={user.firstName} onChange={v => setUser({ ...user, firstName: v })} />
-        <Input label="Last Name" value={user.lastName} onChange={v => setUser({ ...user, lastName: v })} />
-        <Input label="Email" value={user.email} disabled />
-        <Input label="Phone" value={user.phoneNo} onChange={v => setUser({ ...user, phoneNo: v })} />
+      <TwoCol>
+        <Field
+          label="First Name"
+          name="firstName"
+          value={user.firstName}
+          onChange={handleChange}
+        />
+        <Field
+          label="Last Name"
+          name="lastName"
+          value={user.lastName}
+          onChange={handleChange}
+        />
+      </TwoCol>
 
-        <button className="px-8 py-3 rounded-full bg-[#3f3a33] text-white">
-          {saving ? "Saving…" : "Update Changes"}
-        </button>
-      </form>
-    </>
+      {/* EMAIL (READ ONLY) */}
+      <Field label="Email" value={user.email} disabled />
+
+      <Field
+        label="Phone"
+        name="phoneNo"
+        value={user.phoneNo}
+        onChange={handleChange}
+      />
+
+      <button
+        disabled={saving}
+        className="px-8 py-3 rounded-full bg-[#3f3a33] text-white"
+      >
+        {saving ? "Saving…" : "Update Changes"}
+      </button>
+    </form>
   );
 }
 
-const Input = ({ label, value, onChange, disabled }) => (
+/* ---------- UI HELPERS ---------- */
+
+const Field = ({ label, name, value, onChange, disabled }) => (
   <div>
-    <label className="text-sm text-[#6b6258]">{label}</label>
+    <label className="text-sm text-[#6b6258] block mb-2">{label}</label>
     <input
+      name={name}
       value={value || ""}
+      onChange={onChange}
       disabled={disabled}
-      onChange={(e) => onChange(e.target.value)}
-      className="w-full border rounded-xl px-4 py-3"
+      className="w-full border border-[#e6e0d9] rounded-xl px-4 py-3"
     />
   </div>
+);
+
+const TwoCol = ({ children }) => (
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">{children}</div>
 );

@@ -1,14 +1,14 @@
 import axios from "axios";
-
+import http from "./http";
 const API = "http://localhost:3000/api/cart";
 
 export const getCart = async () => {
-  const res = await axios.get(API, { withCredentials: true });
+  const res = await http.get(API, { withCredentials: true });
   return res.data.cart;
 };
 
 export const addToCart = async (productId, quantity = 1) => {
-  const res = await axios.post(
+  const res = await http.post(
     `${API}/add`,
     { productId, quantity },
     { withCredentials: true }
@@ -17,7 +17,7 @@ export const addToCart = async (productId, quantity = 1) => {
 };
 
 export const removeFromCart = async (productId) => {
-  const res = await axios.post(
+  const res = await http.post(
     `${API}/remove`,
     { productId },
     { withCredentials: true }
@@ -26,7 +26,7 @@ export const removeFromCart = async (productId) => {
 };
 
 export const updateCartItem = async (productId, quantity) => {
-  const res = await axios.post(
+  const res = await http.post(
     `${API}/update`,
     { productId, quantity },
     { withCredentials: true }
@@ -35,6 +35,6 @@ export const updateCartItem = async (productId, quantity) => {
 };
 
 export const clearCart = async () => {
-  const res = await axios.post(`${API}/clear`, {}, { withCredentials: true });
+  const res = await http.post(`${API}/clear`, {}, { withCredentials: true });
   return res.data.cart;
 };

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { updateProfile } from "../../../services/profileService";
+import { updateAddress } from "../../../services/profileService";
 
 export default function AddressTab({ user, setUser }) {
   const [saving, setSaving] = useState(false);
@@ -10,11 +10,13 @@ export default function AddressTab({ user, setUser }) {
 
   const saveAddress = async () => {
     setSaving(true);
-    const updated = await updateProfile({
+
+    const updated = await updateAddress({
       address: user.address,
       city: user.city,
       zipCode: user.zipCode,
     });
+
     setUser(updated);
     setSaving(false);
   };
@@ -43,7 +45,7 @@ const Field = ({ label, name, value, onChange }) => (
       name={name}
       value={value || ""}
       onChange={onChange}
-      className="w-full border border-[#e6e0d9] rounded-xl px-4 py-3 text-sm"
+      className="w-full border border-[#e6e0d9] rounded-xl px-4 py-3"
     />
   </div>
 );

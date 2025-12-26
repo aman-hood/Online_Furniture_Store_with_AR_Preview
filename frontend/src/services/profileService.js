@@ -2,8 +2,8 @@ export async function getProfile() {
   const res = await fetch("http://localhost:3000/api/users/me", {
     credentials: "include",
   });
-  if (!res.ok) throw new Error("Failed to fetch profile");
-  return res.json();
+  const data = await res.json();
+  return data.user;
 }
 
 export async function updateProfile(data) {
@@ -13,21 +13,26 @@ export async function updateProfile(data) {
     credentials: "include",
     body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error("Update failed");
-  return res.json();
+  return (await res.json()).user;
 }
 
-export async function uploadAvatar(file) {
-  const formData = new FormData();
-  formData.append("avatar", file);
-
-  const res = await fetch("http://localhost:3000/api/users/avatar", {
-    method: "POST",
+export async function updateAddress(data) {
+  const res = await fetch("http://localhost:3000/api/users/address", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: formData,
+    body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error("Avatar upload failed");
-  return res.json();
+  return (await res.json()).user;
+}
+
+export async function changePassword(data) {
+  return fetch("http://localhost:3000/api/users/change-password", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify(data),
+  });
 }
 
 export async function logoutUser() {

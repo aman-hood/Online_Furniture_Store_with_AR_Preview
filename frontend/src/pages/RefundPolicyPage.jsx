@@ -5,6 +5,7 @@ import {
   FiXCircle,
   FiHelpCircle,
 } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 /* ---------------- According Item ---------------- */
 const PolicyItem = ({ icon: Icon, title, children }) => {
@@ -39,6 +40,7 @@ const PolicyItem = ({ icon: Icon, title, children }) => {
 
 /* ---------------- Page ---------------- */
 const RefundPolicyPage = () => {
+  const navigate = useNavigate();
   return (
     <section className="bg-[#fbf9f6] min-h-screen pt-30 pb-32 px-6">
       <div className="max-w-5xl mx-auto">
@@ -97,17 +99,15 @@ const RefundPolicyPage = () => {
               </div>
             </div>
 
-            <button className="px-7 py-3 rounded-full bg-[#3f3a33] text-white text-sm hover:opacity-90 transition">
+            <button onClick={() => navigate("/contact")}
+             className="px-7 py-3 rounded-full bg-[#3f3a33] text-white text-sm hover:opacity-90 transition">
               Contact Support
             </button>
           </div>
 
         </div>
 
-        {/* Footer */}
-        <p className="text-center text-sm text-[#8a8177] mt-24">
-          Refund policy updated · March 2025
-        </p>
+        
 
       </div>
     </section>

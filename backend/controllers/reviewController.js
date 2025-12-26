@@ -9,32 +9,46 @@ export const getReviews = async (req, res) => {
 };
 
 export const addReview = async (req, res) => {
-  const { productId, rating, comment } = req.body;
+  try {
+    console.log("BODY 👉", req.body);
+    console.log("USER 👉", req.user);
+    const { productId, rating, comment } = req.body;
 
-  const already = await Review.findOne({
-    product: productId,
-    user: req.id,
-  });
-  if (already)
-    return res.status(400).json({ message: "Already reviewed" });
+    if (!rating || !comment) {
+      return res.status(400).json({ message: "Rating and comment required" });
+    }
 
-  const review = await Review.create({
-    product: productId,
-    user: req.id,
-    name: req.user.name,
-    rating,
-    comment,
-  });
+    // ✅ FIX HERE
+    const already = await Review.findOne({
+      product: productId,
+      user: req.user._id,
+    });
 
-  // update product rating
-  const reviews = await Review.find({ product: productId });
-  const avg =
-    reviews.reduce((s, r) => s + r.rating, 0) / reviews.length;
+    if (already) {
+      return res.status(400).json({ message: "Already reviewed" });
+    }
 
-  await Product.findByIdAndUpdate(productId, {
-    rating: avg,
-    reviewCount: reviews.length,
-  });
+    const review = await Review.create({
+      product: productId,
+      user: req.user._id,     // ✅ FIX
+      name: req.user.name,
+      rating: Number(rating),
+      comment,
+    });
 
-  res.json(review);
+    // 🔄 Update product rating correctly
+    const reviews = await Review.find({ product: productId });
+
+    const avg =
+      reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
+
+    await Product.findByIdAndUpdate(productId, {
+      rating: avg.toFixed(1),
+      reviewCount: reviews.length,
+    });
+
+    res.status(201).json(review);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to submit review" });
+  }
 };

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import AccountSidebar from "./AccountSidebar";
 import ProfileTab from "./tabs/ProfileTab";
-import OrdersTab from "./tabs/OrdersTab";
+import OrdersTab from "../OrdersTab";
 import AddressTab from "./tabs/AddressTab";
 import PasswordTab from "./tabs/PasswordTab";
 

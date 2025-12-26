@@ -51,7 +51,7 @@ const GiftCard = () => {
         <div className="text-center">
           <Link
             to="/checkout"
-            state={{ amount: finalAmount, email, message }}
+            state={{ type: "gift", amount: finalAmount, email, message }}
             className="inline-flex items-center gap-2 bg-[#3f3a33] text-white px-12 py-3.5 rounded-full text-sm"
           >
             Continue with ₹{finalAmount.toLocaleString()} →

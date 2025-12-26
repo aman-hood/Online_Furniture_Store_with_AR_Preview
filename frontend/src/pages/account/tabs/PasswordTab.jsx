@@ -1,152 +1,116 @@
-import { useRef, useState } from "react";
-import {
-  updateProfile,
-  uploadAvatar,
-} from "../../../services/profileService";
+import { useState } from "react";
 
-export default function ProfileTab({ user, setUser }) {
+export default function PasswordTab({ user }) {
+  const [form, setForm] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
   const [saving, setSaving] = useState(false);
-  const [uploading, setUploading] = useState(false);
-  const fileRef = useRef(null);
 
-  /* ---------------- AVATAR UPLOAD ---------------- */
-  const handleAvatarChange = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    // ✅ TYPE CHECK
-    if (!file.type.startsWith("image/")) {
-      alert("Only image files are allowed");
-      e.target.value = null;
-      return;
-    }
-
-    // ✅ SIZE CHECK (2MB)
-    const MAX_SIZE = 2 * 1024 * 1024;
-    if (file.size > MAX_SIZE) {
-      alert("Image must be under 2MB");
-      e.target.value = null;
-      return;
-    }
-
-    setUploading(true);
-    try {
-      const updatedUser = await uploadAvatar(file);
-      setUser(updatedUser);
-    } catch {
-      alert("Avatar upload failed");
-    } finally {
-      setUploading(false);
-    }
-  };
-
-  /* ---------------- PROFILE UPDATE ---------------- */
   const handleChange = (e) => {
-    setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const saveProfile = async (e) => {
-    e.preventDefault();
-    setSaving(true);
-    try {
-      const updated = await updateProfile({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        phoneNo: user.phoneNo,
-      });
-      setUser(updated);
-    } finally {
-      setSaving(false);
+const changePassword = async () => {
+  if (form.newPassword !== form.confirmPassword) {
+    return alert("Passwords do not match");
+  }
+
+  setSaving(true);
+
+  try {
+    const res = await fetch(
+      "http://localhost:3000/api/users/change-password",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          currentPassword: form.currentPassword,
+          newPassword: form.newPassword,
+        }),
+      }
+    );
+
+    const data = await res.json();
+
+    if (!res.ok || !data.success) {
+      throw new Error(data.message || "Password update failed");
     }
-  };
+
+    // ✅ SUCCESS FLOW (ONLY ONCE)
+    alert("Password updated successfully. Please log in again.");
+
+    // logout user
+    await fetch("http://localhost:3000/api/users/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+
+    // redirect to login
+    window.location.href = "/login";
+  } catch (err) {
+    console.error("PASSWORD ERROR:", err);
+    alert(err.message);
+  } finally {
+    setSaving(false);
+  }
+};
+
+
 
   return (
-    <>
-      {/* AVATAR */}
-      <div className="flex items-center gap-6 mb-12">
-        <div className="relative">
-          <img
-            src={user.avatar || "https://i.pravatar.cc/120"}
-            alt="avatar"
-            className="w-28 h-28 rounded-full object-cover"
-          />
+    <div className="space-y-6 max-w-md">
 
-          <button
-            type="button"
-            onClick={() => fileRef.current.click()}
-            className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-[#3f3a33] text-white text-xs flex items-center justify-center"
-          >
-            {uploading ? "…" : "✎"}
-          </button>
+  {/* 🔐 CURRENT PASSWORD */}
+  <Field
+    label="Current Password"
+    name="currentPassword"
+    type="password"
+    value={form.currentPassword}
+    onChange={handleChange}
+  />
 
-          <input
-            type="file"
-            ref={fileRef}
-            onChange={handleAvatarChange}
-            accept="image/*"
-            hidden
-          />
-        </div>
-      </div>
+  {/* 🔐 NEW PASSWORD */}
+  <Field
+    label="New Password"
+    name="newPassword"
+    type="password"
+    value={form.newPassword}
+    onChange={handleChange}
+  />
 
-      {/* FORM */}
-      <form onSubmit={saveProfile} className="space-y-6 max-w-xl">
-        <TwoCol>
-          <Field
-            label="First Name"
-            name="firstName"
-            value={user.firstName}
-            onChange={handleChange}
-          />
-          <Field
-            label="Last Name"
-            name="lastName"
-            value={user.lastName}
-            onChange={handleChange}
-          />
-        </TwoCol>
+  {/* 🔐 CONFIRM PASSWORD */}
+  <Field
+    label="Confirm Password"
+    name="confirmPassword"
+    type="password"
+    value={form.confirmPassword}
+    onChange={handleChange}
+  />
 
-        <Field label="Email" value={user.email} disabled />
+  <button
+    onClick={changePassword}
+    disabled={saving}
+    className="px-8 py-3 rounded-full bg-[#3f3a33] text-white"
+  >
+    {saving ? "Updating…" : "Change Password"}
+  </button>
+</div>
 
-        <Field
-          label="Phone"
-          name="phoneNo"
-          value={user.phoneNo}
-          onChange={handleChange}
-        />
-
-        <button
-          disabled={saving}
-          className={`px-8 py-3 rounded-full text-sm transition
-            ${
-              saving
-                ? "bg-[#e6e0d9] text-[#8a8177]"
-                : "bg-[#3f3a33] text-white hover:bg-[#2f2a24]"
-            }`}
-        >
-          {saving ? "Saving…" : "Update Changes"}
-        </button>
-      </form>
-    </>
   );
 }
 
-/* ---------------- UI HELPERS ---------------- */
-
-const Field = ({ label, name, value, onChange, disabled, type = "text" }) => (
+const Field = ({ label, name, value, onChange, type }) => (
   <div>
     <label className="text-sm text-[#6b6258] block mb-2">{label}</label>
     <input
       type={type}
       name={name}
-      value={value || ""}
+      value={value}
       onChange={onChange}
-      disabled={disabled}
-      className="w-full border border-[#e6e0d9] rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#3f3a33]"
+      className="w-full border rounded-xl px-4 py-3"
     />
   </div>
-);
-
-const TwoCol = ({ children }) => (
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">{children}</div>
 );

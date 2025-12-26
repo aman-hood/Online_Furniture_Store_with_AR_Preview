@@ -7,6 +7,7 @@ export const listProducts = async (params = {}) => {
   return res.data.products;
 };
 
+
 export const getProduct = async (id) => {
   const res = await http.get(`${API}/${id}`);
   return res.data.product;

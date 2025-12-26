@@ -25,10 +25,13 @@ import Checkout from "../pages/Checkout";
 import GiftCardSuccess from "../pages/GiftCardSuccess";
 import Refund from "../pages/RefundPolicyPage";
 import Shipping from "../pages/ShippingPolicyPage";
+import MyGiftCards from "../pages/MyGiftCards";
 
 import ProfilePage from "../pages/account/AccountPage";
 import OrdersPage from "../pages/OrdersPage";
 import TrackOrderPage from "../pages/TrackOrderPage";
+import OrderSuccess from "../pages/OrderSuccess";
+
 
 import Collections from "../pages/Collections";
 import CategoryPage from "../pages/CategoryPage";
@@ -42,6 +45,8 @@ import RoomCategoryPage from "../pages/RoomCategoryPage";
 import AdminProducts from "../pages/AdminProducts";
 import ProductForm from "../components/admin/ProductForm";
 import AdminMessages from "../components/admin/AdminMessages";
+import AdminOrders from "../pages/admin/AdminOrders";
+import OrdersTab from "../pages/OrdersTab"
 
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
@@ -91,11 +96,18 @@ const AppRoutes = () => {
         <Route path="/gift-card/success" element={<GiftCardSuccess />} />
         <Route path="/refund" element={<Refund />} />
         <Route path="/shipping" element={<Shipping />} />
+        <Route path="/my-gift-cards" element={<MyGiftCards />} />
+
 
         {/* Account / Orders */}
         <Route path="/account" element={<ProfilePage />} />
         <Route path="/orders" element={<OrdersPage />} />
         <Route path="/track" element={<TrackOrderPage />} />
+        <Route path="/order-success" element={<OrderSuccess />} />
+        <Route path="/admin/orders" element={<AdminOrders />} />
+        <Route path="/orders/:orderId" element={<OrdersTab />} />
+
+
 
         {/* Collections */}
         <Route path="/collections" element={<Collections />} />

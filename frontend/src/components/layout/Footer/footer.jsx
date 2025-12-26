@@ -119,12 +119,12 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-4 tracking-wide">Shop</h3>
           <ul className="space-y-3 text-gray-700">
-            <li><Link to="/shop">Living Room</Link></li>
-            <li><Link to="/shop">Bedroom</Link></li>
+            <li><Link to="/shop/living-room">Living Room</Link></li>
+            <li><Link to="/shop/bedroom">Bedroom</Link></li>
             <li><Link to="/collections/sofas">Sofas</Link></li>
-            <li><Link to="/collections/lighting">Lighting</Link></li>
+            <li><Link to="/collections/lamps">Lighting</Link></li>
             <li><Link to="/collections/tables">Tables</Link></li>
-            <li><Link to="/shop">Office</Link></li>
+            <li><Link to="/collections/office">Office</Link></li>
           </ul>
         </div>
 
@@ -135,7 +135,7 @@ const Footer = () => {
             <li><Link to="/faq">FAQ</Link></li>
             <li><Link to="/shipping">Shipping</Link></li>
             <li><Link to="/refund">Refund Policy</Link></li>
-            <li><Link to="/track-order">Order Tracking</Link></li>
+            <li><Link to="/track">Order Tracking</Link></li>
             <li><Link to="/support">Help Center</Link></li>
           </ul>
         </div>
@@ -150,9 +150,18 @@ const Footer = () => {
             <li className="flex items-center gap-3">
               <FiPhone /> +91 98765 43210
             </li>
-            <li className="flex items-center gap-3">
-              <FiMail /> support@funio.com
-            </li>
+           <li className="flex items-center gap-3">
+  <FiMail />
+  <a
+    href="https://mail.google.com/mail/?view=cm&fs=1&to=arhomespace@gmail.com"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:underline"
+  >
+    arhomespace@gmail.com
+  </a>
+</li>
+
           </ul>
         </div>
       </div>

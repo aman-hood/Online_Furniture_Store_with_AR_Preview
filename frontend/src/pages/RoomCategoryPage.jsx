@@ -82,7 +82,7 @@ const RoomOverviewPage = () => {
                  hover:shadow-lg transition"
     >
       <img
-        src={`${import.meta.env.VITE_BACKEND_URL}${image}`}
+        src={image}
         alt={cat}
         className="h-20 w-20 object-contain"
       />

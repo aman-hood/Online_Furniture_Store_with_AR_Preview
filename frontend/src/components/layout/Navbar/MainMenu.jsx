@@ -40,8 +40,8 @@ const menuItems = [
       {
         heading: "BLOG PAGES",
         items: [
-          { label: "Latest Posts", path: "/blog/list" },
           { label: "Blog Grid", path: "/blog" },
+          { label: "Latest Posts", path: "/blog/list" },
         ],
       },
     ],
@@ -134,18 +134,21 @@ const MainMenu = ({ isHome }) => {
       const blogs = await blogRes.json();
 
       const contactItems = contacts
-        .filter((c) => c.status !== "replied")
-        .map((c) => ({
-          label: `📩 Contact from ${c.name}`,
-          link: "/admin/messages",
-          date: c.createdAt,
-        }));
-
-      const blogItems = blogs.map((b) => ({
-        label: `📝 Blog request: ${b.title}`,
-        link: "/admin/blogs",
-        date: b.createdAt,
+      .filter((c) => c.status !== "replied")
+      .map((c) => ({
+        label: `📩 Contact from ${c.name}`,
+        link: "/admin/messages",
+        date: c.createdAt,
+        type: "contact", // 🔥 ADD
       }));
+
+    const blogItems = blogs.map((b) => ({
+      label: `📝 Blog request: ${b.title}`,
+      link: "/admin/blogs",
+      date: b.createdAt,
+      type: "blog", // 🔥 ADD
+    }));
+
 
       const all = [...contactItems, ...blogItems].sort(
         (a, b) => new Date(b.date) - new Date(a.date)
@@ -204,6 +207,21 @@ const MainMenu = ({ isHome }) => {
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
+
+  const handleNotificationClick = (index, type) => {
+  setNotifications((prev) => prev.filter((_, i) => i !== index));
+
+  if (type === "contact") {
+    setNewMsgCount((c) => Math.max(0, c - 1));
+  }
+
+  if (type === "blog") {
+    setPendingBlogCount((c) => Math.max(0, c - 1));
+  }
+
+  setOpenNotifications(false);
+};
+
 
   return (
     <div className={`py-4 ${isHome ? "bg-transparent" : "bg-white"}`}>
@@ -294,13 +312,12 @@ const MainMenu = ({ isHome }) => {
                   <Link
                     key={i}
                     to={n.link}
-                    onClick={() =>
-                      setOpenNotifications(false)
-                    }
+                    onClick={() => handleNotificationClick(i, n.type)}
                     className="block px-4 py-3 text-sm hover:bg-gray-100 border-b"
                   >
                     {n.label}
                   </Link>
+
                 ))
               )}
             </div>

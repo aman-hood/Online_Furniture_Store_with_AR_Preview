@@ -10,6 +10,8 @@ const productSchema = new mongoose.Schema(
     room: { type: String, index: true },       // bedroom, living-room
 
     img: { type: String, default: "" },
+    modelUrl: { type: String, default: "" },
+
 
     stock: { type: Number, default: 0 },
     isActive: { type: Boolean, default: true },

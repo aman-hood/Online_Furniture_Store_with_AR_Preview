@@ -1,14 +1,15 @@
 import axios from "axios";
+import http from "./http";
 
 const API = "http://localhost:3000/api/wishlist";
 
 export const getWishlist = async () => {
-  const res = await axios.get(API, { withCredentials: true });
+  const res = await http.get(API, { withCredentials: true });
   return res.data.wishlist.items;
 };
 
 export const addToWishlist = async (productId) => {
-  const res = await axios.post(
+  const res = await http.post(
     `${API}/add`,
     { productId },
     { withCredentials: true }
@@ -17,7 +18,7 @@ export const addToWishlist = async (productId) => {
 };
 
 export const removeFromWishlist = async (productId) => {
-  const res = await axios.post(
+  const res = await http.post(
     `${API}/remove`,
     { productId },
     { withCredentials: true }

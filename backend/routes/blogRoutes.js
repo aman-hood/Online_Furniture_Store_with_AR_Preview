@@ -21,11 +21,8 @@ router.put("/admin/:id/publish", isAuthenticated, isAdmin, async (req, res) => {
 
 
 // ADMIN CREATE BLOG (DIRECT PUBLISH)
-router.post(
-  "/admin",
-  isAuthenticated,
-  isAdmin,
-  async (req, res) => {
+router.post("/admin", isAuthenticated, isAdmin, async (req, res) => {
+  try {
     const blog = await Blog.create({
       ...req.body,
       status: "published",
@@ -33,25 +30,58 @@ router.post(
     });
 
     res.status(201).json(blog);
+  } catch (err) {
+    console.error("ADMIN BLOG CREATE ERROR 👉", err);
+    res.status(500).json({ message: err.message });
   }
-);
+});
+
 /* USER CREATE BLOG */
 router.post("/", isAuthenticated, async (req, res) => {
-  const blog = await Blog.create({
-    ...req.body,
-    author: req.user._id,
-    status: "pending",
-  });
+  try {
+    const { title, slug, excerpt, content, coverImage } = req.body;
 
-  // 🔔 NOTIFY ADMIN
-  req.app.get("io").emit("new_blog_request", {
-    title: blog.title,
-  });
+    // 🔒 BASIC VALIDATION
+    if (!title || !slug || !content) {
+      return res.status(400).json({
+        message: "Title, slug, and content are required",
+      });
+    }
 
-  res.status(201).json(blog);
+    // 🔒 NORMALIZE SLUG
+    const cleanSlug = slug
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, "-");
 
+    // 🔒 CHECK DUPLICATE SLUG
+    const existing = await Blog.findOne({ slug: cleanSlug });
+    if (existing) {
+      return res.status(409).json({
+        message: "Slug already exists. Choose a different one.",
+      });
+    }
 
+    const blog = await Blog.create({
+      title,
+      slug: cleanSlug,
+      excerpt,
+      content,
+      coverImage,
+      author: req.user._id,
+      status: "pending",
+    });
+
+    res.status(201).json(blog);
+  } catch (err) {
+    console.error("BLOG CREATE ERROR 👉", err);
+    res.status(500).json({
+      message: err.message,
+    });
+  }
 });
+
+
 
 
 
@@ -81,5 +111,27 @@ router.get("/:slug", async (req, res) => {
   if (!blog) return res.status(404).json({ message: "Not found" });
   res.json(blog);
 });
+
+// DELETE BLOG (ADMIN ONLY)
+router.delete(
+  "/admin/:id",
+  isAuthenticated,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const blog = await Blog.findByIdAndDelete(req.params.id);
+
+      if (!blog) {
+        return res.status(404).json({ message: "Blog not found" });
+      }
+
+      res.json({ message: "Blog deleted successfully" });
+    } catch (err) {
+      console.error("BLOG DELETE ERROR 👉", err);
+      res.status(500).json({ message: err.message });
+    }
+  }
+);
+
 
 export default router;

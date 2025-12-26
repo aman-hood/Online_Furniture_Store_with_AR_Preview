@@ -10,7 +10,7 @@ const AdminCreateBlog = () => {
     coverImage: "",
   });
 
-  // 🔥 IMAGE UPLOAD HAPPENS HERE
+  //  IMAGE UPLOAD HAPPENS HERE
   const uploadImage = async (file) => {
     const fd = new FormData();
     fd.append("image", file);
@@ -27,7 +27,7 @@ const AdminCreateBlog = () => {
     }));
   };
 
-  // 🔥 BLOG SAVE (WITH IMAGE URL)
+  // BLOG SAVE (WITH IMAGE URL)
   const submitBlog = async () => {
   try {
     await axios.post(
@@ -71,14 +71,14 @@ const AdminCreateBlog = () => {
         onChange={(e) => setForm({ ...form, content: e.target.value })}
       />
 
-      {/* 🔥 IMAGE INPUT */}
+      {/*  IMAGE INPUT */}
       <input
         type="file"
         accept="image/*"
         onChange={(e) => uploadImage(e.target.files[0])}
       />
 
-      {/* 🔥 IMAGE PREVIEW */}
+      {/*  IMAGE PREVIEW */}
       {form.coverImage && (
         <img
           src={`http://localhost:3000${form.coverImage}`}
